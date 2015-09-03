@@ -11,7 +11,7 @@
         android:background="@color/primary"
         android:translationZ="@dimen/margin_tiny"/>
 
-    <android.support.v7.widget.RecycleView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_frequency_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
