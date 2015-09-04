@@ -6,4 +6,5 @@ package in.udacity.learning.constantsutility;
 public class WebServiceURL {
 
     public static String urlWeatherSevenDayForcast = "http://api.openweathermap.org/data/2.5/forecast?q=Mumbai,in&mode=json&cnt=7";
+
 }
