@@ -9,16 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:translationZ="@dimen/margin_tiny"/>
+        android:translationZ="@dimen/margin_tiny" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_frequency_list"
+    <fragment
+        android:name="in.udacity.learning.shunshine.app.ForcastFragment"
+        android:id="@+id/frag_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_main"></fragment>
 
 </LinearLayout>
