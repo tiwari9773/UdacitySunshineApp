@@ -5,6 +5,10 @@ package in.udacity.learning.constantsutility;
  */
 public class WebServiceURL {
 
-    public static String urlWeatherSevenDayForcast = "http://api.openweathermap.org/data/2.5/forecast?q=Mumbai,in&mode=json&cnt=7";
+    public static String baseURLWeatherForcast = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+    public static String QUERY = "q";
+    public static String UNIT = "units";
+    public static String DAYS = "cnt";
+    public static String MODE = "mode";
 
 }

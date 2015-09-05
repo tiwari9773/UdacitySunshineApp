@@ -1,21 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:translationZ="@dimen/margin_tiny" />
+    <!--<include layout="@layout/layout_toolbar"></include>-->
 
     <fragment
-        android:name="in.udacity.learning.shunshine.app.ForcastFragment"
         android:id="@+id/frag_container"
+        android:name="in.udacity.learning.shunshine.app.ForcastFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_main"></fragment>
 
-</LinearLayout>
+</FrameLayout>

@@ -6,4 +6,5 @@ package in.udacity.learning.constantsutility;
 public class AppConstant {
 
     public static boolean DEBUG = true;
+    public static boolean DEVELOPER = false;
 }
