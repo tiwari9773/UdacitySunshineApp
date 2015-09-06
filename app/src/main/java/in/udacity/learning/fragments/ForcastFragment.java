@@ -2,9 +2,12 @@ package in.udacity.learning.fragments;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +32,7 @@ import in.udacity.learning.serviceutility.JSONParser;
 import in.udacity.learning.shunshine.app.DetailActivity;
 import in.udacity.learning.shunshine.app.MyApplication;
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.shunshine.app.SettingsActivity;
 
 /**
  * Created by Lokesh on 05-09-2015.
@@ -37,6 +41,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
     /*adapter which holds values*/
     private WeatherRecycleViewAdapter adapter;
+    private List<Item> mItem = new ArrayList<>();
 
     public ForcastFragment() {
     }
@@ -48,8 +53,15 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeatherApp();
+    }
+
+    @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
     }
 
     /**
@@ -68,13 +80,15 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh: {
-                if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity()))
-                    new FetchForcastData().execute("94043");
-                else {
-                    L.lToast(getContext(), getString(R.string.msg_internet_status));
-                }
+                updateWeatherApp();
+            }
+            break;
+            case R.id.action_settings: {
+                Intent in = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(in);
                 return true;
             }
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,34 +104,42 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
     public void initialize(View view) {
 
-        List<Item> itemList = new ArrayList<Item>();
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
-
         /* Recycle Value holder*/
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_frequency_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new WeatherRecycleViewAdapter(itemList, this);
+        adapter = new WeatherRecycleViewAdapter(mItem, this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onClickWeather(int position) {
-      //  L.lToast(MyApplication.getContext(), adapter.getItem(position).toString());
-
         Intent in = new Intent(getActivity(), DetailActivity.class);
-        in.putExtra(Intent.EXTRA_TEXT,adapter.getItem(position).toString());
+        in.putExtra(Intent.EXTRA_TEXT, adapter.getItem(position).toString());
         startActivity(in);
 
     }
+
+    //method to initiate
+    private void updateWeatherApp() {
+        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity()))
+
+            new FetchForcastData().execute(getSavedKeys());
+        else {
+            L.lToast(getContext(), getString(R.string.msg_internet_status));
+        }
+    }
+
+    //Provide value of setting meu
+    private String[] getSavedKeys() {
+        SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String unit = s.getString(getString(R.string.pref_keys_list), "metric");
+        String zip = s.getString(getString(R.string.pref_keys_edit), "94043");
+
+        return new String[]{unit, zip};
+    }
+
 
     class FetchForcastData extends AsyncTask<String, String, List<String>> {
         String TAG = getClass().getName();
@@ -130,10 +152,9 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         @Override
         protected List<String> doInBackground(String... params) {
 
-            String defaultZip = "94043";
-            String zip = params.length > 0 ? params[0] : defaultZip;
+            String unit = params[0];
+            String zip = params[1];
             String mode = "json";
-            String unit = "metric";
             int days = 7;
 
             String jSonString = new HttpURLConnectionInfo(mode, unit, days, zip).getJSON(TAG);
@@ -146,14 +167,14 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
             if (AppConstant.DEBUG)
                 L.lToast(getContext(), s.toString());
 
-            List<Item> item = new ArrayList<>();
+            mItem = new ArrayList<>();
 
             int count = 1;
             for (String temp : s) {
-                item.add(new Item(count++, temp));
+                mItem.add(new Item(count++, temp));
             }
-            if (item.size() > 0) {
-                adapter.setLsItem(item);
+            if (mItem.size() > 0 && adapter!=null) {
+                adapter.setLsItem(mItem);
                 adapter.notifyDataSetChanged();
             }
 

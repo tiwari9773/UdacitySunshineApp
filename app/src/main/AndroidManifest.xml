@@ -26,10 +26,13 @@
             android:label="@string/title_activity_detail" >
         </activity>
         <activity
-            android:parentActivityName=".SettingsActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".DetailActivity"
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="@string/title_activity_setting" >
         </activity>
+        <!--  android:launchMode="singleTask" without this line .SettingActivity return to itself when click on backOptionHomeButton
+           while working properly when Navigating .SettingActvity from DetailActivity why??-->
     </application>
 
 </manifest>

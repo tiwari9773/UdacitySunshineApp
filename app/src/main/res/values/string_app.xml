@@ -4,21 +4,23 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
 
-    <string name="city_ic">1275339</string>
+    <string name="city_ic" translatable="false">1275339</string>
 
-    <string name="pref_heading">Sunshine Setting</string>
+    <string name="pref_heading" translatable="false">Sunshine Setting</string>
 
-    <string name="pref_title_units">Unit</string>
-    <string name="unit_metric">metric</string>
+    <string name="pref_title_units" translatable="false">Pick Unit</string>
+    <string name="unit_metric" translatable="false">metric</string>
 
     <string-array name="arr_unit_list">
         <item>metric</item>
         <item>imperial</item>
     </string-array>
 
-    <string name="pref_title_zip_code">Zipcode</string>
-    <string name="pref_city_zip">94043</string>
-    <string name="zip_code">94043</string>
+    <string name="pref_title_zip_code" translatable="false">Location</string>
+    <string name="pref_city_zip" translatable="false">94043</string>
+    <string name="zip_code" translatable="false">94043</string>
 
 
+    <string name="pref_keys_list">pref_unit_type</string>
+    <string name="pref_keys_edit">pref_zip_code</string>
 </resources>
