@@ -16,7 +16,11 @@ import in.udacity.learning.shunshine.app.R;
  */
 public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
 
-    List<Item> lsItem;
+    public void setLsItem(List<Item> lsItem) {
+        this.lsItem = lsItem;
+    }
+
+    private List<Item> lsItem;
 
     public WeatherRecycleViewAdapter(List<Item> lsItem) {
         this.lsItem = lsItem;
@@ -29,6 +33,7 @@ public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewH
 
         return weatherViewHolder;
     }
+
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {

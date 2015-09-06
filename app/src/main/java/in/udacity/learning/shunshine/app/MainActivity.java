@@ -12,7 +12,7 @@ import in.udacity.learning.network.NetWorkInfoUtility;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Toolbar mToolbar;
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     //
     public void initialize(Bundle savedInstanceState) {
 
-//        mToolbar = (Toolbar)findViewById(R.id.tb_main);
-//        setSupportActionBar(mToolbar);
+        mToolbar = (Toolbar)findViewById(R.id.tb_main);
+        setSupportActionBar(mToolbar);
 
         if(savedInstanceState == null)
         {

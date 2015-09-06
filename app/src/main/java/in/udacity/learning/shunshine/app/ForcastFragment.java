@@ -1,14 +1,12 @@
 package in.udacity.learning.shunshine.app;
 
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,24 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.udacity.learning.adapter.WeatherRecycleViewAdapter;
 import in.udacity.learning.constantsutility.AppConstant;
-import in.udacity.learning.constantsutility.WebServiceURL;
-import in.udacity.learning.keys.JSONKeys;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.model.Item;
 import in.udacity.learning.network.NetWorkInfoUtility;
@@ -44,6 +29,9 @@ import in.udacity.learning.serviceutility.JSONParser;
  * Created by Lokesh on 05-09-2015.
  */
 public class ForcastFragment extends Fragment {
+
+    /*adapter which holds values*/
+    private WeatherRecycleViewAdapter adapter;
 
     public ForcastFragment() {
     }
@@ -109,11 +97,11 @@ public class ForcastFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        WeatherRecycleViewAdapter adapter = new WeatherRecycleViewAdapter(itemList);
+        adapter = new WeatherRecycleViewAdapter(itemList);
         recyclerView.setAdapter(adapter);
     }
 
-    class FetchForcastData extends AsyncTask<String, String, String> {
+    class FetchForcastData extends AsyncTask<String, String, List<String>> {
         String TAG = getClass().getName();
 
         @Override
@@ -122,7 +110,7 @@ public class ForcastFragment extends Fragment {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected List<String> doInBackground(String... params) {
 
             String defaultZip = "94043";
             String zip = params.length > 0 ? params[0] : defaultZip;
@@ -131,16 +119,26 @@ public class ForcastFragment extends Fragment {
             int days = 7;
 
             String jSonString = new HttpURLConnectionInfo(mode, unit, days, zip).getJSON(TAG);
-            String parsedString = JSONParser.parseWeatherForcast(jSonString);
+            List<String> parsedString = JSONParser.parseWeatherForcast(jSonString);
             return parsedString;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(List<String> s) {
             if (AppConstant.DEBUG)
-                L.lToast(getContext(), s);
+                L.lToast(getContext(), s.toString());
 
-            //Log.v(TAG, s);
+            List<Item> item = new ArrayList<>();
+
+            int count = 1;
+            for (String temp : s) {
+                item.add(new Item(count++, temp));
+            }
+            if (item.size() > 0) {
+                adapter.setLsItem(item);
+                adapter.notifyDataSetChanged();
+            }
+
             super.onPostExecute(s);
         }
     }
