@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.model.Item;
 import in.udacity.learning.shunshine.app.R;
 
@@ -16,20 +17,18 @@ import in.udacity.learning.shunshine.app.R;
  */
 public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
 
-    public void setLsItem(List<Item> lsItem) {
-        this.lsItem = lsItem;
-    }
-
     private List<Item> lsItem;
+    private OnWeatherItemClickListener onWeatherItemClickListener;
 
-    public WeatherRecycleViewAdapter(List<Item> lsItem) {
+    public WeatherRecycleViewAdapter(List<Item> lsItem, OnWeatherItemClickListener onWeatherItemClickListener) {
+        this.onWeatherItemClickListener = onWeatherItemClickListener;
         this.lsItem = lsItem;
     }
 
     @Override
     public WeatherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       View view=  LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather_list,parent,false);
-        WeatherViewHolder weatherViewHolder = new WeatherViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather_list, parent, false);
+        WeatherViewHolder weatherViewHolder = new WeatherViewHolder(view,onWeatherItemClickListener);
 
         return weatherViewHolder;
     }
@@ -48,4 +47,10 @@ public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewH
     public Item getItem(int position) {
         return lsItem.get(position);
     }
+
+    public void setLsItem(List<Item> lsItem) {
+        this.lsItem = lsItem;
+    }
+
+
 }

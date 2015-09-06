@@ -6,4 +6,5 @@
 
     <string name="msg_internet_status">No Internet Connection</string>
     <string name="menu_refresh">Refresh</string>
+
 </resources>

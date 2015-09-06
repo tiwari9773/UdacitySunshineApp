@@ -10,8 +10,8 @@ public class MyApplication extends Application {
 
     private static MyApplication mInstance = null;
 
-    private MyApplication() {
-
+    public MyApplication() {
+        mInstance = this;
     }
 
     public static MyApplication getInstance() {
@@ -21,7 +21,6 @@ public class MyApplication extends Application {
     }
 
     public static Context getContext() {
-
         if (mInstance == null)
             mInstance = new MyApplication();
         return mInstance.getApplicationContext();

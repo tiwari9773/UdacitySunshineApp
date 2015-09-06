@@ -1,6 +1,7 @@
-package in.udacity.learning.shunshine.app;
+package in.udacity.learning.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,16 +20,20 @@ import java.util.List;
 
 import in.udacity.learning.adapter.WeatherRecycleViewAdapter;
 import in.udacity.learning.constantsutility.AppConstant;
+import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.model.Item;
 import in.udacity.learning.network.NetWorkInfoUtility;
 import in.udacity.learning.serviceutility.HttpURLConnectionInfo;
 import in.udacity.learning.serviceutility.JSONParser;
+import in.udacity.learning.shunshine.app.DetailActivity;
+import in.udacity.learning.shunshine.app.MyApplication;
+import in.udacity.learning.shunshine.app.R;
 
 /**
  * Created by Lokesh on 05-09-2015.
  */
-public class ForcastFragment extends Fragment {
+public class ForcastFragment extends Fragment implements OnWeatherItemClickListener {
 
     /*adapter which holds values*/
     private WeatherRecycleViewAdapter adapter;
@@ -86,19 +91,32 @@ public class ForcastFragment extends Fragment {
     public void initialize(View view) {
 
         List<Item> itemList = new ArrayList<Item>();
-        itemList.add(new Item(1, "ABC"));
-        itemList.add(new Item(1, "ABC"));
-        itemList.add(new Item(1, "ABC"));
-        itemList.add(new Item(1, "ABC"));
-        itemList.add(new Item(1, "ABC"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
+        itemList.add(new Item(1, "Dummy Sun Sep O6-Rain-14/12"));
 
         /* Recycle Value holder*/
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_frequency_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new WeatherRecycleViewAdapter(itemList);
+        adapter = new WeatherRecycleViewAdapter(itemList, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClickWeather(int position) {
+      //  L.lToast(MyApplication.getContext(), adapter.getItem(position).toString());
+
+        Intent in = new Intent(getActivity(), DetailActivity.class);
+        in.putExtra(Intent.EXTRA_TEXT,adapter.getItem(position).toString());
+        startActivity(in);
+
     }
 
     class FetchForcastData extends AsyncTask<String, String, List<String>> {

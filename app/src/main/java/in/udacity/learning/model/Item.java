@@ -47,4 +47,10 @@ public class Item {
     public void setDescription(String description) {
         Description = description;
     }
+
+    @Override
+    public String toString() {
+
+        return Description==null ?Name:Name+" "+Description;
+    }
 }
