@@ -10,4 +10,7 @@ public class AppConstant {
 
     // for development time
     public static boolean DEVELOPER = true;
+
+
+    public static String TYPE_TEXT_DATA_TRANS = "text/plain";
 }

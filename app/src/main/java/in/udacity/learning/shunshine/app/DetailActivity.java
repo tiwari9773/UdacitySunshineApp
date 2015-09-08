@@ -2,19 +2,26 @@ package in.udacity.learning.shunshine.app;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
+
+import in.udacity.learning.constantsutility.AppConstant;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private ShareActionProvider mShareActionProvider;
     private Toolbar mToolbar;
+    private String weatherRep;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +37,10 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String strWeather = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        weatherRep = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         if (savedInstanceState == null) {
             Bundle b =new Bundle();
-            b.putString(Intent.EXTRA_TEXT, strWeather);
+            b.putString(Intent.EXTRA_TEXT, weatherRep);
             PlaceholderFragment placeholderFragment = new PlaceholderFragment();
             placeholderFragment.setArguments(b);
             getSupportFragmentManager().beginTransaction()
@@ -41,10 +48,15 @@ public class DetailActivity extends AppCompatActivity {
             .commit();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_detail, menu);
+        MenuItem item = menu.findItem(R.id.action_item_share);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         return true;
     }
 
@@ -60,9 +72,22 @@ public class DetailActivity extends AppCompatActivity {
             Intent in = new Intent(this,SettingsActivity.class);
             startActivity(in);
             return true;
+        }else if(id == R.id.action_item_share){
+            Intent in = new Intent();
+            in.setAction(Intent.ACTION_SEND);
+            in.putExtra(Intent.EXTRA_TEXT, weatherRep);
+            in.setType(AppConstant.TYPE_TEXT_DATA_TRANS);
+            setShareIntent(in);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent) {
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
     }
 
     /**
