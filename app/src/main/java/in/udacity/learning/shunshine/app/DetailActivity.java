@@ -22,13 +22,13 @@ public class DetailActivity extends AppCompatActivity {
     private ShareActionProvider mShareActionProvider;
     private Toolbar mToolbar;
     private String weatherRep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
         initialize(savedInstanceState);
-
     }
 
     private void initialize(Bundle savedInstanceState)
@@ -87,6 +87,7 @@ public class DetailActivity extends AppCompatActivity {
     private void setShareIntent(Intent shareIntent) {
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(shareIntent);
+            startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.title_activity_detail)));
         }
     }
 
