@@ -44,24 +44,18 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     private List<Item> mItem = new ArrayList<>();
 
     public ForcastFragment() {
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         updateWeatherApp();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
     }
 
     /**
@@ -72,7 +66,8 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //If I will remove this "Refresh" menu is apearing twice
-        menu.clear();
+        //menu.clear();
+
         inflater.inflate(R.menu.forcast_fragment_menu, menu);
     }
 

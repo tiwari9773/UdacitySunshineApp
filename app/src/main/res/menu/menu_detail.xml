@@ -9,9 +9,8 @@
         app:showAsAction="never" />
 
     <item
-
         android:id="@+id/action_item_share"
-        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         app:showAsAction="ifRoom"
         android:title="Share" />
 </menu>
