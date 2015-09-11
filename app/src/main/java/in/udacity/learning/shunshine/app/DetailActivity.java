@@ -48,29 +48,6 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent in = new Intent(this, SettingsActivity.class);
-            startActivity(in);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -117,7 +94,12 @@ public class DetailActivity extends AppCompatActivity {
             if (id == R.id.action_item_share) {
                 Intent in = createShareForeCast();
                 startActivity(in);
+            } else if (id == R.id.action_settings) {
+                Intent in = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(in);
+                return true;
             }
+
 
             return super.onOptionsItemSelected(item);
         }

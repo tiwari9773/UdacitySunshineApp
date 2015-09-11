@@ -7,11 +7,10 @@
 
     <include layout="@layout/layout_toolbar"></include>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/frag_container"
-        android:name="in.udacity.learning.fragments.ForcastFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_main"></fragment>
+        tools:layout="@layout/fragment_main"></FrameLayout>
 
 </LinearLayout>
