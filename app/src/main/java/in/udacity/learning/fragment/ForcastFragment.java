@@ -1,4 +1,4 @@
-package in.udacity.learning.fragments;
+package in.udacity.learning.fragment;
 
 
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,15 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.udacity.learning.adapter.WeatherRecycleViewAdapter;
-import in.udacity.learning.constantsutility.AppConstant;
+import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.model.Item;
 import in.udacity.learning.network.NetWorkInfoUtility;
-import in.udacity.learning.serviceutility.HttpURLConnectionInfo;
-import in.udacity.learning.serviceutility.JSONParser;
+import in.udacity.learning.web_services.HttpURLConnectionWebService;
+import in.udacity.learning.web_services.JSONParser;
 import in.udacity.learning.shunshine.app.DetailActivity;
-import in.udacity.learning.shunshine.app.MyApplication;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.shunshine.app.SettingsActivity;
 
@@ -52,11 +50,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateWeatherApp();
-    }
+
 
     /**
      * I dont know why option menu is apearing twice*
@@ -95,6 +89,12 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeatherApp();
     }
 
     public void initialize(View view) {
@@ -152,7 +152,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
             String mode = "json";
             int days = 7;
 
-            String jSonString = new HttpURLConnectionInfo(mode, unit, days, zip).getJSON(TAG);
+            String jSonString = new HttpURLConnectionWebService(mode, unit, days, zip).getJSON(TAG);
             List<String> parsedString = JSONParser.parseWeatherForcast(jSonString);
             return parsedString;
         }

@@ -1,4 +1,4 @@
-package in.udacity.learning.constantsutility;
+package in.udacity.learning.web_services;
 
 /**
  * Created by USER on 03-Sep-15.

@@ -1,4 +1,4 @@
-package in.udacity.learning.fragments;
+package in.udacity.learning.fragment;
 
 /**
  * Created by Lokesh on 06-09-2015.

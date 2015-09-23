@@ -1,4 +1,4 @@
-package in.udacity.learning.constantsutility;
+package in.udacity.learning.constant;
 
 /**
  * Created by Lokesh on 04-09-2015.

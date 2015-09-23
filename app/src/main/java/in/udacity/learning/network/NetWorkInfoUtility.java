@@ -38,7 +38,6 @@ public class NetWorkInfoUtility {
         this.isNetworkAvailable = isNetworkAvailable;
     }
 
-
     public boolean isNetWorkAvailableNow(Context context)
     {
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -46,7 +45,7 @@ public class NetWorkInfoUtility {
         setIsWifiEnable(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected());
         setIsMobileNetworkAvailable(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected());
 
-        if(isWifiEnable() || isNetworkAvailable())
+        if(isWifiEnable() || isMobileNetworkAvailable())
         {
             setIsNetworkAvailable(true);
         }

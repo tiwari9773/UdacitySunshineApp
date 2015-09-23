@@ -1,9 +1,9 @@
-package in.udacity.learning.keys;
+package in.udacity.learning.web_services;
 
 /**
  * Created by Lokesh on 06-09-2015.
  */
-public interface JSONKeys {
+public interface WebServiceParsingKeys {
 
     interface weatherKeys{
         String MIN = "min";

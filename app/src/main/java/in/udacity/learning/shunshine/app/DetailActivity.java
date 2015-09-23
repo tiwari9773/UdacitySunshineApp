@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import in.udacity.learning.constantsutility.AppConstant;
+import in.udacity.learning.constant.AppConstant;
 
 public class DetailActivity extends AppCompatActivity {
 

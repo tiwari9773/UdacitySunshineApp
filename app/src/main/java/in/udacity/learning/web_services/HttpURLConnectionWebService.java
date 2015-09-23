@@ -1,4 +1,4 @@
-package in.udacity.learning.serviceutility;
+package in.udacity.learning.web_services;
 
 import android.net.Uri;
 import android.util.Log;
@@ -11,15 +11,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import in.udacity.learning.constantsutility.AppConstant;
-import in.udacity.learning.constantsutility.WebServiceURL;
+import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.shunshine.app.MyApplication;
 
 /**
  * Created by Lokesh on 06-09-2015.
  */
-public class HttpURLConnectionInfo {
+public class HttpURLConnectionWebService {
 
     String defaultZip = "94043";
     String mode = "json";
@@ -28,7 +27,7 @@ public class HttpURLConnectionInfo {
     String zip = "";
 
 
-    public HttpURLConnectionInfo(String mode, String unit, int days, String zip) {
+    public HttpURLConnectionWebService(String mode, String unit, int days, String zip) {
         this.mode = mode;
         this.unit = unit;
         this.days = days;

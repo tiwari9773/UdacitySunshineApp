@@ -1,6 +1,4 @@
-package in.udacity.learning.serviceutility;
-
-import android.text.format.Time;
+package in.udacity.learning.web_services;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,8 +11,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import in.udacity.learning.keys.JSONKeys;
-
 /**
  * Created by Lokesh on 06-09-2015.
  */
@@ -26,7 +22,7 @@ public class JSONParser {
 
         try {
             JSONObject jsonObject = new JSONObject(jSonString);
-            JSONArray jsonArray = jsonObject.getJSONArray(JSONKeys.weatherKeys.LIST);
+            JSONArray jsonArray = jsonObject.getJSONArray(WebServiceParsingKeys.weatherKeys.LIST);
 
             //set Time
             Calendar dayTime = new GregorianCalendar();
@@ -35,15 +31,15 @@ public class JSONParser {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject origArray = jsonArray.getJSONObject(i);
-                JSONObject tempJSON = origArray.getJSONObject(JSONKeys.weatherKeys.TEMP);
+                JSONObject tempJSON = origArray.getJSONObject(WebServiceParsingKeys.weatherKeys.TEMP);
 
-                String max = tempJSON.getString(JSONKeys.weatherKeys.MAX);
-                String min = tempJSON.getString(JSONKeys.weatherKeys.MIN);
+                String max = tempJSON.getString(WebServiceParsingKeys.weatherKeys.MAX);
+                String min = tempJSON.getString(WebServiceParsingKeys.weatherKeys.MIN);
 
                 String min_max = formatHighLows(Double.parseDouble(max), Double.parseDouble(min));
-                JSONArray jsonAr = origArray.getJSONArray(JSONKeys.weatherKeys.WEATHER);
+                JSONArray jsonAr = origArray.getJSONArray(WebServiceParsingKeys.weatherKeys.WEATHER);
                 tempJSON = jsonAr.getJSONObject(0);
-                String main = tempJSON.getString(JSONKeys.weatherKeys.MAIN);
+                String main = tempJSON.getString(WebServiceParsingKeys.weatherKeys.MAIN);
 
                 //Set date increment
                 dayTime.add(Calendar.DATE, i);

@@ -33,7 +33,6 @@ public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewH
         return weatherViewHolder;
     }
 
-
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
         holder.tv.setText(getItem(position).getName());
@@ -51,6 +50,5 @@ public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewH
     public void setLsItem(List<Item> lsItem) {
         this.lsItem = lsItem;
     }
-
 
 }

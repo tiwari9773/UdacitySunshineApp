@@ -1,13 +1,12 @@
 package in.udacity.learning.shunshine.app;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import in.udacity.learning.fragments.SettingsFragment;
+import in.udacity.learning.fragment.SettingsFragment;
 
 /**
  * Created by Lokesh on 06-09-2015.
