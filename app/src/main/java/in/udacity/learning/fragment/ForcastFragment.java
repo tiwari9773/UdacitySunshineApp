@@ -50,18 +50,10 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         super.onCreate(savedInstanceState);
     }
 
-
-
-    /**
-     * I dont know why option menu is apearing twice*
-     * pease explain on this ??
-     */
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //If I will remove this "Refresh" menu is apearing twice
         //menu.clear();
-
         inflater.inflate(R.menu.forcast_fragment_menu, menu);
     }
 
@@ -119,7 +111,6 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     //method to initiate
     private void updateWeatherApp() {
         if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity()))
-
             new FetchForcastData().execute(getSavedKeys());
         else {
             L.lToast(getContext(), getString(R.string.msg_internet_status));

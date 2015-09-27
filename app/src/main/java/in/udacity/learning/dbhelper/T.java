@@ -5,12 +5,13 @@ import android.provider.BaseColumns;
 /**
  * Created by Lokesh on 23-09-2015.
  */
-public interface TableContract extends BaseColumns {
+public interface T {
 
     /*** Defining Every DML , DDL Key word as Constatnt so that Typing mistake
      * should be completely removed
      * 1) It also helps to AutoComplete the statement
-     * 2) Manage spaces between Column name and Type*/
+     * 2) Manage spaces between ColumnName and Type
+     * this is how I prevent comma, parenthesis mistakes*/
 
     /* Data Type And Separator */
     String TYPE_INTEGER = " INTEGER ";

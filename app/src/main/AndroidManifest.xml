@@ -31,8 +31,13 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_setting" >
         </activity>
-        <!--  android:launchMode="singleTask" without this line .SettingActivity return to itself when click on backOptionHomeButton
-           while working properly when Navigating .SettingActvity from DetailActivity why??-->
+
+        <provider
+            android:authorities="@string/content_authority"
+            android:name="in.udacity.learning.dbhelper.WeatherProvider"
+            android:exported="false"
+            android:syncable="true" />
+
     </application>
 
 </manifest>

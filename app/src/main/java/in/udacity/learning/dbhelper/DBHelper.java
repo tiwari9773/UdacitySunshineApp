@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * If want change the database schema, you must increment the database version.
      */
     public static int DATABASE_VERSION = 1;
-    public static final String DB_NAME = "BabyName.sqlite";
+    public static final String DATABASE_NAME = "weather2.sqlite";
 
     private Context myContext;
 
@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //What is this SQLiteDatabase.CursorFactory exactly is when is best sciniero to use it
         //SQLiteDatabase.CursorFactory factory = null;
 
-        super(context, DB_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         myContext = context;
     }
 
@@ -44,7 +44,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(WeatherContract.WeatherEntry.SQL_DROP);
+        db.execSQL(WeatherContract.LocationEntry.SQL_DROP);
 
+        onCreate(db);
     }
 
     /* Insert Saved Status of List */
