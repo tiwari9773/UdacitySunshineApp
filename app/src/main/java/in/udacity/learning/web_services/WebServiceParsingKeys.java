@@ -12,6 +12,5 @@ public interface WebServiceParsingKeys {
         String WEATHER = "weather";
         String LIST = "list";
         String TEMP = "temp";
-
     }
 }
