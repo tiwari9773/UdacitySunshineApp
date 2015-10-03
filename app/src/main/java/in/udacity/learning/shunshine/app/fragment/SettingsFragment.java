@@ -1,4 +1,4 @@
-package in.udacity.learning.fragment;
+package in.udacity.learning.shunshine.app.fragment;
 
 /**
  * Created by Lokesh on 06-09-2015.
@@ -28,15 +28,14 @@ public class SettingsFragment extends PreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(R.xml.pref_general);
 
-        Preference list_preference = findPreference("pref_unit_type");
+        Preference list_preference = findPreference(getString(R.string.pref_keys_unit_type));
         bindPreferenceSummaryToValue(list_preference);
 
 
-        Preference edit_preference = findPreference("pref_zip_code");
+        Preference edit_preference = findPreference(getString(R.string.pref_keys_zip_code));
         bindPreferenceSummaryToValue(edit_preference);
-
     }
 
     /**
@@ -51,9 +50,7 @@ public class SettingsFragment extends PreferenceFragment
         // Trigger the listener immediately with the preference's
         // current value.
         onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+                PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
     }
 
     @Override
@@ -61,7 +58,7 @@ public class SettingsFragment extends PreferenceFragment
         String stringValue = value.toString();
 
         if (preference instanceof ListPreference) {
-            // For list preferences, look up the correct display value in
+            // For list pref_general, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
             int prefIndex = listPreference.findIndexOfValue(stringValue);
@@ -69,7 +66,7 @@ public class SettingsFragment extends PreferenceFragment
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
         } else {
-            // For other preferences, set the summary to the value's simple string representation.
+            // For other pref_general, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
         }
         return true;

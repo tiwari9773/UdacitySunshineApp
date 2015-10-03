@@ -4,23 +4,25 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
 
-    <string name="city_ic" translatable="false">1275339</string>
-
     <string name="pref_heading" translatable="false">Sunshine Setting</string>
 
-    <string name="pref_title_units" translatable="false">Pick Unit</string>
-    <string name="unit_metric" translatable="false">metric</string>
+    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_location_key" translatable="false">location</string>
 
+    <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
+    <string name="pref_location_default" translatable="false">1275339</string>
+
+    <string name="pref_title_units" translatable="false">Temprature Unit</string>
+    <string name="pref_unit_metric">metric</string>
+    <string name="pref_unit_imperial">imperial</string>
     <string-array name="arr_unit_list">
         <item>metric</item>
         <item>imperial</item>
     </string-array>
 
     <string name="pref_title_zip_code" translatable="false">Location</string>
-    <string name="pref_city_zip" translatable="false">94043</string>
-    <string name="zip_code" translatable="false">94043</string>
+    <string name="pref_city_zip" translatable="false">1275339</string>
 
-
-    <string name="pref_keys_list">pref_unit_type</string>
-    <string name="pref_keys_edit">pref_zip_code</string>
+    <string name="pref_keys_unit_type" translatable="false">pref_unit_type</string>
+    <string name="pref_keys_zip_code" translatable="false">pref_zip_code</string>
 </resources>

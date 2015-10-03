@@ -4,7 +4,6 @@
     android:id="@+id/parentPanel"
     android:layout_height="match_parent"
     android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
     android:padding="@dimen/margin_tiny">
 
     <TextView

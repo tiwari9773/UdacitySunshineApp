@@ -3,6 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_map">My Location</string>
 
     <string name="msg_internet_status">No Internet Connection</string>
     <string name="menu_refresh">Refresh</string>

@@ -1,4 +1,4 @@
-package in.udacity.learning.fragment;
+package in.udacity.learning.shunshine.app.fragment;
 
 
 import android.content.Intent;
@@ -10,16 +10,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.CharacterPickerDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.udacity.learning.adapter.WeatherListAdapter;
 import in.udacity.learning.adapter.WeatherRecycleViewAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
@@ -38,7 +42,8 @@ import in.udacity.learning.shunshine.app.SettingsActivity;
 public class ForcastFragment extends Fragment implements OnWeatherItemClickListener {
 
     /*adapter which holds values*/
-    private WeatherRecycleViewAdapter adapter;
+    //private WeatherRecycleViewAdapter adapter;
+    private WeatherListAdapter adapter;
     private List<Item> mItem = new ArrayList<>();
 
     public ForcastFragment() {
@@ -91,13 +96,22 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
     public void initialize(View view) {
 
-        /* Recycle Value holder*/
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_frequency_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
+//        /* Recycle Value holder*/
+//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_frequency_list);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setAdapter(adapter);
 
-        adapter = new WeatherRecycleViewAdapter(mItem, this);
-        recyclerView.setAdapter(adapter);
+        ListView lsView = (ListView) view.findViewById(R.id.lv_weather_list);
+        adapter = new WeatherListAdapter(getActivity(), R.layout.item_weather_list, R.id.tv_item, mItem);
+        lsView.setAdapter(adapter);
+
+        lsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onClickWeather(position);
+            }
+        });
     }
 
     @Override
@@ -105,7 +119,6 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         Intent in = new Intent(getActivity(), DetailActivity.class);
         in.putExtra(Intent.EXTRA_TEXT, adapter.getItem(position).toString());
         startActivity(in);
-
     }
 
     //method to initiate
@@ -120,8 +133,8 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     //Provide value of setting meu
     private String[] getSavedKeys() {
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String unit = s.getString(getString(R.string.pref_keys_list), "metric");
-        String zip = s.getString(getString(R.string.pref_keys_edit), "94043");
+        String unit = s.getString(getString(R.string.pref_keys_unit_type), getString(R.string.pref_unit_metric));
+        String zip = s.getString(getString(R.string.pref_keys_zip_code), getString(R.string.pref_city_zip));
 
         return new String[]{unit, zip};
     }
@@ -138,7 +151,8 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         @Override
         protected List<String> doInBackground(String... params) {
 
-            String unit = params[0];
+            //By default we are going to call only metric and do conversion here as per need
+            String unit = getString(R.string.pref_unit_metric);//params[0];
             String zip = params[1];
             String mode = "json";
             int days = 7;
@@ -154,15 +168,21 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
                 L.lToast(getContext(), s.toString());
 
             mItem = new ArrayList<>();
+            adapter.clear();
 
             int count = 1;
             for (String temp : s) {
                 mItem.add(new Item(count++, temp));
             }
-            if (mItem.size() > 0 && adapter!=null) {
-                adapter.setLsItem(mItem);
-                adapter.notifyDataSetChanged();
-            }
+
+            // Array adapter automatically call notify dataset changes so need to call
+            //notify dataset changes.
+            adapter.addAll(mItem);
+
+//            if (mItem.size() > 0 && adapter != null) {
+//                adapter.setLsItem(mItem);
+//                //adapter.notifyDataSetChanged();
+//            }
 
             super.onPostExecute(s);
         }

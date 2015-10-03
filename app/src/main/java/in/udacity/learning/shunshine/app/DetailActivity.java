@@ -1,6 +1,7 @@
 package in.udacity.learning.shunshine.app;
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import in.udacity.learning.constant.AppConstant;
 
 public class DetailActivity extends AppCompatActivity {
-
+    private PlaceholderFragment placeholderFragment;
     private Toolbar mToolbar;
     private String weatherRep;
 
@@ -40,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle b = new Bundle();
             b.putString(Intent.EXTRA_TEXT, weatherRep);
-            PlaceholderFragment placeholderFragment = new PlaceholderFragment();
+            placeholderFragment = new PlaceholderFragment();
             placeholderFragment.setArguments(b);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, placeholderFragment)
@@ -48,6 +49,17 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putString("Key", placeholderFragment.value);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        placeholderFragment.value = savedInstanceState.getString("Key");
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -75,11 +87,11 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             inflater.inflate(R.menu.menu_detail, menu);
-            MenuItem item = menu.findItem(R.id.action_item_share);
+            MenuItem item = menu.findItem(R.id.action_share);
             ShareActionProvider shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 
             if (shareActionProvider != null) {
-                shareActionProvider.setShareIntent(createShareForeCast());
+                shareActionProvider.setShareIntent(createShareForeCast(value));
             }
         }
 
@@ -91,20 +103,18 @@ public class DetailActivity extends AppCompatActivity {
             int id = item.getItemId();
 
             //noinspection SimplifiableIfStatement
-            if (id == R.id.action_item_share) {
-                Intent in = createShareForeCast();
+            if (id == R.id.action_share) {
+                Intent in = createShareForeCast(value);
                 startActivity(in);
             } else if (id == R.id.action_settings) {
                 Intent in = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(in);
-                return true;
             }
-
 
             return super.onOptionsItemSelected(item);
         }
 
-        private Intent createShareForeCast() {
+        private Intent createShareForeCast(String value) {
             Intent in = new Intent(Intent.ACTION_SEND);
             in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             in.putExtra(Intent.EXTRA_TEXT, value);

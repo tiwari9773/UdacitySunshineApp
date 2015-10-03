@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import in.udacity.learning.fragment.SettingsFragment;
+import in.udacity.learning.shunshine.app.fragment.SettingsFragment;
 
 /**
  * Created by Lokesh on 06-09-2015.
