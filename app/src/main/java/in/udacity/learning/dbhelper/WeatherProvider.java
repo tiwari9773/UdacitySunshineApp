@@ -42,7 +42,7 @@ public class WeatherProvider extends ContentProvider {
                 WeatherContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
                         WeatherContract.LocationEntry.TABLE_NAME +
                         " ON " + WeatherContract.WeatherEntry.TABLE_NAME +
-                        "." + WeatherContract.WeatherEntry.LOCATION_KEY +
+                        "." + WeatherContract.WeatherEntry.LOCATION_ID +
                         " = " + WeatherContract.LocationEntry.TABLE_NAME +
                         "." + WeatherContract.LocationEntry._ID);
     }
@@ -65,6 +65,7 @@ public class WeatherProvider extends ContentProvider {
                     WeatherContract.WeatherEntry.DATE + " = ? ";
 
     private Cursor getWeatherByLocationSetting(Uri uri, String[] projection, String sortOrder) {
+
         String locationSetting = WeatherContract.WeatherEntry.getLocationSettingFromUri(uri);
         long startDate = WeatherContract.WeatherEntry.getStartDateFromUri(uri);
 
@@ -72,8 +73,8 @@ public class WeatherProvider extends ContentProvider {
         String selection;
 
         if (startDate == 0) {
-            selection = sLocationSettingSelection;
             selectionArgs = new String[]{locationSetting};
+            selection = sLocationSettingSelection;
         } else {
             selectionArgs = new String[]{locationSetting, Long.toString(startDate)};
             selection = sLocationSettingWithStartDateSelection;
@@ -89,8 +90,8 @@ public class WeatherProvider extends ContentProvider {
         );
     }
 
-    private Cursor getWeatherByLocationSettingAndDate(
-            Uri uri, String[] projection, String sortOrder) {
+    private Cursor getWeatherByLocationSettingAndDate(Uri uri, String[] projection, String sortOrder) {
+
         String locationSetting = WeatherContract.WeatherEntry.getLocationSettingFromUri(uri);
         long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
 
@@ -122,7 +123,7 @@ public class WeatherProvider extends ContentProvider {
             case WEATHER:
                 return WeatherContract.WeatherEntry.CONTENT_TYPE;
             case LOCATION:
-                return WeatherContract.WeatherEntry.CONTENT_TYPE;
+                return WeatherContract.LocationEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }

@@ -19,17 +19,17 @@ public class TestDb extends AndroidTestCase {
 
     String TAG = TestDb.class.getName();
 
-    // Since we want each test to start with a clean slate
-    void deleteTheDatabase() {
-        mContext.deleteDatabase(DBHelper.DATABASE_NAME);
-    }
-
     /*
        This function gets called before each test is executed to delete the database.  This makes
        sure that we always have a clean test.
     */
     public void setUp() {
         deleteTheDatabase();
+    }
+
+    // Since we want each test to start with a clean slate
+    void deleteTheDatabase() {
+        mContext.deleteDatabase(DBHelper.DATABASE_NAME);
     }
 
     public void testCreateDb() throws Throwable {
@@ -40,13 +40,14 @@ public class TestDb extends AndroidTestCase {
         tableNameHashSet.add(WeatherContract.LocationEntry.TABLE_NAME);
         tableNameHashSet.add(WeatherContract.WeatherEntry.TABLE_NAME);
 
+        //If independently we are calling this method then this method will work to clean database
         mContext.deleteDatabase(DBHelper.DATABASE_NAME);
+
         SQLiteDatabase db = new DBHelper(this.mContext).getWritableDatabase();
         assertEquals(true, db.isOpen());
 
         // have we created the tables we want?
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-
         assertTrue("Error: This means that the database has not been created correctly",
                 c.moveToFirst());
 
@@ -62,11 +63,8 @@ public class TestDb extends AndroidTestCase {
                 tableNameHashSet.isEmpty());
 
         // now, do our tables contain the correct columns?
-        c = db.rawQuery("PRAGMA table_info(" + WeatherContract.LocationEntry.TABLE_NAME + ")",
-                null);
-
-        assertTrue("Error: This means that we were unable to query the database for table information.",
-                c.moveToFirst());
+        c = db.rawQuery("PRAGMA table_info(" + WeatherContract.LocationEntry.TABLE_NAME + ")", null);
+        assertTrue("Error: This means that we were unable to query the database for table information.",c.moveToFirst());
 
         // Build a HashSet of all of the column names we want to look for
         final HashSet<String> locationColumnHashSet = new HashSet<String>();
@@ -141,12 +139,10 @@ public class TestDb extends AndroidTestCase {
 
 
         // Fifth Step: Validate the location Query
-        TestUtilities.validateCurrentRecord("testInsertReadDb weatherEntry failed to validate",
-                weatherCursor, weatherValues);
+        TestUtilities.validateCurrentRecord("testInsertReadDb weatherEntry failed to validate",weatherCursor, weatherValues);
 
         // Move the cursor to demonstrate that there is only one record in the database
-        assertFalse("Error: More than one record returned from weather query",
-                weatherCursor.moveToNext());
+        assertFalse("Error: More than one record returned from weather query",weatherCursor.moveToNext());
 
         // Sixth Step: Close cursor and database
         weatherCursor.close();
@@ -158,7 +154,6 @@ public class TestDb extends AndroidTestCase {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = TestUtilities.createNorthPoleLocationValues();
-
         long locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, contentValues);
 
         // Verify we got a row back.
@@ -186,12 +181,10 @@ public class TestDb extends AndroidTestCase {
         // Fifth Step: Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
-        TestUtilities.validateCurrentRecord("Error: Location Query Validation Failed",
-                cursor, contentValues);
+        TestUtilities.validateCurrentRecord("Error: Location Query Validation Failed",cursor, contentValues);
 
         // Move the cursor to demonstrate that there is only one record in the database
-        assertFalse("Error: More than one record returned from location query",
-                cursor.moveToNext());
+        assertFalse("Error: More than one record returned from location query", cursor.moveToNext());
 
         // Sixth Step: Close Cursor and Database
         cursor.close();

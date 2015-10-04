@@ -49,10 +49,8 @@ public final class WeatherContract {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOCATION).build();
 
-        public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
 
 
         public static String TABLE_NAME = "location";
@@ -86,7 +84,7 @@ public final class WeatherContract {
         public static final String CONTENT_ITEM_BASE_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
 
         public static String TABLE_NAME = "weather";
-        public static String LOCATION_KEY = "location_id";
+        public static String LOCATION_ID = "location_id";
         public static String DATE = "date";
         public static String SHORT_DESC = "short_desc";
         public static String WEATHER_ID = "weather_id";
@@ -102,7 +100,7 @@ public final class WeatherContract {
         public static final String SQL_CREATE = T.CREATE_TABLE + TABLE_NAME
                 + T.OPEN_BRACE
                 + _ID + T.TYPE_INTEGER + T.PRIMARY_KEY + T.AUTO_INCREMENT + T.SEP_COMMA
-                + LOCATION_KEY + T.TYPE_INTEGER + T.NOT_NULL + T.SEP_COMMA
+                + LOCATION_ID + T.TYPE_INTEGER + T.NOT_NULL + T.SEP_COMMA
                 + DATE + T.TYPE_INTEGER + T.NOT_NULL + T.SEP_COMMA
                 + SHORT_DESC + T.TYPE_TEXT + T.NOT_NULL + T.SEP_COMMA
                 + WEATHER_ID + T.TYPE_INTEGER + T.NOT_NULL + T.SEP_COMMA
@@ -116,9 +114,9 @@ public final class WeatherContract {
                 + DEGREES + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
 
                 + T.FOREIGN_KEY
-                + T.OPEN_BRACE + LOCATION_KEY + T.CLOSE_BRACE + T.REFERENCES
+                + T.OPEN_BRACE + LOCATION_ID + T.CLOSE_BRACE + T.REFERENCES
                 + LocationEntry.TABLE_NAME + T.OPEN_BRACE + LocationEntry._ID + T.CLOSE_BRACE + T.SEP_COMMA
-                + T.UNIQUE + T.OPEN_BRACE + DATE + T.SEP_COMMA + LOCATION_KEY + T.CLOSE_BRACE + T.ON_CONFLICT_REPLACE
+                + T.UNIQUE + T.OPEN_BRACE + DATE + T.SEP_COMMA + LOCATION_ID + T.CLOSE_BRACE + T.ON_CONFLICT_REPLACE
                 + T.CLOSE_BRACE + T.SEMICOLON;
 
         public static final String SQL_DROP = T.DROP_TABLE + TABLE_NAME;

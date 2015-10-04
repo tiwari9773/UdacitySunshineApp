@@ -60,7 +60,7 @@ public class TestUtilities extends AndroidTestCase {
         testValues.put(WeatherContract.LocationEntry.LOCATION_SETTING, TEST_LOCATION);
         testValues.put(WeatherContract.LocationEntry.CITY_NAME, "North Pole");
         testValues.put(WeatherContract.LocationEntry.CORD_LAT, 64.7488);
-        testValues.put(WeatherContract.LocationEntry.CORD_LONG, 147.353);
+        testValues.put(WeatherContract.LocationEntry.CORD_LONG, -147.353);
 
         return testValues;
     }
@@ -78,7 +78,7 @@ public class TestUtilities extends AndroidTestCase {
         testValues.put(WeatherContract.WeatherEntry.MAX, 75);
         testValues.put(WeatherContract.WeatherEntry.HUMADITY, 1.2);
         testValues.put(WeatherContract.WeatherEntry.PRESSURE, 1.2);
-        testValues.put(WeatherContract.WeatherEntry.LOCATION_KEY, locationRowId);
+        testValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationRowId);
         testValues.put(WeatherContract.WeatherEntry.DEGREES, 1.1);
         testValues.put(WeatherContract.WeatherEntry.SHORT_DESC, "Asteroids");
         testValues.put(WeatherContract.WeatherEntry.WIND_SPEED, 5.5);

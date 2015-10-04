@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.udacity.learning.constant.AppConstant;
 
@@ -47,18 +48,6 @@ public class DetailActivity extends AppCompatActivity {
                     .add(R.id.container, placeholderFragment)
                     .commit();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        outState.putString("Key", placeholderFragment.value);
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        placeholderFragment.value = savedInstanceState.getString("Key");
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     /**
