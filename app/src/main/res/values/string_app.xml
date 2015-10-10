@@ -21,7 +21,7 @@
     </string-array>
 
     <string name="pref_title_zip_code" translatable="false">Location</string>
-    <string name="pref_city_zip" translatable="false">1275339</string>
+    <string name="pref_city_zip" translatable="false">94043</string>
 
     <string name="pref_keys_unit_type" translatable="false">pref_unit_type</string>
     <string name="pref_keys_zip_code" translatable="false">pref_zip_code</string>

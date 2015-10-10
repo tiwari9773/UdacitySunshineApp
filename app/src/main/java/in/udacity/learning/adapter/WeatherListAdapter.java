@@ -27,6 +27,7 @@ public class WeatherListAdapter extends ArrayAdapter {
         super(context, resource, textViewResourceId, objects);
         lsItem = objects;
         this.context = context;
+
     }
 
 

@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import in.udacity.learning.constant.AppConstant;
+import in.udacity.learning.keys.Keys;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.shunshine.app.MyApplication;
 
@@ -34,7 +35,7 @@ public class HttpURLConnectionWebService {
         this.zip = zip.length() > 0 ? zip : defaultZip;
     }
 
-    public String getJSON(String TAG) {
+    public String getWeatherJSON(String TAG) {
         HttpURLConnection httpURLConnection = null;
         BufferedReader bufferedReader = null;
          /* Take an URL Object*/
@@ -44,7 +45,9 @@ public class HttpURLConnectionWebService {
                     .appendQueryParameter(WebServiceURL.QUERY, zip)
                     .appendQueryParameter(WebServiceURL.MODE, mode)
                     .appendQueryParameter(WebServiceURL.UNIT, unit)
-                    .appendQueryParameter(WebServiceURL.DAYS, Integer.toString(days)).build();
+                    .appendQueryParameter(WebServiceURL.DAYS, Integer.toString(days))
+                    .appendQueryParameter(WebServiceURL.KEYS, Keys.weatherApiKeys).build();
+
             URL url = new URL(builtUri.toString());
 
                 /* */

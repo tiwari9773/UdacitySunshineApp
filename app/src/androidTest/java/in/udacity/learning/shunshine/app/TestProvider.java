@@ -275,8 +275,7 @@ public class TestProvider extends AndroidTestCase {
 
         mContext.getContentResolver().registerContentObserver(WeatherContract.WeatherEntry.CONTENT_URI, true, tco);
 
-        Uri weatherInsertUri = mContext.getContentResolver()
-                .insert(WeatherContract.WeatherEntry.CONTENT_URI, weatherValues);
+        Uri weatherInsertUri = mContext.getContentResolver().insert(WeatherContract.WeatherEntry.CONTENT_URI, weatherValues);
         assertTrue(weatherInsertUri != null);
 
         // Did our content observer get called?  Students:  If this fails, your insert weather

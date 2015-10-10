@@ -10,6 +10,8 @@ public class WebServiceURL {
     public static String UNIT = "units";
     public static String DAYS = "cnt";
     public static String MODE = "mode";
+    public static String KEYS = "appid";
+
     //public static String MODE = "mode";
 
 }
