@@ -1,18 +1,15 @@
 package in.udacity.learning.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
-import in.udacity.learning.framework.OnWeatherItemClickListener;
-import in.udacity.learning.model.Item;
+import in.udacity.learning.model.WeatherAttribute;
 import in.udacity.learning.shunshine.app.R;
 
 /**
@@ -20,14 +17,13 @@ import in.udacity.learning.shunshine.app.R;
  */
 public class WeatherListAdapter extends ArrayAdapter {
 
-    private List<Item> lsItem;
+    private List<String> lsItem;
     private Context context;
 
     public WeatherListAdapter(Context context, int resource, int textViewResourceId, List objects) {
         super(context, resource, textViewResourceId, objects);
         lsItem = objects;
         this.context = context;
-
     }
 
 
@@ -60,12 +56,12 @@ public class WeatherListAdapter extends ArrayAdapter {
             weatherViewHolder = (ViewHolder) convertView.getTag();
         }
 
-        weatherViewHolder.tv.setText(lsItem.get(position).getName());
+        weatherViewHolder.tv.setText(lsItem.get(position));
 
         return convertView;
     }
 
-    public void setLsItem(List<Item> lsItem) {
+    public void setLsItem(List<String> lsItem) {
         this.lsItem = lsItem;
     }
 

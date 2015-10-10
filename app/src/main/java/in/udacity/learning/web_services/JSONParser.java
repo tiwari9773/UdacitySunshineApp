@@ -62,7 +62,6 @@ public class JSONParser {
                 JSONArray jsonAr = origArray.getJSONArray(WebServiceParsingKeys.weatherKeys.WEATHER);
 
                 JSONObject weatherJSON = jsonAr.getJSONObject(0);
-                String main = weatherJSON.getString(WebServiceParsingKeys.weatherKeys.MAIN);
                 String weather_id = weatherJSON.getString(WebServiceParsingKeys.weatherKeys.WEATHER_ID);
                 String description = weatherJSON.getString(WebServiceParsingKeys.weatherKeys.DESC);
 

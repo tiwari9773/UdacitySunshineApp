@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class WeatherRecycleViewAdapter extends RecyclerView.Adapter<WeatherViewH
 
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
-        holder.tv.setText(getItem(position).getName());
+       // holder.tv.setText(getItem(position).getName());
     }
 
     @Override

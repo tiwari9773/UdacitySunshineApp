@@ -22,7 +22,6 @@ import java.util.List;
 import in.udacity.learning.adapter.WeatherListAdapter;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
-import in.udacity.learning.model.Item;
 import in.udacity.learning.network.NetWorkInfoUtility;
 import in.udacity.learning.shunshine.app.DetailActivity;
 import in.udacity.learning.shunshine.app.R;
@@ -37,7 +36,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     /*adapter which holds values*/
     //private WeatherRecycleViewAdapter adapter;
     private WeatherListAdapter mForecastAdapter;
-    private List<Item> mItem = new ArrayList<>();
+    private List<String> mItem = new ArrayList<>();
 
     public ForcastFragment() {
         setHasOptionsMenu(true);
@@ -84,7 +83,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     @Override
     public void onStart() {
         super.onStart();
-       // updateWeatherApp();
+        updateWeatherApp();
     }
 
     public void initialize(View view) {

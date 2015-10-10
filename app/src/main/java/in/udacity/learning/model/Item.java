@@ -1,5 +1,4 @@
 package in.udacity.learning.model;
-
 /**
  * Created by Lokesh on 05-09-2015.
  */

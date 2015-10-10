@@ -1,7 +1,5 @@
 package in.udacity.learning.framework;
 
-import in.udacity.learning.model.Item;
-
 /**
  * Created by Lokesh on 06-09-2015.
  */

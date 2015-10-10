@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -33,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.dbhelper.WeatherProvider;
 import in.udacity.learning.model.LocationAttribute;
@@ -42,23 +44,28 @@ import in.udacity.learning.shunshine.app.R;
 
 public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
-    private final String LOG = FetchWeatherTask.class.getSimpleName();
+    private final String TAG = FetchWeatherTask.class.getSimpleName();
     private ArrayAdapter<String> mForecastAdapter;
     private final Context mContext;
-
-    private static int coutn = 0;
 
     public FetchWeatherTask(Context context, ArrayAdapter<String> forecastAdapter) {
         mContext = context;
         mForecastAdapter = forecastAdapter;
     }
 
-    private boolean DEBUG = true;
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
 
+        if (AppConstant.DEBUG)
+            Log.d(TAG, "onPreExecute 1");
+    }
 
     @Override
     protected String[] doInBackground(String... params) {
 
+        if (AppConstant.DEBUG)
+            Log.d(TAG, "doInBackground 2");
         // If there's no zip code, there's nothing to look up.  Verify size of params.
         if (params.length == 0) {
             return null;
@@ -71,9 +78,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         String mode = "json";
         int days = 14;
 
-        String jSonString = new HttpURLConnectionWebService(mode, unit, days, locationQuery).getWeatherJSON(LOG);
+        String jSonString = new HttpURLConnectionWebService(mode, unit, days, locationQuery).getWeatherJSON(TAG);
         if (jSonString != null) {
-            return getWeatherDataFromJson(jSonString, locationQuery);
+            String s[] = getWeatherDataFromJson(jSonString, locationQuery);
+            return s;
         }
 
         // This will only happen if there was an error getting or parsing the forecast.
@@ -82,6 +90,9 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
     @Override
     protected void onPostExecute(String[] result) {
+        if (AppConstant.DEBUG)
+            Log.d(TAG, "onPostExecute 3");
+
         if (result != null && mForecastAdapter != null) {
             mForecastAdapter.clear();
             for (String dayForecastStr : result) {
@@ -110,75 +121,85 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
             // Insert the new weather information into the database
             Vector<ContentValues> cVVector = new Vector<ContentValues>(lsWeather.size());
-//
-//            // OWM returns daily forecasts based upon the local time of the city that is being
-//            // asked for, which means that we need to know the GMT offset to translate this data
-//            // properly.
-//
-//            // Since this data is also sent in-order and the first day is always the
-//            // current day, we're going to take advantage of that to get a nice
-//            // normalized UTC date for all of our weather.
-//
-//            Time dayTime = new Time();
-//            dayTime.setToNow();
-//
-//            // we start at the day returned by local time. Otherwise this is a mess.
-//            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
-//
-//            // now we work exclusively in UTC
-//            dayTime = new Time();
-//
-//            for (int i = 0; i < lsWeather.size(); i++) {
-//                // These are the values that will be collected.
-//
-//                WeatherAttribute wa = lsWeather.get(i);
-//                ContentValues weatherValues = new ContentValues();
-//
-//                weatherValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationId);
-//                weatherValues.put(WeatherContract.WeatherEntry.DATE, wa.getWeatherDate());
-//                weatherValues.put(WeatherContract.WeatherEntry.HUMADITY, wa.getHumidity());
-//                weatherValues.put(WeatherContract.WeatherEntry.PRESSURE, wa.getPressure());
-//                weatherValues.put(WeatherContract.WeatherEntry.WIND_SPEED, wa.getWindSpeed());
-//                weatherValues.put(WeatherContract.WeatherEntry.DEGREES, wa.getDegree());
-//                weatherValues.put(WeatherContract.WeatherEntry.MAX, wa.getMax());
-//                weatherValues.put(WeatherContract.WeatherEntry.MIN, wa.getMin());
-//                weatherValues.put(WeatherContract.WeatherEntry.SHORT_DESC, wa.getDescription());
-//                weatherValues.put(WeatherContract.WeatherEntry.WEATHER_ID, wa.getWeather_id());
-//
-//                cVVector.add(weatherValues);
-//            }
-//
-//            // add to database
-//            if (cVVector.size() > 0) {
-//                // Student: call bulkInsert to add the weatherEntries to the database here
-//            }
-//
-//            // Sort order:  Ascending, by date.
-//            String sortOrder = WeatherContract.WeatherEntry.DATE + " ASC";
-//            Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-//                    locationSetting, System.currentTimeMillis());
 
-            // Students: Uncomment the next lines to display what what you stored in the bulkInsert
+            // OWM returns daily forecasts based upon the local time of the city that is being
+            // asked for, which means that we need to know the GMT offset to translate this data
+            // properly.
 
-//            Cursor cur = mContext.getContentResolver().query(weatherForLocationUri,
-//                    null, null, null, sortOrder);
-//
-//            cVVector = new Vector<ContentValues>(cur.getCount());
-//            if ( cur.moveToFirst() ) {
-//                do {
-//                    ContentValues cv = new ContentValues();
-//                    DatabaseUtils.cursorRowToContentValues(cur, cv);
-//                    cVVector.add(cv);
-//                } while (cur.moveToNext());
-//            }
+            // Since this data is also sent in-order and the first day is always the
+            // current day, we're going to take advantage of that to get a nice
+            // normalized UTC date for all of our weather.
 
-            Log.d(LOG, "FetchWeatherTask Complete. " + cVVector.size() + " Inserted");
+            Time dayTime = new Time();
+            dayTime.setToNow();
+
+            // we start at the day returned by local time. Otherwise this is a mess.
+            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
+
+            // now we work exclusively in UTC
+            dayTime = new Time();
+
+            for (int i = 0; i < lsWeather.size(); i++) {
+
+                // Cheating to convert this to UTC time, which is what we want anyhow
+                long dateTime = dayTime.setJulianDay(julianStartDay + i);
+
+                // These are the values that will be collected.
+
+                WeatherAttribute wa = lsWeather.get(i);
+                ContentValues weatherValues = new ContentValues();
+
+                weatherValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationId);
+                weatherValues.put(WeatherContract.WeatherEntry.DATE, dateTime);
+                weatherValues.put(WeatherContract.WeatherEntry.HUMADITY, wa.getHumidity());
+                weatherValues.put(WeatherContract.WeatherEntry.PRESSURE, wa.getPressure());
+                weatherValues.put(WeatherContract.WeatherEntry.WIND_SPEED, wa.getWindSpeed());
+                weatherValues.put(WeatherContract.WeatherEntry.DEGREES, wa.getDegree());
+                weatherValues.put(WeatherContract.WeatherEntry.MAX, wa.getMax());
+                weatherValues.put(WeatherContract.WeatherEntry.MIN, wa.getMin());
+                weatherValues.put(WeatherContract.WeatherEntry.SHORT_DESC, wa.getDescription());
+                weatherValues.put(WeatherContract.WeatherEntry.WEATHER_ID, wa.getWeather_id());
+
+                cVVector.add(weatherValues);
+            }
+
+            // add to database
+            if (cVVector.size() > 0) {
+                ContentValues[] cv = new ContentValues[cVVector.size()];
+                cVVector.toArray(cv);
+                mContext.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cv);
+            }
+
+            // Sort order:  Ascending, by date.
+            String sortOrder = WeatherContract.WeatherEntry.DATE + " ASC";
+            Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                    locationSetting, System.currentTimeMillis());
+
+            // Uncomment the next lines to display what what you stored in the bulkInsert
+
+            Cursor cur = mContext.getContentResolver().query(WeatherContract.WeatherEntry.CONTENT_URI,
+                    null, null, null, sortOrder);
+
+            cVVector = new Vector<ContentValues>(cur.getCount());
+            if (cur.moveToFirst()) {
+                do {
+                    ContentValues cv = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cur, cv);
+                    cVVector.add(cv);
+                } while (cur.moveToNext());
+            }
+
+            if (AppConstant.DEBUG)
+                Log.d(TAG, "FetchWeatherTask Complete. " + cVVector.size() + " Inserted");
 
             String[] resultStrs = convertContentValuesToUXFormat(cVVector);
+
+            if (AppConstant.DEBUG)
+                Log.d(TAG, "getWeatherDataFromJson " + resultStrs.length);
             return resultStrs;
 
         } catch (Exception e) {
-            Log.e(LOG, e.getMessage(), e);
+            Log.e(TAG, e.getMessage(), e);
             e.printStackTrace();
         }
         return null;
@@ -205,8 +226,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         cv.put(WeatherContract.LocationEntry.CORD_LONG, lon);
         cv.put(WeatherContract.LocationEntry.LOCATION_SETTING, locationSetting);
 
-        coutn++;
-       // Toast.makeText(mContext, coutn + "", Toast.LENGTH_SHORT).show();
         Cursor c = mContext.getContentResolver().query(WeatherContract.LocationEntry.CONTENT_URI, new String[]{WeatherContract.LocationEntry._ID}, WeatherContract.LocationEntry.LOCATION_SETTING + "= ? ", new String[]{locationSetting}, null);
 
         if (!c.moveToFirst()) {
@@ -249,7 +268,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             high = (high * 1.8) + 32;
             low = (low * 1.8) + 32;
         } else if (!unitType.equals(mContext.getString(R.string.pref_unit_metric))) {
-            Log.d(LOG, "Unit type not found: " + unitType);
+            Log.d(TAG, "Unit type not found: " + unitType);
         }
 
         // For presentation, assume the user doesn't care about tenths of a degree.
