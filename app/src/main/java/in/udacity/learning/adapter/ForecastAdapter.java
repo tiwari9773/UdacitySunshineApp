@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.shunshine.app.fragment.ForcastFragment;
 import in.udacity.learning.utility.Utility;
 
 
@@ -39,18 +40,13 @@ public class ForecastAdapter extends CursorAdapter {
         string.
      */
     private String convertCursorRowToUXFormat(Cursor cursor) {
-        // get row indices for our cursor
-        int idx_max_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.MAX);
-        int idx_min_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.MIN);
-        int idx_date = cursor.getColumnIndex(WeatherContract.WeatherEntry.DATE);
-        int idx_short_desc = cursor.getColumnIndex(WeatherContract.WeatherEntry.SHORT_DESC);
 
         String highAndLow = formatHighLows(
-                cursor.getDouble(idx_max_temp),
-                cursor.getDouble(idx_min_temp));
+                cursor.getDouble(ForcastFragment.COL_WEATHER_MAX_TEMP),
+                cursor.getDouble(ForcastFragment.COL_WEATHER_MIN_TEMP));
 
-        return Utility.formatDate(cursor.getLong(idx_date)) +
-                " - " + cursor.getString(idx_short_desc) +
+        return Utility.formatDate(cursor.getLong(ForcastFragment.COL_WEATHER_DATE)) +
+                " - " + cursor.getString(ForcastFragment.COL_WEATHER_DESC) +
                 " - " + highAndLow;
     }
 

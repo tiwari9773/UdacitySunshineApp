@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.udacity.learning.adapter.ForecastAdapter;
-import in.udacity.learning.adapter.WeatherListAdapter;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
@@ -37,22 +39,57 @@ import in.udacity.learning.web_services.FetchWeatherTask;
 /**
  * Created by Lokesh on 05-09-2015.
  */
-public class ForcastFragment extends Fragment implements OnWeatherItemClickListener {
+public class ForcastFragment extends Fragment implements OnWeatherItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private final String TAG = ForcastFragment.class.getName();
-    /*adapter which holds values*/
+
+    // For the forecast view we're showing only a small subset of the stored data.
+    // Specify the columns we need.
+    private static final String[] FORECAST_COLUMNS = {
+            // In this case the id needs to be fully qualified with a table name, since
+            // the content provider joins the location & weather tables in the background
+            // (both have an _id column)
+            // On the one hand, that's annoying.  On the other, you can search the weather table
+            // using the location set by the user, which is only in the Location table.
+            // So the convenience is worth it.
+            WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
+            WeatherContract.WeatherEntry.DATE,
+            WeatherContract.WeatherEntry.SHORT_DESC,
+            WeatherContract.WeatherEntry.MAX,
+            WeatherContract.WeatherEntry.MIN,
+            WeatherContract.LocationEntry.LOCATION_SETTING,
+            WeatherContract.WeatherEntry.WEATHER_ID,
+            WeatherContract.LocationEntry.CORD_LAT,
+            WeatherContract.LocationEntry.CORD_LONG
+    };
+
+    // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
+    // must change.
+    public static final int COL_WEATHER_ID = 0;
+    public static final int COL_WEATHER_DATE = 1;
+    public static final int COL_WEATHER_DESC = 2;
+    public static final int COL_WEATHER_MAX_TEMP = 3;
+    public static final int COL_WEATHER_MIN_TEMP = 4;
+    public static final int COL_LOCATION_SETTING = 5;
+    public static final int COL_WEATHER_CONDITION_ID = 6;
+    public static final int COL_COORD_LAT = 7;
+    public static final int COL_COORD_LONG = 8;
+
     //private WeatherRecycleViewAdapter adapter;
     private ForecastAdapter mForecastAdapter;
+
+    // Unique Loader Id for every loader we create
+    private static final int FORECAST_LOADER = 0;
     //private WeatherListAdapter mForecastAdapter;
     private List<String> mItem = new ArrayList<>();
 
     public ForcastFragment() {
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -104,23 +141,13 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
         ListView lsView = (ListView) view.findViewById(R.id.lv_weather_list);
 
-        String locationSetting = Utility.getPreferredLocation(getActivity());
-        // Sort order:  Ascending, by date.
-        String sortOrder = WeatherContract.WeatherEntry.DATE + " ASC";
-//        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-//               locationSetting, System.currentTimeMillis());
-
-        Uri weatherForLocationUri = WeatherContract.WeatherEntry.CONTENT_URI;
-
-        Cursor cur = getActivity().getContentResolver().query(weatherForLocationUri,
-                null, null, null, sortOrder);
 
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
-        cur.moveToFirst();
-        Log.d(TAG, "initialize "+cur.getCount());
-        mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
+
+//        mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
+        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         lsView.setAdapter(mForecastAdapter);
 
         lsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,6 +159,13 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(FORECAST_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+
+    @Override
     public void onClickWeather(int position) {
         Intent in = new Intent(getActivity(), DetailActivity.class);
         in.putExtra(Intent.EXTRA_TEXT, mForecastAdapter.getItem(position).toString());
@@ -140,13 +174,11 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
     //method to initiate
     private void updateWeatherApp() {
-        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity()))
-        {
+        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
             FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
             weatherTask.execute(getSavedKeys());
             //new FetchForcastData().execute(getSavedKeys());
-        }
-        else {
+        } else {
             L.lToast(getContext(), getString(R.string.msg_internet_status));
         }
     }
@@ -157,6 +189,36 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         String location_setting = s.getString(getString(R.string.pref_keys_zip_code), getString(R.string.pref_location_default));
         String unit = s.getString(getString(R.string.pref_keys_unit_type), getString(R.string.pref_unit_metric));
 
-        return new String[]{location_setting,unit};
+        return new String[]{location_setting, unit};
+    }
+
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        String locationSetting = Utility.getPreferredLocation(getActivity());
+
+        // Sort order:  Ascending, by date.
+        String sortOrder = WeatherContract.WeatherEntry.DATE + " ASC";
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
+                locationSetting, System.currentTimeMillis());
+
+
+        return new CursorLoader(getActivity(),
+                weatherForLocationUri,
+                FORECAST_COLUMNS,
+                null,
+                null,
+                sortOrder);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mForecastAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mForecastAdapter.swapCursor(null);
     }
 }

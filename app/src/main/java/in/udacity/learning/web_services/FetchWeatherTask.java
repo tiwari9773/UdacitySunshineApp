@@ -78,7 +78,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         try {
             LocationAttribute la = JSONParser.parseLocationForcast(forecastJsonStr);
 
-            long locationId = addLocation(la.getSetting(), la.getCityName(), Double.parseDouble(la.getLati())
+            long locationId = addLocation(locationSetting, la.getCityName(), Double.parseDouble(la.getLati())
                     , Double.parseDouble(la.getLongi()));
 
             List<WeatherAttribute> lsWeather = JSONParser.parseWeatherForcast(forecastJsonStr, locationId + "");
