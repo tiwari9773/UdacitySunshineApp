@@ -38,7 +38,12 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        weatherRep = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        Intent in = getIntent();
+        if(in!=null )
+        {
+            weatherRep = in.getDataString();
+        }
+
         if (savedInstanceState == null) {
             Bundle b = new Bundle();
             b.putString(Intent.EXTRA_TEXT, weatherRep);

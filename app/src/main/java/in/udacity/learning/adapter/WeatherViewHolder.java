@@ -26,6 +26,6 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        onWeatherItemClickListener.onClickWeather(getLayoutPosition());
+        //onWeatherItemClickListener.onClickWeather(getLayoutPosition());
     }
 }
