@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * If want change the database schema, you must increment the database version.
      */
     public static int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "weather2.sqlite";
+    public static final String DATABASE_NAME = "weather.db";
 
     private Context myContext;
 

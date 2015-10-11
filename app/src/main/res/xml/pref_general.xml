@@ -2,11 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:defaultValue="@string/pref_city_zip"
+        android:defaultValue="@string/pref_location_default"
         android:key="@string/pref_keys_zip_code"
         android:singleLine="true"
-        android:summary="@string/pref_city_zip"
-        android:title="@string/pref_title_zip_code" />
+        android:summary="@string/pref_location_default"
+        android:title="@string/pref_location_label" />
 
     <ListPreference
         android:defaultValue="@string/pref_unit_metric"

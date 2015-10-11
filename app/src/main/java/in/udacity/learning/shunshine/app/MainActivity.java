@@ -3,19 +3,31 @@ package in.udacity.learning.shunshine.app;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import in.udacity.learning.dbhelper.DBHelper;
 import in.udacity.learning.shunshine.app.fragment.ForcastFragment;
 import in.udacity.learning.logger.L;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initialize(savedInstanceState);
+
+        //Write database to inspect
+       writeDatabase();
     }
 
     @Override
@@ -52,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openPreferedMapLocation() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String location = sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        //String location = sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
 
         //Uri geoLocation = Uri.parse("geo:19.014410,72.847939?").buildUpon().appendQueryParameter("q",location).build();
         // Create a Uri from an intent string. Use the result to create an Intent.
@@ -92,4 +107,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void writeDatabase() {
+        String path = getApplicationInfo().dataDir + "/databases/" + DBHelper.DATABASE_NAME;
+        File dbFile = new File(path);
+
+        InputStream is = null;
+        OutputStream os = null;
+
+        try {
+            is = new FileInputStream(dbFile);
+
+            File writePath = new File("mnt/storage/test.db");
+            if(!writePath.exists())
+                writePath.createNewFile();
+            os = new FileOutputStream(writePath);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+            os.flush();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.d(TAG, "writeDatabase " + e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG, "writeDatabase " + e.toString());
+        } finally {
+            if (is != null)
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "writeDatabase " + e.toString());
+                }
+
+            if (os != null)
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "writeDatabase " + e.toString());
+                }
+        }
+
+
+    }
 }

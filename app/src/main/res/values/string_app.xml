@@ -6,11 +6,6 @@
 
     <string name="pref_heading" translatable="false">Sunshine Setting</string>
 
-    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_location_key" translatable="false">location</string>
-
-    <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
-    <string name="pref_location_default" translatable="false">1275339</string>
 
     <string name="pref_title_units" translatable="false">Temprature Unit</string>
     <string name="pref_unit_metric">metric</string>
@@ -20,8 +15,14 @@
         <item>imperial</item>
     </string-array>
 
-    <string name="pref_title_zip_code" translatable="false">Location</string>
-    <string name="pref_city_zip" translatable="false">94043</string>
+    <!-- Label for the location preference [CHAR LIMIT=30] -->
+    <string name="pref_location_label">Location</string>
+
+    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_location_key" translatable="false">location</string>
+
+    <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
+    <string name="pref_location_default" translatable="false">94043</string>
 
     <string name="pref_keys_unit_type" translatable="false">pref_unit_type</string>
     <string name="pref_keys_zip_code" translatable="false">pref_zip_code</string>
