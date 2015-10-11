@@ -45,7 +45,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
-    private static final String[] FORECAST_COLUMNS = {
+    public static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
             // the content provider joins the location & weather tables in the background
             // (both have an _id column)
@@ -153,7 +153,8 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         lsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onClickWeather(position);
+                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+                onClickWeather(cursor);
             }
         });
     }
@@ -166,11 +167,19 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
 
 
     @Override
-    public void onClickWeather(int position) {
-        Intent in = new Intent(getActivity(), DetailActivity.class);
-        in.putExtra(Intent.EXTRA_TEXT, mForecastAdapter.getItem(position).toString());
-        startActivity(in);
+    public void onClickWeather(Cursor cursor) {
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String locationSetting = Utility.getPreferredLocation(getActivity());
+            Intent intent = new Intent(getActivity(), DetailActivity.class)
+                    .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                            locationSetting, cursor.getLong(COL_WEATHER_DATE)
+                    ));
+            startActivity(intent);
+        }
     }
+
 
     //method to initiate
     private void updateWeatherApp() {
