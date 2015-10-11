@@ -108,7 +108,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         // Sort order:  Ascending, by date.
         String sortOrder = WeatherContract.WeatherEntry.DATE + " ASC";
 //        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-//                locationSetting, System.currentTimeMillis());
+//               locationSetting, System.currentTimeMillis());
 
         Uri weatherForLocationUri = WeatherContract.WeatherEntry.CONTENT_URI;
 
@@ -118,6 +118,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
+        cur.moveToFirst();
         Log.d(TAG, "initialize "+cur.getCount());
         mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
         lsView.setAdapter(mForecastAdapter);

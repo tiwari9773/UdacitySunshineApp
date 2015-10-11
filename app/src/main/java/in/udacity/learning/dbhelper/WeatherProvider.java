@@ -31,7 +31,7 @@ public class WeatherProvider extends ContentProvider {
         return uriMatcher;
     }
 
-    private static final SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
+    private static SQLiteQueryBuilder sWeatherByLocationSettingQueryBuilder;
 
     static{
         sWeatherByLocationSettingQueryBuilder = new SQLiteQueryBuilder();
@@ -56,7 +56,8 @@ public class WeatherProvider extends ContentProvider {
     private static final String sLocationSettingWithStartDateSelection =
             WeatherContract.LocationEntry.TABLE_NAME+
                     "." + WeatherContract.LocationEntry.LOCATION_SETTING + " = ? AND " +
-                    WeatherContract.WeatherEntry.DATE + " >= ? ";
+                    WeatherContract.LocationEntry.TABLE_NAME+
+                    "." +WeatherContract.WeatherEntry.DATE + " >= ? ";
 
     //location.location_setting = ? AND date = ?
     private static final String sLocationSettingAndDaySelection =
@@ -176,6 +177,7 @@ public class WeatherProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
+
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;
     }

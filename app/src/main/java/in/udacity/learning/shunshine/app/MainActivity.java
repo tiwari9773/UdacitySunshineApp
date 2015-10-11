@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             is = new FileInputStream(dbFile);
 
-            File writePath = new File("mnt/storage/test.db");
+            File writePath = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/test.sqlite");
             if(!writePath.exists())
                 writePath.createNewFile();
             os = new FileOutputStream(writePath);

@@ -26,7 +26,6 @@ public final class WeatherContract {
     // Possible paths (appended to base content URI for possible URI's)
     // For instance, content://com.example.android.sunshine.app/weather/ is a valid path for
     // looking at weather data.
-
     public static final String PATH_WEATHER = "weather";
     public static final String PATH_LOCATION = "location";
 
@@ -92,7 +91,7 @@ public final class WeatherContract {
         public static String MIN = "min";
         public static String MAX = "max";
 
-        public static String HUMADITY = "humadity";
+        public static String HUMIDITY = "humidity";
         public static String PRESSURE = "pressure";
         public static String WIND_SPEED = "wind_speed";
         public static String DEGREES = "degree";
@@ -108,7 +107,7 @@ public final class WeatherContract {
                 + MIN + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
                 + MAX + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
 
-                + HUMADITY + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
+                + HUMIDITY + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
                 + PRESSURE + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
                 + WIND_SPEED + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
                 + DEGREES + T.TYPE_REAL + T.NOT_NULL + T.SEP_COMMA
