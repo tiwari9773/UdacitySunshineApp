@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,9 +38,9 @@ import in.udacity.learning.web_services.FetchWeatherTask;
 /**
  * Created by Lokesh on 05-09-2015.
  */
-public class ForcastFragment extends Fragment implements OnWeatherItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class ForecastFragment extends Fragment implements OnWeatherItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
-    private final String TAG = ForcastFragment.class.getName();
+    private final String TAG = ForecastFragment.class.getName();
 
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -83,7 +82,7 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
     //private WeatherListAdapter mForecastAdapter;
     private List<String> mItem = new ArrayList<>();
 
-    public ForcastFragment() {
+    public ForecastFragment() {
     }
 
     @Override
@@ -125,10 +124,10 @@ public class ForcastFragment extends Fragment implements OnWeatherItemClickListe
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    public void onLocationChange()
+    {
         updateWeatherApp();
+        getLoaderManager().restartLoader(FORECAST_LOADER,null,this);
     }
 
     public void initialize(View view) {

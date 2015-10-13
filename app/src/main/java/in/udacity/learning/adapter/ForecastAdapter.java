@@ -6,12 +6,10 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.shunshine.app.R;
-import in.udacity.learning.shunshine.app.fragment.ForcastFragment;
+import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.utility.Utility;
 
 
@@ -42,11 +40,11 @@ public class ForecastAdapter extends CursorAdapter {
     private String convertCursorRowToUXFormat(Cursor cursor) {
 
         String highAndLow = formatHighLows(
-                cursor.getDouble(ForcastFragment.COL_WEATHER_MAX_TEMP),
-                cursor.getDouble(ForcastFragment.COL_WEATHER_MIN_TEMP));
+                cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP),
+                cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP));
 
-        return Utility.formatDate(cursor.getLong(ForcastFragment.COL_WEATHER_DATE)) +
-                " - " + cursor.getString(ForcastFragment.COL_WEATHER_DESC) +
+        return Utility.formatDate(cursor.getLong(ForecastFragment.COL_WEATHER_DATE)) +
+                " - " + cursor.getString(ForecastFragment.COL_WEATHER_DESC) +
                 " - " + highAndLow;
     }
 

@@ -21,23 +21,30 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import in.udacity.learning.dbhelper.DBHelper;
-import in.udacity.learning.shunshine.app.fragment.ForcastFragment;
+import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.logger.L;
+import in.udacity.learning.utility.Utility;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private final String TAG = MainActivity.class.getName();
 
+    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+    private String mLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mLocation = Utility.getPreferredLocation(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initialize(savedInstanceState);
 
         //Write database to inspect
-       writeDatabase();
+        writeDatabase();
     }
 
     @Override
@@ -101,9 +108,24 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, new ForcastFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frag_container
+                    , new ForecastFragment(), FORECASTFRAGMENT_TAG).commit();
         } else {
             L.lToast(getBaseContext(), "Test");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String location = Utility.getPreferredLocation(this);
+
+        if (location != null && !location.equals(mLocation)) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if (ff != null) {
+                ff.onLocationChange();
+            }
+            mLocation = location;
         }
     }
 
@@ -117,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             is = new FileInputStream(dbFile);
 
-            File writePath = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/test.sqlite");
-            if(!writePath.exists())
+            File writePath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.sqlite");
+            if (!writePath.exists())
                 writePath.createNewFile();
             os = new FileOutputStream(writePath);
 
