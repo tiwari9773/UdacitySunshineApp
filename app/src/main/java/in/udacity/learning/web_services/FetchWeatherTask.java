@@ -43,7 +43,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
         if (AppConstant.DEBUG)
             Log.d(TAG, "doInBackground 2");
-        // If there's no zip code, there's nothing to look up.  Verify size of params.
+        // If there's no location_setting code, there's nothing to look up.  Verify size of params.
         if (params.length == 0) {
             return null;
         }

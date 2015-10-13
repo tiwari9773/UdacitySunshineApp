@@ -94,7 +94,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //If I will remove this "Refresh" menu is apearing twice
-        //menu.clear();
         inflater.inflate(R.menu.forcast_fragment_menu, menu);
     }
 
@@ -121,6 +120,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view);
+
         return view;
     }
 
@@ -145,7 +145,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
 
-//        mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         lsView.setAdapter(mForecastAdapter);
 
@@ -160,8 +159,8 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(FORECAST_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(FORECAST_LOADER, null, this);
     }
 
 
@@ -185,7 +184,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
             FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
             weatherTask.execute(getSavedKeys());
-            //new FetchForcastData().execute(getSavedKeys());
         } else {
             L.lToast(getContext(), getString(R.string.msg_internet_status));
         }

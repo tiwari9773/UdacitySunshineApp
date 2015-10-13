@@ -21,18 +21,20 @@ import in.udacity.learning.shunshine.app.MyApplication;
  */
 public class HttpURLConnectionWebService {
 
-    String defaultZip = "94043";
     String mode = "json";
     String unit = "metric";
-    int days = 7;
-    String zip = "";
+    int days = 14;
+    String location_setting = "94043";
 
 
-    public HttpURLConnectionWebService(String mode, String unit, int days, String zip) {
+    public HttpURLConnectionWebService(String mode, String unit, int days, String location_setting) {
         this.mode = mode;
         this.unit = unit;
         this.days = days;
-        this.zip = zip.length() > 0 ? zip : defaultZip;
+
+        // If location_setting is supplied correctly use currunt one else default one
+        if (location_setting.length() > 0)
+            this.location_setting = location_setting;
     }
 
     public String getWeatherJSON(String TAG) {
@@ -42,7 +44,7 @@ public class HttpURLConnectionWebService {
         try {
 
             Uri builtUri = Uri.parse(WebServiceURL.baseURLWeatherForcast).buildUpon()
-                    .appendQueryParameter(WebServiceURL.QUERY, zip)
+                    .appendQueryParameter(WebServiceURL.QUERY, location_setting)
                     .appendQueryParameter(WebServiceURL.MODE, mode)
                     .appendQueryParameter(WebServiceURL.UNIT, unit)
                     .appendQueryParameter(WebServiceURL.DAYS, Integer.toString(days))
@@ -77,8 +79,7 @@ public class HttpURLConnectionWebService {
 
             return stringBuffer.toString();
         } catch (MalformedURLException e) {
-            L.lToast(MyApplication.getContext(), e.toString());
-            //e.printStackTrace();
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -89,7 +90,7 @@ public class HttpURLConnectionWebService {
                 try {
                     bufferedReader.close();
                 } catch (final Exception e) {
-                    L.lToast(MyApplication.getContext(), e.toString());
+                    e.printStackTrace();
                 }
         }
         return null;

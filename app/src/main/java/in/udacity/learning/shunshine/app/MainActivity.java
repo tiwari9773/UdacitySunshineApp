@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         initialize(savedInstanceState);
 
         //Write database to inspect
-        writeDatabase();
+        //writeDatabase();
     }
 
     @Override

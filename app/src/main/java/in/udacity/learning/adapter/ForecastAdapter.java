@@ -66,7 +66,29 @@ public class ForecastAdapter extends CursorAdapter {
         // our view is pretty simple here --- just a text view
         // we'll keep the UI functional with a simple (and slow!) binding.
 
-        TextView tv = (TextView)view.findViewById(R.id.tv_item);
-        tv.setText(convertCursorRowToUXFormat(cursor));
+        //Read Date
+        long dayInMillis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
+        TextView tv = (TextView) view.findViewById(R.id.tv_title);
+        tv.setText(Utility.getFriendlyDayString(mContext, dayInMillis));
+
+        TextView tv_sub_detail = (TextView) view.findViewById(R.id.tv_subtitle);
+        tv_sub_detail.setText(cursor.getString(ForecastFragment.COL_WEATHER_DESC));
+
+        // Read user preference for metric or imperial temperature units
+        boolean isMetric = Utility.isMetric(context);
+
+        TextView tv_min = (TextView) view.findViewById(R.id.tv_min_temp);
+        tv_min.setText(cursor.getString(ForecastFragment.COL_WEATHER_DESC));
+
+        double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
+        TextView lowView = (TextView) view.findViewById(R.id.tv_min_temp);
+        lowView.setText(Utility.formatTemperature(low, isMetric));
+
+        // Read high temperature from cursor
+        double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
+        TextView highView = (TextView) view.findViewById(R.id.tv_max_temp);
+        highView.setText(Utility.formatTemperature(high, isMetric));
+
+
     }
 }
