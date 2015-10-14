@@ -50,7 +50,7 @@ public class WeatherListAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_weather_list, parent, false);
             weatherViewHolder = new ViewHolder();
-            weatherViewHolder.tv = (TextView) convertView.findViewById(R.id.tv_title);
+            weatherViewHolder.tv = (TextView) convertView.findViewById(R.id.tv_date);
             convertView.setTag(weatherViewHolder);
         } else {
             weatherViewHolder = (ViewHolder) convertView.getTag();

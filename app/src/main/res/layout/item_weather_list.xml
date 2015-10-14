@@ -33,13 +33,13 @@
         android:paddingLeft="@dimen/default_padding">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title" />
 
         <TextView
-            android:id="@+id/tv_subtitle"
+            android:id="@+id/tv_weather_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Subtitle" />
