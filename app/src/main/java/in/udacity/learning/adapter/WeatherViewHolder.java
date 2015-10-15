@@ -21,7 +21,7 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder implements View.O
         parentView = itemView.findViewById(R.id.parentPanel);
         parentView.setOnClickListener(this);
 
-        tv = (TextView) itemView.findViewById(R.id.tv_item);
+        //tv = (TextView) itemView.findViewById(R.id.tv_item);
     }
 
     @Override

@@ -168,7 +168,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     public void onClickWeather(Cursor cursor) {
 
         if (cursor != null) {
-            cursor.moveToFirst();
             String locationSetting = Utility.getPreferredLocation(getActivity());
             Intent intent = new Intent(getActivity(), DetailActivity.class)
                     .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
