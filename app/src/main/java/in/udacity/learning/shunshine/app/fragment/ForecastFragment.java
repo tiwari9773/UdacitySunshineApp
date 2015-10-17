@@ -94,6 +94,15 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     //private WeatherListAdapter mForecastAdapter;
     private List<String> mItem = new ArrayList<>();
 
+    // Holds the clicked position of Item, remember to make at that place list when user rotates
+    private int mSelectionPostion = -1;
+
+    // key to holds selectiom position
+    private final String POS_KEY = "pos_key";
+
+    //List View which holds list
+    private ListView mlsView;
+
     public ForecastFragment() {
     }
 
@@ -129,6 +138,8 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(POS_KEY))
+            mSelectionPostion = savedInstanceState.getInt(POS_KEY);
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view);
@@ -136,10 +147,9 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         return view;
     }
 
-    public void onLocationChange()
-    {
+    public void onLocationChange() {
         updateWeatherApp();
-        getLoaderManager().restartLoader(FORECAST_LOADER,null,this);
+        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
     public void initialize(View view) {
@@ -150,7 +160,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 //        recyclerView.setLayoutManager(linearLayoutManager);
 //        recyclerView.setAdapter(adapter);
 
-        ListView lsView = (ListView) view.findViewById(R.id.lv_weather_list);
+        mlsView = (ListView) view.findViewById(R.id.lv_weather_list);
 
 
         // The CursorAdapter will take data from our cursor and populate the ListView
@@ -158,11 +168,12 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         // up with an empty list the first time we run.
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-        lsView.setAdapter(mForecastAdapter);
+        mlsView.setAdapter(mForecastAdapter);
 
-        lsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectionPostion = position;
                 Cursor cursor = (Cursor) parent.getItemAtPosition(position);
                 onClickWeather(cursor);
             }
@@ -175,6 +186,12 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         getLoaderManager().initLoader(FORECAST_LOADER, null, this);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mSelectionPostion != ListView.INVALID_POSITION)
+            outState.putInt(POS_KEY, mSelectionPostion);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onClickWeather(Cursor cursor) {
@@ -230,6 +247,8 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+        if (mSelectionPostion != ListView.INVALID_POSITION)
+            mlsView.smoothScrollToPosition(mSelectionPostion);
     }
 
     @Override
