@@ -27,12 +27,12 @@ import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.utility.Utility;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ForecastFragment.Callback {
 
     private Toolbar mToolbar;
     private final String TAG = MainActivity.class.getName();
 
-    private static final String DETAIL_FRAGMENT_ID = "DFTAG";
+    private static final String DETAIL_FRAGMENT_TAG = "DFTAG";
     private String mLocation;
     private boolean mTwoPane = false;
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             // fragment transaction.
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAIL_FRAGMENT_ID)
+                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAIL_FRAGMENT_TAG)
                         .commit();
             }
         } else {
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // try to update Detail Fragment (Works if it is two pane layout)
-            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_ID);
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
             if (df != null) {
                 df.onLocationChanged(location);
             }
@@ -196,4 +196,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container, fragment, DETAIL_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, DetailActivity.class)
+                    .setData(contentUri);
+            startActivity(intent);
+        }
+    }
+
 }

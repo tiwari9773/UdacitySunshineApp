@@ -32,7 +32,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle b = new Bundle();
-            b.putString(Intent.EXTRA_TEXT, weatherRep);
+            b.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
 
             mDetailFragment = new DetailFragment();
             mDetailFragment.setArguments(b);
