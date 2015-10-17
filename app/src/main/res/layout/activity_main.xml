@@ -7,12 +7,13 @@
 
     <include layout="@layout/layout_toolbar"></include>
 
-    <FrameLayout
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+    <fragment
         android:id="@+id/frag_container"
+        android:name="in.udacity.learning.shunshine.app.fragment.ForecastFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_main"></FrameLayout>
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:layout="@layout/fragment_main"></fragment>
 
 </LinearLayout>

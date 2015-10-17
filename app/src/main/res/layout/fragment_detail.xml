@@ -11,16 +11,20 @@
 
         <!-- Header: Day, Date -->
         <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="24sp"
             android:id="@+id/detail_day_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tomorrow" />
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
             android:id="@+id/detail_date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="June 24"/>
+            android:text="June 24" />
 
         <!-- Main content: high, low, art, weather state -->
         <LinearLayout
@@ -31,27 +35,32 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/detail_high_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21°"/>
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="21°"
+                    android:textSize="96sp" />
 
                 <TextView
                     android:id="@+id/detail_low_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11°" />
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="11°"
+                    android:textSize="48sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 

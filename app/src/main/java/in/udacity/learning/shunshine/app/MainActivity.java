@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import in.udacity.learning.dbhelper.DBHelper;
+import in.udacity.learning.dbhelper.WeatherContract;
+import in.udacity.learning.shunshine.app.fragment.DetailFragment;
 import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.utility.Utility;
@@ -30,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private final String TAG = MainActivity.class.getName();
 
-    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+    private static final String DETAIL_FRAGMENT_ID = "DFTAG";
     private String mLocation;
+    private boolean mTwoPane = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mLocation = Utility.getPreferredLocation(this);
-
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initialize(savedInstanceState);
@@ -107,11 +109,21 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frag_container
-                    , new ForecastFragment(), FORECASTFRAGMENT_TAG).commit();
+        if (findViewById(R.id.weather_detail_container) != null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.weather_detail_container, new DetailFragment(), DETAIL_FRAGMENT_ID)
+                        .commit();
+            }
         } else {
-            L.lToast(getBaseContext(), "Test");
+            mTwoPane = false;
         }
     }
 
@@ -121,9 +133,16 @@ public class MainActivity extends AppCompatActivity {
         String location = Utility.getPreferredLocation(this);
 
         if (location != null && !location.equals(mLocation)) {
-            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            //ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_ID);
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.frag_container);
             if (ff != null) {
                 ff.onLocationChange();
+            }
+
+            // try to update Detail Fragment (Works if it is two pane layout)
+            DetailFragment df = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_ID);
+            if (df != null) {
+                df.onLocationChanged(location);
             }
             mLocation = location;
         }

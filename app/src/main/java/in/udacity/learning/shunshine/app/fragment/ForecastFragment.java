@@ -42,6 +42,18 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     private final String TAG = ForecastFragment.class.getName();
 
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
+    }
+
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
     public static final String[] FORECAST_COLUMNS = {

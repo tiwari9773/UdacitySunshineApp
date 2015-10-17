@@ -33,12 +33,15 @@
         android:paddingLeft="@dimen/default_padding">
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title" />
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/tv_weather_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,12 +57,16 @@
         android:paddingLeft="@dimen/default_padding">
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceLarge"
             android:id="@+id/tv_max_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="test" />
 
         <TextView
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/tv_min_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
