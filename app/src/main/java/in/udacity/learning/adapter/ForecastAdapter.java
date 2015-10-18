@@ -25,6 +25,12 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
     private static final int VIEW_TYPE_COUNT = 2;
 
+
+    public void setmUseTodayLayout(boolean mUseTodayLayout) {
+        this.mUseTodayLayout = mUseTodayLayout;
+
+    }
+
     // Flag to determine if we want to use a separate view for "today".
     private boolean mUseTodayLayout = true;
 
@@ -37,7 +43,7 @@ public class ForecastAdapter extends CursorAdapter {
      */
     private String formatHighLows(double high, double low) {
         boolean isMetric = Utility.isMetric(mContext);
-        String highLowStr = Utility.formatTemperature(mContext,high, isMetric) + "/" + Utility.formatTemperature(mContext,low, isMetric);
+        String highLowStr = Utility.formatTemperature(mContext, high, isMetric) + "/" + Utility.formatTemperature(mContext, low, isMetric);
         return highLowStr;
     }
 
@@ -58,7 +64,7 @@ public class ForecastAdapter extends CursorAdapter {
 
 
     /*
-            Remember that these views are reused as needed.
+     Remember that these views are reused as needed.
          */
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -97,7 +103,7 @@ public class ForecastAdapter extends CursorAdapter {
         int viewType = getItemViewType(cursor.getPosition());
         switch (viewType) {
             case VIEW_TYPE_TODAY: {
-                 //Get weather icon
+                //Get weather icon
                 viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(
                         cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID)));
                 break;
@@ -110,6 +116,7 @@ public class ForecastAdapter extends CursorAdapter {
             }
         }
 
+        // Content Description
         //Read Date
         long dayInMillis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(mContext, dayInMillis));
@@ -120,17 +127,19 @@ public class ForecastAdapter extends CursorAdapter {
         boolean isMetric = Utility.isMetric(context);
 
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(mContext,low, isMetric));
-
+        viewHolder.lowTempView.setText(Utility.formatTemperature(mContext, low, isMetric));
+        viewHolder.lowTempView.setContentDescription("Minimum Temperature is " + Utility.formatTemperature(mContext, low, isMetric));
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(mContext,high, isMetric));
+        viewHolder.highTempView.setText(Utility.formatTemperature(mContext, high, isMetric));
+        viewHolder.lowTempView.setContentDescription("Maximum Temperature is " + Utility.formatTemperature(mContext, low, isMetric));
     }
 
     @Override
     public int getItemViewType(int position) {
         return (position == 0 && mUseTodayLayout) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
     }
+
 
     @Override
     public int getViewTypeCount() {
@@ -151,8 +160,8 @@ public class ForecastAdapter extends CursorAdapter {
             iconView = (ImageView) view.findViewById(R.id.iv_weather_thumbnail);
             dateView = (TextView) view.findViewById(R.id.tv_date);
             descriptionView = (TextView) view.findViewById(R.id.tv_weather_desc);
-            highTempView = (TextView) view.findViewById(R.id.tv_min_temp);
-            lowTempView = (TextView) view.findViewById(R.id.tv_max_temp);
+            lowTempView = (TextView) view.findViewById(R.id.tv_min_temp);
+            highTempView = (TextView) view.findViewById(R.id.tv_max_temp);
         }
     }
 

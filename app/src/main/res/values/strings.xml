@@ -1,5 +1,5 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    <string name="app_name">UdacitySunshineApp</string>
+    <string name="app_name">Sunshine</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

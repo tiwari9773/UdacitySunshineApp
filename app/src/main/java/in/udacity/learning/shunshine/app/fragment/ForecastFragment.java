@@ -30,6 +30,7 @@ import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.network.NetWorkInfoUtility;
 import in.udacity.learning.shunshine.app.DetailActivity;
+import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.shunshine.app.SettingsActivity;
 import in.udacity.learning.utility.Utility;
@@ -91,8 +92,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     // Unique Loader Id for every loader we create
     private static final int FORECAST_LOADER = 0;
-    //private WeatherListAdapter mForecastAdapter;
-    private List<String> mItem = new ArrayList<>();
 
     // Holds the clicked position of Item, remember to make at that place list when user rotates
     private int mSelectionPostion = -1;
@@ -103,7 +102,16 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     //List View which holds list
     private ListView mlsView;
 
+    //Set layout bit if on mobile else small for tablet
+    private boolean mUseTodayLayout;
+
     public ForecastFragment() {
+    }
+
+    public void setmUseTodayLayout(boolean mUseTodayLayout) {
+        this.mUseTodayLayout = mUseTodayLayout;
+        if (mForecastAdapter != null)
+            mForecastAdapter.setmUseTodayLayout(this.mUseTodayLayout);
     }
 
     @Override
@@ -144,6 +152,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view);
 
+
         return view;
     }
 
@@ -178,6 +187,10 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
                 onClickWeather(cursor);
             }
         });
+
+        // Lets keep first Item Selected if it is tablet
+        if (!((MainActivity) getActivity()).ismTwoPane())
+            mlsView.setSelection(0);
     }
 
     @Override
@@ -248,7 +261,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
         if (mSelectionPostion != ListView.INVALID_POSITION)
-            mlsView.smoothScrollToPosition(mSelectionPostion);
+            mlsView.setSelection(mSelectionPostion);
     }
 
     @Override

@@ -7,7 +7,7 @@
     <string name="pref_heading" translatable="false">Sunshine Setting</string>
 
 
-    <string name="pref_title_units" translatable="false">Temprature Unit</string>
+    <string name="pref_title_units" translatable="false">Temperature Unit</string>
     <string name="pref_unit_metric">metric</string>
     <string name="pref_unit_imperial">imperial</string>
     <string-array name="arr_unit_list">

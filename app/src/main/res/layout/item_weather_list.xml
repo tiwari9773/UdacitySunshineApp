@@ -7,10 +7,11 @@
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
 
     <FrameLayout
-        android:layout_width="60dp"
+        android:layout_width="@dimen/list_header_today_menu_padding_60"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical">
 
@@ -28,49 +29,51 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/default_padding">
+        android:layout_weight="7"
+        android:orientation="vertical">
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceLarge"
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="Title" />
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceSmall"
             android:id="@+id/tv_weather_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subtitle" />
+            android:fontFamily="sans-serif-condensed"
+            android:text="Subtitle"
+            android:textAppearance="?android:textAppearanceSmall" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_right"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/default_padding">
+        android:gravity="center_horizontal"
+        android:layout_weight="5"
+        android:orientation="vertical">
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceLarge"
             android:id="@+id/tv_max_temp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="test" />
+            android:fontFamily="sans-serif-condensed"
+            android:text="test"
+            android:contentDescription="Max temp is"
+            android:textAppearance="?android:textAppearanceLarge" />
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="?android:textAppearanceSmall"
+            android:contentDescription="Min temp is"
             android:id="@+id/tv_min_temp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="test" />
+            android:fontFamily="sans-serif-condensed"
+            android:text="test"
+            android:textAppearance="?android:textAppearanceSmall" />
     </LinearLayout>
 
 </LinearLayout>
