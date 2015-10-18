@@ -184,6 +184,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             // Use placeholder Image
             mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 
+            // Content Description
+            mIconView.setContentDescription(data.getString(ForecastFragment.COL_WEATHER_DESC));
+
             // Read date from cursor and update views for day of week and date
             long date = data.getLong(COL_WEATHER_DATE);
             String friendlyDateText = Utility.getDayName(getActivity(), date);

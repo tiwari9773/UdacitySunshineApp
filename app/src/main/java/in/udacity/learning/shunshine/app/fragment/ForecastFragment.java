@@ -189,7 +189,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         });
 
         // Lets keep first Item Selected if it is tablet
-        if (!((MainActivity) getActivity()).ismTwoPane())
+        if (((MainActivity) getActivity()).ismTwoPane())
             mlsView.setSelection(0);
     }
 
