@@ -1,5 +1,5 @@
-# UdacitySunshineApp
-Undacity Weather App, For Sample creating app with Sync Adapter, Loaders, Content Provider and Loaders
+# SunshineApp Weather Application
+Weather App, Created sample app with Sync Adapter, Loaders, Content Provider and Loaders
 
 This project is purly for study purpose and any student can refer the code 
 Code is written by myself with some library help taken form github example
@@ -15,4 +15,12 @@ Code is written by myself with some library help taken form github example
 # Tablet Screenshot
 ---------------------
 ![Screenshot](/presentation/Home_tab.png)
+
+# Upcoming
+------------------
+a) Alarm Manager
+<br>b) Notofication Manager
+<br>c) Authentication
+<br>d) Push Notification
+
 
