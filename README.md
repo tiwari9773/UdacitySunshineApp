@@ -1,15 +1,18 @@
 # UdacitySunshineApp
 Undacity Weather App, For Sample creating app with Sync Adapter, Loaders, Content Provider and Loaders
 
-This app is purposly for study and practice
-
-If any body want to learn they can take it and play with code
+This project is purly for study purpose and any student can refer the code 
+Code is written by myself with some library help taken form github example
 
 # ScreenShot
 ---------------------------
-![Demo](/presentation/sunshine.gif "Sample demo of project")
-![Screenshot](/presentation/Detail_phone.png "Sample demo of project")
-![Screenshot](/screenshot_gif_demo/Home_phone.png "Sample demo of project")
-![Screenshot](/screenshot_gif_demo/Home_phone.gif "Sample demo of project")
-![Screenshot](/screenshot_gif_demo/Home_tab.png "Sample demo of project")
+![Demo](/presentation/sunshine.gif)
+![Screenshot](/presentation/Detail_phone.png)
+</br>
+![Screenshot](/presentation/Home_phone.png)
+![Screenshot](/presentation/Setting.png)
+</br>
+# Tablet Screenshot
+---------------------
+![Screenshot](/presentation/Home_tab.png)
 
