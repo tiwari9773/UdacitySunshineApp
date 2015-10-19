@@ -135,7 +135,7 @@ public class SunshineService extends IntentService {
             }
 
             if (AppConstant.DEBUG)
-                Log.d(TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
+                Log.d(TAG, TAG+" Complete. " + inserted + " Inserted");
 
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
