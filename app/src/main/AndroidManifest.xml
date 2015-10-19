@@ -39,6 +39,7 @@
             android:exported="false"
             android:syncable="true" />
 
+        <service android:name="in.udacity.learning.service.SunshineService"/>
     </application>
 
 </manifest>

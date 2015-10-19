@@ -29,6 +29,7 @@ import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
 import in.udacity.learning.network.NetWorkInfoUtility;
+import in.udacity.learning.service.SunshineService;
 import in.udacity.learning.shunshine.app.DetailActivity;
 import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
@@ -221,8 +222,15 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     //method to initiate
     private void updateWeatherApp() {
         if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-            weatherTask.execute(getSavedKeys());
+            // The whole thing is replaced by SunshineSErvice
+            //FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
+            //weatherTask.execute(getSavedKeys());
+
+            // Using Intent Service
+            Intent in = new Intent(getActivity(), SunshineService.class);
+            in.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
+            getActivity().startService(in);
+
         } else {
             L.lToast(getContext(), getString(R.string.msg_internet_status));
         }
