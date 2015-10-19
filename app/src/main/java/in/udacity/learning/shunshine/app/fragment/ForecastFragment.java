@@ -1,11 +1,15 @@
 package in.udacity.learning.shunshine.app.fragment;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -226,10 +230,18 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
             //FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
             //weatherTask.execute(getSavedKeys());
 
+
+            Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+            alarmIntent.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
+            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+            AlarmManager alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 500, pi);
+
             // Using Intent Service
             Intent in = new Intent(getActivity(), SunshineService.class);
             in.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
             getActivity().startService(in);
+
 
         } else {
             L.lToast(getContext(), getString(R.string.msg_internet_status));

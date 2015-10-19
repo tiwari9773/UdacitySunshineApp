@@ -40,6 +40,7 @@
             android:syncable="true" />
 
         <service android:name="in.udacity.learning.service.SunshineService"/>
+        <receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver"/>
     </application>
 
 </manifest>
