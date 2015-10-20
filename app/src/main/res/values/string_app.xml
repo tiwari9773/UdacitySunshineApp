@@ -15,6 +15,9 @@
         <item>imperial</item>
     </string-array>
 
+    <string name="sync_account_type">sunshine.udacity.com</string>
+    <string name="content_authority">in.udacity.learning.shunshine.app</string>
+
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
 

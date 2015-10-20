@@ -8,8 +8,6 @@
     <string name="msg_internet_status">No Internet Connection</string>
     <string name="menu_refresh">Refresh</string>
 
-    <string name="content_authority">in.udacity.learning.shunshine.app</string>
-
     <!-- Language-specific constants -->
     <string name="today">Today</string>
 
