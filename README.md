@@ -1,8 +1,14 @@
 # SunshineApp Weather Application
-Weather App, Created sample app with Sync Adapter, Loaders, Content Provider and Loaders
+Weather App using weathermapapi, Created sample app with Sync Adapter, Loaders and Content Provider
 
-This project is purly for study purpose and any student can refer the code 
-Code is written by myself with some library help taken form github example
+This project is purly for study purpose and any student can refer the code.
+<br>Code is written as per material design guideline and reviewed by expertes from udacity
+<br>packaging and naming everything is as per standard.
+
+# Purpose
+----------------
+Take it and study about android coding
+<br>a
 
 # ScreenShot
 ---------------------------
