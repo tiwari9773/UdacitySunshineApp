@@ -25,6 +25,7 @@ import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.shunshine.app.fragment.DetailFragment;
 import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.logger.L;
+import in.udacity.learning.sync.SunshineSyncAdapter;
 import in.udacity.learning.utility.Utility;
 
 public class MainActivity extends AppCompatActivity implements ForecastFragment.Callback {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         initialize(savedInstanceState);
 
+        SunshineSyncAdapter.initializeSyncAdapter(this);
         //Write database to inspect
         //writeDatabase();
     }

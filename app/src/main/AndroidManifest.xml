@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.udacity.learning.shunshine.app" >
+    package="in.udacity.learning.shunshine.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,21 +8,18 @@
     <uses-permission android:name="android.permission.STORAGE" />
 
     <!-- Permissions required by the sync adapter -->
-    <uses-permission
-        android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,28 +27,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:parentActivityName=".MainActivity"
             android:name=".DetailActivity"
-            android:label="@string/title_activity_detail" >
-        </activity>
+            android:label="@string/title_activity_detail"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:parentActivityName=".DetailActivity"
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
+            android:label="@string/title_activity_setting"
+            android:launchMode="singleTask"
+            android:parentActivityName=".DetailActivity"></activity>
 
         <provider
-            android:authorities="@string/content_authority"
             android:name="in.udacity.learning.dbhelper.WeatherProvider"
+            android:authorities="@string/content_authority"
             android:exported="false"
             android:syncable="true" />
 
-        <service android:name="in.udacity.learning.service.SunshineService"/>
-        <receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver"/>
+        <service android:name="in.udacity.learning.service.SunshineService" />
+        <receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver" />
 
-        <service
-            android:name="in.udacity.learning.sync.SunshineAuthenticatorService">
+        <service android:name="in.udacity.learning.sync.SunshineAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -63,8 +57,7 @@
         <!-- The SyncAdapter service -->
         <service
             android:name="in.udacity.learning.sync.SunshineSyncService"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>

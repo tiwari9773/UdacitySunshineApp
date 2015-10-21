@@ -38,6 +38,7 @@ import in.udacity.learning.shunshine.app.DetailActivity;
 import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.shunshine.app.SettingsActivity;
+import in.udacity.learning.sync.SunshineSyncAdapter;
 import in.udacity.learning.utility.Utility;
 import in.udacity.learning.web_services.FetchWeatherTask;
 
@@ -225,27 +226,28 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     //method to initiate
     private void updateWeatherApp() {
-        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
-            // The whole thing is replaced by SunshineSErvice
-            //FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-            //weatherTask.execute(getSavedKeys());
-
-
-            Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
-            alarmIntent.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
-            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
-            AlarmManager alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 500, pi);
-
-            // Using Intent Service
-            Intent in = new Intent(getActivity(), SunshineService.class);
-            in.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
-            getActivity().startService(in);
-
-
-        } else {
-            L.lToast(getContext(), getString(R.string.msg_internet_status));
-        }
+        SunshineSyncAdapter.syncImmediately(getActivity());
+//        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
+//            // The whole thing is replaced by SunshineSErvice
+//            //FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
+//            //weatherTask.execute(getSavedKeys());
+//
+//
+//            Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+//            alarmIntent.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
+//            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+//            AlarmManager alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+//            alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 500, pi);
+//
+//            // Using Intent Service
+//            Intent in = new Intent(getActivity(), SunshineService.class);
+//            in.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
+//            getActivity().startService(in);
+//
+//
+//        } else {
+//            L.lToast(getContext(), getString(R.string.msg_internet_status));
+//        }
     }
 
     //Provide value of setting meu
