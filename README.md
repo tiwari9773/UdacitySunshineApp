@@ -3,7 +3,7 @@ Created sample Weather App using weathermapapi with
 <br>a) SyncAdapter,
 <br>b) Loaders and 
 <br>c) Content Provider
-<br>d) Alarm Manager // Deprecated
+<br>d) Alarm Manager // Commented
 <br>e) Notofication Manager
 <br>f) Authentication
 <br>g) Push Notification
