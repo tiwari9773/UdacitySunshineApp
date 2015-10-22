@@ -43,7 +43,7 @@ public class ForecastAdapter extends CursorAdapter {
      */
     private String formatHighLows(double high, double low) {
         boolean isMetric = Utility.isMetric(mContext);
-        String highLowStr = Utility.formatTemperature(mContext, high, isMetric) + "/" + Utility.formatTemperature(mContext, low, isMetric);
+        String highLowStr = Utility.formatTemperature(mContext, high) + "/" + Utility.formatTemperature(mContext, low);
         return highLowStr;
     }
 
@@ -74,7 +74,7 @@ public class ForecastAdapter extends CursorAdapter {
         int layoutId = -1;
         switch (viewType) {
             case VIEW_TYPE_TODAY: {
-                layoutId = R.layout.item_header_weather;
+                layoutId = R.layout.item_today_weather;
                 break;
             }
             case VIEW_TYPE_FUTURE_DAY: {
@@ -128,12 +128,12 @@ public class ForecastAdapter extends CursorAdapter {
         boolean isMetric = Utility.isMetric(context);
 
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(mContext, low, isMetric));
-        viewHolder.lowTempView.setContentDescription("Minimum Temperature is " + Utility.formatTemperature(mContext, low, isMetric));
+        viewHolder.lowTempView.setText(Utility.formatTemperature(mContext, low));
+        viewHolder.lowTempView.setContentDescription("Minimum Temperature is " + Utility.formatTemperature(mContext, low));
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(mContext, high, isMetric));
-        viewHolder.lowTempView.setContentDescription("Maximum Temperature is " + Utility.formatTemperature(mContext, low, isMetric));
+        viewHolder.highTempView.setText(Utility.formatTemperature(mContext, high));
+        viewHolder.highTempView.setContentDescription("Maximum Temperature is " + Utility.formatTemperature(mContext, high));
     }
 
     @Override

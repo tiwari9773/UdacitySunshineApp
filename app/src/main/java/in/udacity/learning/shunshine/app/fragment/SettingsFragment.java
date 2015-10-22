@@ -4,6 +4,10 @@ package in.udacity.learning.shunshine.app.fragment;
  * Created by Lokesh on 06-09-2015.
  */
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -35,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment
         bindPreferenceSummaryToValue(list_preference);
 
 
-        Preference edit_preference = findPreference(getString(R.string.pref_keys_zip_code));
+        Preference edit_preference = findPreference(getString(R.string.pref_location_key));
         bindPreferenceSummaryToValue(edit_preference);
     }
 
@@ -48,10 +52,9 @@ public class SettingsFragment extends PreferenceFragment
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(this);
 
-        // Trigger the listener immediately with the preference's
-        // current value.
-        onPreferenceChange(preference,
-                PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
+        // Trigger the listener immediately with the preference's current value.
+        String strPref = PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), "");
+        onPreferenceChange(preference, strPref);
     }
 
     @Override
@@ -73,12 +76,9 @@ public class SettingsFragment extends PreferenceFragment
             // For other pref_general, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
 
-            // As soona as Location changes sync immediately
-            SunshineSyncAdapter.syncImmediately(getActivity());
-
+            // As soon as Location changes sync immediately
+            //SunshineSyncAdapter.syncImmediately(getActivity());
         }
-
         return true;
     }
-
 }

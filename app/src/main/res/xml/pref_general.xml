@@ -3,7 +3,7 @@
 
     <EditTextPreference
         android:defaultValue="@string/pref_location_default"
-        android:key="@string/pref_keys_zip_code"
+        android:key="@string/pref_location_key"
         android:singleLine="true"
         android:summary="@string/pref_location_default"
         android:title="@string/pref_location_label" />
@@ -16,4 +16,11 @@
         android:key="@string/pref_keys_unit_type"
         android:summary="@string/pref_unit_metric"
         android:title="@string/pref_title_units" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="notification_preference"
+        android:summaryOn="@string/pref_notification_summery_off"
+        android:summaryOff="@string/pref_notification_summery_on"
+        android:title="Notification" />
 </PreferenceScreen>
