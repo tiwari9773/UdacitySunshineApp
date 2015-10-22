@@ -136,14 +136,13 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh: {
-                updateWeatherApp();
-            }
-            break;
-            case R.id.action_settings: {
-                Intent in = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(in);
-                return true;
+//            case R.id.action_refresh: {
+//                updateWeatherApp();
+//            }
+//            break;
+
+            case R.id.action_map: {
+                openPreferedMapLocation();
             }
 
         }
@@ -200,6 +199,34 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
             mlsView.setSelection(0);
     }
 
+    private void openPreferedMapLocation() {
+
+        if (mForecastAdapter != null) {
+            Cursor c = mForecastAdapter.getCursor();
+            if (c != null) {
+                c.moveToPosition(0);
+                String lat = c.getString(COL_COORD_LAT);
+                String longi = c.getString(COL_COORD_LONG);
+
+                //Uri geoLocation = Uri.parse("geo:19.014410,72.847939?").buildUpon().appendQueryParameter("q",location).build();
+                // Create a Uri from an intent string. Use the result to create an Intent.
+                Uri geoLocation = Uri.parse("geo:" + lat + ","+longi);
+
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, geoLocation);
+
+                // Make the Intent explicit by setting the Google Maps package
+                mapIntent.setPackage("com.google.android.apps.maps");
+                //mapIntent.setData(geoLocation);
+
+                // Attempt to start an activity that can handle the Intent
+                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        }
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -254,7 +281,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     //Provide value of setting meu
     private String[] getSavedKeys() {
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String location_setting = s.getString(getString(R.string.pref_keys_zip_code), getString(R.string.pref_location_default));
+        String location_setting = s.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
         String unit = s.getString(getString(R.string.pref_keys_unit_type), getString(R.string.pref_unit_metric));
 
         return new String[]{location_setting, unit};
@@ -285,7 +312,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         mForecastAdapter.swapCursor(data);
         if (mSelectionPostion != ListView.INVALID_POSITION)
             mlsView.setSelection(mSelectionPostion);
-        Log.d(TAG, "onLoadFinished Position"+mSelectionPostion);
+        Log.d(TAG, "onLoadFinished Position" + mSelectionPostion);
     }
 
     @Override

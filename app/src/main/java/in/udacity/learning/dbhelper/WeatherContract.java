@@ -83,6 +83,8 @@ public final class WeatherContract {
         public static final String CONTENT_ITEM_BASE_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
 
         public static String TABLE_NAME = "weather";
+
+        //Some City Are not giving value with Id so changing to name
         public static String LOCATION_ID = "location_id";
         public static String DATE = "date";
         public static String SHORT_DESC = "short_desc";
