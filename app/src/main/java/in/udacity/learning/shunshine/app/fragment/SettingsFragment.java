@@ -12,6 +12,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.sync.SunshineSyncAdapter;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -65,10 +66,18 @@ public class SettingsFragment extends PreferenceFragment
             if (prefIndex >= 0) {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
+
+            // No need to sync from server , Only changing unit that can be calculated offline
+
         } else {
             // For other pref_general, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
+
+            // As soona as Location changes sync immediately
+            SunshineSyncAdapter.syncImmediately(getActivity());
+
         }
+
         return true;
     }
 

@@ -36,13 +36,14 @@ import in.udacity.learning.shunshine.app.BuildConfig;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.utility.Utility;
 import in.udacity.learning.web_services.JSONParser;
+import in.udacity.learning.web_services.WebServiceURL;
 
 public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String TAG = SunshineSyncAdapter.class.getSimpleName();
 
     // Interval at which to sync with the weather, in seconds.
     // 60 seconds (1 minute) * 180 = 3 hours
-    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_INTERVAL = 60*180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     public SunshineSyncAdapter(Context context, boolean autoInitialize) {
@@ -70,20 +71,14 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             // Construct the URL for the OpenWeatherMap query
             // Possible parameters are avaiable at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
-            final String FORECAST_BASE_URL =
-                    "http://api.openweathermap.org/data/2.5/forecast/daily?";
-            final String QUERY_PARAM = "q";
-            final String FORMAT_PARAM = "mode";
-            final String UNITS_PARAM = "units";
-            final String DAYS_PARAM = "cnt";
-            final String APPID_PARAM = "APPID";
+            final String FORECAST_BASE_URL = WebServiceURL.baseURLWeatherForcast;
 
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, locationQuery)
-                    .appendQueryParameter(FORMAT_PARAM, format)
-                    .appendQueryParameter(UNITS_PARAM, units)
-                    .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                    .appendQueryParameter(APPID_PARAM, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
+                    .appendQueryParameter(WebServiceURL.QUERY, locationQuery)
+                    .appendQueryParameter(WebServiceURL.MODE, format)
+                    .appendQueryParameter(WebServiceURL.UNIT, units)
+                    .appendQueryParameter(WebServiceURL.DAYS, Integer.toString(numDays))
+                    .appendQueryParameter(WebServiceURL.KEYS, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());

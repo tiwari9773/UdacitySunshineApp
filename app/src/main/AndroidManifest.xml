@@ -42,8 +42,8 @@
             android:exported="false"
             android:syncable="true" />
 
-        <service android:name="in.udacity.learning.service.SunshineService" />
-        <receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver" />
+        <!--<service android:name="in.udacity.learning.service.SunshineService" />-->
+        <!--<receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver" />-->
 
         <service android:name="in.udacity.learning.sync.SunshineAuthenticatorService">
             <intent-filter>

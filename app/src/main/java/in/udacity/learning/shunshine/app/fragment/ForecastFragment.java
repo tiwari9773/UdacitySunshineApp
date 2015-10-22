@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -284,6 +285,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         mForecastAdapter.swapCursor(data);
         if (mSelectionPostion != ListView.INVALID_POSITION)
             mlsView.setSelection(mSelectionPostion);
+        Log.d(TAG, "onLoadFinished Position"+mSelectionPostion);
     }
 
     @Override
