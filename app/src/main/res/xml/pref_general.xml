@@ -19,8 +19,8 @@
 
     <CheckBoxPreference
         android:defaultValue="true"
-        android:key="notification_preference"
-        android:summaryOn="@string/pref_notification_summery_off"
-        android:summaryOff="@string/pref_notification_summery_on"
+        android:key="@string/pref_keys_notification"
+        android:summaryOn="@string/pref_notification_summery_on"
+        android:summaryOff="@string/pref_notification_summery_off"
         android:title="Notification" />
 </PreferenceScreen>

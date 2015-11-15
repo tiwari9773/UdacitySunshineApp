@@ -38,7 +38,6 @@ public class SettingsFragment extends PreferenceFragment
         Preference list_preference = findPreference(getString(R.string.pref_keys_unit_type));
         bindPreferenceSummaryToValue(list_preference);
 
-
         Preference edit_preference = findPreference(getString(R.string.pref_location_key));
         bindPreferenceSummaryToValue(edit_preference);
     }
@@ -81,4 +80,5 @@ public class SettingsFragment extends PreferenceFragment
         }
         return true;
     }
+
 }

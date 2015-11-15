@@ -16,6 +16,7 @@ import in.udacity.learning.shunshine.app.fragment.SettingsFragment;
  */
 public class SettingsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +25,8 @@ public class SettingsActivity extends AppCompatActivity {
         initialize();
     }
 
-    private void initialize()
-    {
-        mToolbar = (Toolbar)findViewById(R.id.tb_main);
+    private void initialize() {
+        mToolbar = (Toolbar) findViewById(R.id.tb_main);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -34,13 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, new SettingsFragment())
                 .commit();
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    public Intent getParentActivityIntent() {
-        return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 
     @Override
@@ -51,5 +44,12 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public Intent getParentActivityIntent() {
+        return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
 }

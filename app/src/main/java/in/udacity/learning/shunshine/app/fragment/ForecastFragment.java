@@ -103,7 +103,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     // Holds the clicked position of Item, remember to make at that place list when user rotates
     private int mSelectionPostion = -1;
 
-    // key to holds selectiom position
+    // key to holds selection position
     private final String POS_KEY = "pos_key";
 
     //List View which holds list
@@ -157,7 +157,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view);
-
 
         return view;
     }
@@ -278,7 +277,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 //        }
     }
 
-    //Provide value of setting meu
+    //Provide value of setting menu
     private String[] getSavedKeys() {
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getContext());
         String location_setting = s.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));

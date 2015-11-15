@@ -185,11 +185,11 @@ public class WeatherProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        final int match = sUriMatcher.match(uri);
-        Uri returnUri;
+            final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+            final int match = sUriMatcher.match(uri);
+            Uri returnUri;
 
-        switch (match) {
+            switch (match) {
             case WEATHER: {
                 normalizeDate(values);
                 long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, values);

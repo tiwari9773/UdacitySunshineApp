@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             getSupportActionBar().setElevation(0f);
         }
 
-        // Set Todays View should be highlighted or not
+        // Set Today's View should be highlighted or not
         ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.frag_container);
         forecastFragment.setmUseTodayLayout(!mTwoPane);
     }

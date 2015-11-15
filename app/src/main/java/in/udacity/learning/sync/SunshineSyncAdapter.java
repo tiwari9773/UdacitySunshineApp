@@ -24,6 +24,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.format.Time;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -54,12 +55,11 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
     // Interval at which to sync with the weather, in seconds.
     // 60 seconds (1 minute) * 180 = 3 hours
-    public static final int SYNC_INTERVAL = 60 * 180;
+    public static final int SYNC_INTERVAL = 60*180;
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
 
     private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
     private static final int WEATHER_NOTIFICATION_ID = 3004;
-
 
     private static final String[] NOTIFY_WEATHER_PROJECTION = new String[]{
             WeatherContract.WeatherEntry.WEATHER_ID,
@@ -97,7 +97,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
             // Construct the URL for the OpenWeatherMap query
-            // Possible parameters are avaiable at OWM's forecast API page, at
+            // Possible parameters are available at OWM's forecast API page, at
             // http://openweathermap.org/API#forecast
             final String FORECAST_BASE_URL = WebServiceURL.baseURLWeatherForcast;
 
@@ -386,11 +386,15 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         //checking the last update and notify if it' the first of the day
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        String temp = context.getString(R.string.pref_keys_notification);
-        boolean isNotificationEnabled = Boolean.parseBoolean(temp);
+        String key = context.getString(R.string.pref_keys_notification);
+        boolean isNotificationEnabled = prefs.getBoolean(key,
+                Boolean.parseBoolean(context.getString(R.string.pref_notification_value_default)));;
         if (isNotificationEnabled) {
             String lastNotificationKey = context.getString(R.string.pref_last_notification);
             long lastSync = prefs.getLong(lastNotificationKey, 0);
+
+            if(AppConstant.DEVELOPER)
+                Log.i(TAG,(System.currentTimeMillis() - lastSync)+" ---- "+ DAY_IN_MILLIS);
 
             if (System.currentTimeMillis() - lastSync >= DAY_IN_MILLIS) {
                 // Last sync was more than 1 day ago, let's send a notification with the weather.
@@ -441,13 +445,9 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong(lastNotificationKey, System.currentTimeMillis());
                     editor.commit();
-
                 }
                 cursor.close();
-
             }
         }
-
     }
-
 }

@@ -32,7 +32,7 @@ public class HttpURLConnectionWebService {
         this.unit = unit;
         this.days = days;
 
-        // If location_setting is supplied correctly use currunt one else default one
+        // If location_setting is supplied correctly use current one else default one
         if (location_setting.length() > 0)
             this.location_setting = location_setting;
     }
