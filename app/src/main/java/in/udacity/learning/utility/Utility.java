@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.sync.SunshineSyncAdapter;
 
 
 /**
@@ -24,6 +25,14 @@ public class Utility {
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_location_key), context.getString(R.string.pref_location_default));
+    }
+
+    /*After changing location It will tell about location : Valid. Invalid. */
+    @SuppressWarnings("ReturnType")
+    static public @SunshineSyncAdapter.locationStatus
+    int getLocationStatus(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(context.getString(R.string.pref_keys_location_key_status), SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN);
     }
 
     public static boolean isMetric(Context context) {

@@ -76,7 +76,7 @@ public class TestUtilities extends AndroidTestCase {
         testValues.put(WeatherContract.WeatherEntry.DATE, TEST_DATE);
         testValues.put(WeatherContract.WeatherEntry.MIN, 65);
         testValues.put(WeatherContract.WeatherEntry.MAX, 75);
-        testValues.put(WeatherContract.WeatherEntry.HUMADITY, 1.2);
+        testValues.put(WeatherContract.WeatherEntry.HUMIDITY, 1.2);
         testValues.put(WeatherContract.WeatherEntry.PRESSURE, 1.2);
         testValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationRowId);
         testValues.put(WeatherContract.WeatherEntry.DEGREES, 1.1);

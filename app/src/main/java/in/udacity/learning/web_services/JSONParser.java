@@ -33,7 +33,7 @@ import in.udacity.learning.shunshine.app.R;
 public class JSONParser {
     private static final String TAG = JSONParser.class.getName();
 
-    public static List<WeatherAttribute> parseWeatherForcast(String jSonString, String locationId) {
+    public static List<WeatherAttribute> parseWeatherForcast(String jSonString, String locationId) throws JSONException {
         List<WeatherAttribute> lsWA = null;
         try {
             JSONObject jsonObject = new JSONObject(jSonString);
@@ -76,14 +76,16 @@ public class JSONParser {
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, "parseWeatherForcast " + " " + e.getMessage() + " " + e.getCause() + " " + e.getLocalizedMessage());
+            if (AppConstant.DEVELOPER_TRACK)
+                Log.e(TAG, "parseWeatherForcast " + " " + e.getMessage() + " " + e.getCause() + " " + e.getLocalizedMessage());
             e.printStackTrace();
+            throw e;
         }
         return lsWA;
     }
 
     // parse value of location table
-    public static LocationAttribute parseLocationForcast(String jSonString) {
+    public static LocationAttribute parseLocationForcast(String jSonString) throws JSONException{
         LocationAttribute la = null;
         try {
             JSONObject jsonObject = new JSONObject(jSonString);
@@ -108,6 +110,7 @@ public class JSONParser {
         } catch (JSONException e) {
             Log.e(TAG, "parseLocationForcast " + " " + e.getMessage() + " " + e.getCause() + " " + e.getLocalizedMessage());
             e.printStackTrace();
+            throw e;
         }
         return la;
     }

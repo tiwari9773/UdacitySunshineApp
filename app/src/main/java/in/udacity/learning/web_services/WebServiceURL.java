@@ -5,6 +5,7 @@ package in.udacity.learning.web_services;
  */
 public class WebServiceURL {
 
+    //public static String baseURLWeatherForcast = "http://google.com/ping/?";
     public static String baseURLWeatherForcast = "http://api.openweathermap.org/data/2.5/forecast/daily?";
     public static String QUERY = "q";
     public static String UNIT = "units";

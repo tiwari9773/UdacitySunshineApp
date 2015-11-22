@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_map">My Location</string>
 
-    <string name="msg_internet_status">No Internet Connection</string>
     <string name="menu_refresh">Refresh</string>
 
     <!-- Language-specific constants -->
@@ -17,5 +16,11 @@
     <!-- Date format [CHAR LIMIT=NONE] -->
     <string name="format_full_friendly_date"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="day">%2$s</xliff:g></string>
 
+    <!--Message related to app-->
+    <string name="msg_no_weather_info">No Weather Information Available</string>
+    <string name="msg_no_internet_">No Weather Information Available, No Internet Connection to fetch data</string>
+
+    <string name="msg_empty_forecast_list_server_down">No weather information available. The server is not returning data</string>
+    <string name="msg_empty_forecast_list_server_error">No weather information available. The server is not returning valid data. Please check for an updated version of Sunshine</string>
 
 </resources>

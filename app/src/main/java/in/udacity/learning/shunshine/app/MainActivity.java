@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.DBHelper;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.shunshine.app.fragment.DetailFragment;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         }
 
         // Set Today's View should be highlighted or not
-        ForecastFragment forecastFragment = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.frag_container);
+        ForecastFragment forecastFragment = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.frag_container);
         forecastFragment.setmUseTodayLayout(!mTwoPane);
     }
 
@@ -113,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         return super.onOptionsItemSelected(item);
     }
 
+    /*Copy database outside to check data*/
     private void writeDatabase() {
         String path = getApplicationInfo().dataDir + "/databases/" + DBHelper.DATABASE_NAME;
         File dbFile = new File(path);
@@ -161,17 +162,20 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Log.d(TAG, "writeDatabase " + e.toString());
+            if (AppConstant.DEBUG)
+                Log.d(TAG, "writeDatabase " + e.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d(TAG, "writeDatabase " + e.toString());
+            if (AppConstant.DEBUG)
+                Log.d(TAG, "writeDatabase " + e.toString());
         } finally {
             if (is != null)
                 try {
                     is.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.d(TAG, "writeDatabase " + e.toString());
+                    if (AppConstant.DEBUG)
+                        Log.d(TAG, "writeDatabase " + e.toString());
                 }
 
             if (os != null)
@@ -179,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
                     os.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.d(TAG, "writeDatabase " + e.toString());
+                    if (AppConstant.DEBUG)
+                        Log.d(TAG, "writeDatabase " + e.toString());
                 }
         }
 

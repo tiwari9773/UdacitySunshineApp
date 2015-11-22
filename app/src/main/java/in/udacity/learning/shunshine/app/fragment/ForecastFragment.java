@@ -25,11 +25,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import in.udacity.learning.adapter.ForecastAdapter;
+import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.logger.L;
@@ -128,6 +130,22 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     }
 
     @Override
+    public void onResume() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sp.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sp.unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+
+        super.onPause();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //If I will remove this "Refresh" menu is apearing twice
         inflater.inflate(R.menu.forcast_fragment_menu, menu);
@@ -168,14 +186,8 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     public void initialize(View view) {
 
-//        /* Recycle Value holder*/
-//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_frequency_list);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(adapter);
-
         mlsView = (ListView) view.findViewById(R.id.lv_weather_list);
-
+        mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
 
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
@@ -209,7 +221,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
                 //Uri geoLocation = Uri.parse("geo:19.014410,72.847939?").buildUpon().appendQueryParameter("q",location).build();
                 // Create a Uri from an intent string. Use the result to create an Intent.
-                Uri geoLocation = Uri.parse("geo:" + lat + ","+longi);
+                Uri geoLocation = Uri.parse("geo:" + lat + "," + longi);
 
                 // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, geoLocation);
@@ -306,16 +318,61 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
                 sortOrder);
     }
 
+    /*
+         Updates the empty list view with contextually relevant information that the user can
+         use to determine why they aren't seeing weather.
+      */
+    private void updateEmptyView() {
+        if (mForecastAdapter.getCount() == 0) {
+            int message = R.string.msg_no_weather_info;
+            TextView tv = (TextView) getView().findViewById(R.id.tv_empty_view);
+            if (null != tv) {
+
+                @SunshineSyncAdapter.locationStatus int status = Utility.getLocationStatus(getContext());
+                switch (status) {
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_INVALID:
+                        message = R.string.msg_empty_forecast_list_server_error;
+                        break;
+
+                    case SunshineSyncAdapter.LOCATION_STATUS_SERVER_DOWN:
+                        message = R.string.msg_empty_forecast_list_server_down;
+                        break;
+
+                    default:
+                        if (!new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
+                            message = R.string.msg_no_internet_;
+                        }
+                }
+                tv.setText(message);
+            }
+        }
+    }
+
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
         if (mSelectionPostion != ListView.INVALID_POSITION)
             mlsView.setSelection(mSelectionPostion);
-        Log.d(TAG, "onLoadFinished Position" + mSelectionPostion);
+        // mlsView.smoothScrollToPosition(mSelectionPostion);
+
+        /*Update the View*/
+        updateEmptyView();
+
+        if (AppConstant.DEBUG)
+            Log.d(TAG, "onLoadFinished Position" + mSelectionPostion);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mForecastAdapter.swapCursor(null);
     }
+
+    SharedPreferences.OnSharedPreferenceChangeListener onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(getString(R.string.pref_keys_location_key_status))) {
+                updateEmptyView();
+            }
+        }
+    };
 }

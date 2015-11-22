@@ -75,13 +75,13 @@ public class TestDb extends AndroidTestCase {
         locationColumnHashSet.add(WeatherContract.LocationEntry.LOCATION_SETTING);
 
         c.moveToFirst();
-        int columnNameIndex = c.getColumnIndex("name");
-        do {
-            String columnName = c.getString(columnNameIndex);
-            locationColumnHashSet.remove(columnName);
-            Log.i(TAG, "testCreateDb " + columnName);
+            int columnNameIndex = c.getColumnIndex("name");
+            do {
+                String columnName = c.getString(columnNameIndex);
+                locationColumnHashSet.remove(columnName);
+                Log.i(TAG, "testCreateDb " + columnName);
 
-        } while (c.moveToNext());
+            } while (c.moveToNext());
 
         // if this fails, it means that your database doesn't contain all of the required location
         // entry columns

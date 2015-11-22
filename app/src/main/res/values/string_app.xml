@@ -6,7 +6,6 @@
 
     <string name="pref_heading" translatable="false">Sunshine Setting</string>
 
-
     <string name="pref_title_units" translatable="false">Temperature Unit</string>
     <string name="pref_unit_metric">metric</string>
     <string name="pref_unit_imperial">imperial</string>
@@ -31,21 +30,24 @@
     <string name="pref_keys_notification" translatable="false">pref_notification</string>
     <string name="pref_notification_value_default" translatable="false">true</string>
 
+    <!--Preference Key for status over location change , If user is changeign some random location their might chance of location
+    does not exist-->
+    <string name="pref_keys_location_key_status">pref_key_location_status</string>
+
     <!-- Strings for formatting weather-related data -->
     <!-- Temperature format [CHAR LIMIT=5 -->
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
-
 
     <!-- Windspeed formats -->
     <!-- Wind in mph [CHAR LIMIT=25] -->
     <string name="format_wind_mph">
     Wind: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g>
-</string>
+    </string>
 
     <!-- Wind in kph [CHAR LIMIT=25] -->
-<string name="format_wind_kmh">
+   <string name="format_wind_kmh">
     Wind: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g>
-</string>
+   </string>
 
     <!-- Pressure format CHAR LIMIT=25] -->
     <string name="format_pressure">Pressure: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
@@ -57,7 +59,12 @@
     <string name="format_notification">Forecast: <xliff:g id="condition">%1$s</xliff:g> High: <xliff:g id="high">%2$s</xliff:g> Low: <xliff:g id="low">%3$s</xliff:g></string>
 
     <!-- Strings related to Notification preference -->
-    <string name="pref_last_notification">last_notification</string>
+    <string name="pref_last_notification" translatable="false">last_notification</string>
     <string name="pref_notification_summery_on">Notification Enabled</string>
     <string name="pref_notification_summery_off">Notification Disabled</string>
+
+    <!--Configuration Related Stuff-->
+    <string name="config_default_format" translatable="false">json</string>
+    <string name="config_default_unit_type" translatable="false">metric</string>
+    <string name="config_default_days" translatable="false">14</string>
 </resources>
