@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -154,10 +155,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.action_refresh: {
-//                updateWeatherApp();
-//            }
-//            break;
 
             case R.id.action_map: {
                 openPreferedMapLocation();
@@ -266,33 +263,12 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     //method to initiate
     private void updateWeatherApp() {
         SunshineSyncAdapter.syncImmediately(getActivity());
-//        if (new NetWorkInfoUtility().isNetWorkAvailableNow(getActivity())) {
-//            // The whole thing is replaced by SunshineSErvice
-//            //FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-//            //weatherTask.execute(getSavedKeys());
-//
-//
-//            Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
-//            alarmIntent.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
-//            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
-//            AlarmManager alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-//            alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 500, pi);
-//
-//            // Using Intent Service
-//            Intent in = new Intent(getActivity(), SunshineService.class);
-//            in.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getContext()));
-//            getActivity().startService(in);
-//
-//
-//        } else {
-//            L.lToast(getContext(), getString(R.string.msg_internet_status));
-//        }
     }
 
     //Provide value of setting menu
     private String[] getSavedKeys() {
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String location_setting = s.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        String location_setting = s.getString(getString(R.string.pref_keys_location), getString(R.string.pref_location_default));
         String unit = s.getString(getString(R.string.pref_keys_unit_type), getString(R.string.pref_unit_metric));
 
         return new String[]{location_setting, unit};
@@ -336,6 +312,10 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
                     case SunshineSyncAdapter.LOCATION_STATUS_SERVER_DOWN:
                         message = R.string.msg_empty_forecast_list_server_down;
+                        break;
+
+                    case SunshineSyncAdapter.LOCATION_STATUS_INVALID:
+                        message = R.string.msg_empty_forecast_list_invalid_location;
                         break;
 
                     default:

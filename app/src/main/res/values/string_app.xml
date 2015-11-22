@@ -20,19 +20,23 @@
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
 
-    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_location_key" translatable="false">location</string>
-
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">Mumbai</string>
 
+    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_keys_location" translatable="false">location</string>
     <string name="pref_keys_unit_type" translatable="false">pref_unit_type</string>
     <string name="pref_keys_notification" translatable="false">pref_notification</string>
+    <!--Preference Key for status over location change ,
+    If user is changing some random location their might chance of location does not exist-->
+    <string name="pref_keys_location_key_status">pref_key_location_status</string>
+
     <string name="pref_notification_value_default" translatable="false">true</string>
 
-    <!--Preference Key for status over location change , If user is changeign some random location their might chance of location
-    does not exist-->
-    <string name="pref_keys_location_key_status">pref_key_location_status</string>
+    <!-- Strings used when displaying the state of the Location in settings -->
+    <string name="pref_location_error_description">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+    <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+
 
     <!-- Strings for formatting weather-related data -->
     <!-- Temperature format [CHAR LIMIT=5 -->

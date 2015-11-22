@@ -3,7 +3,7 @@
 
     <EditTextPreference
         android:defaultValue="@string/pref_location_default"
-        android:key="@string/pref_location_key"
+        android:key="@string/pref_keys_location"
         android:singleLine="true"
         android:summary="@string/pref_location_default"
         android:title="@string/pref_location_label" />

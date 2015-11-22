@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.v4.app.NotificationCompat;
@@ -75,7 +76,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
     /*Replacement of enum as annotated constant*/
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({LOCATION_STATUS_OK, LOCATION_STATUS_SERVER_DOWN, LOCATION_STATUS_SERVER_INVALID, LOCATION_STATUS_BAD_REQUEST, LOCATION_STATUS_UNKNOWN})
+    @IntDef({LOCATION_STATUS_OK, LOCATION_STATUS_SERVER_DOWN, LOCATION_STATUS_SERVER_INVALID, LOCATION_STATUS_INVALID, LOCATION_STATUS_UNKNOWN})
     public @interface locationStatus {
     }
 
@@ -83,7 +84,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     public static final int LOCATION_STATUS_OK = 0;
     public static final int LOCATION_STATUS_SERVER_DOWN = 1;
     public static final int LOCATION_STATUS_SERVER_INVALID = 2;
-    public static final int LOCATION_STATUS_BAD_REQUEST = 3;
+    public static final int LOCATION_STATUS_INVALID = 3;
     public static final int LOCATION_STATUS_UNKNOWN = 4;
 
     public SunshineSyncAdapter(Context context, boolean autoInitialize) {
@@ -157,8 +158,6 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
             /*Close input-stream-reader*/
             inputStream.close();
-            setsLocationPreference(getContext(), LOCATION_STATUS_OK);
-
         } catch (IOException e) {
             setsLocationPreference(getContext(), LOCATION_STATUS_SERVER_DOWN);
             Log.e(TAG, "Error ", e);
@@ -194,83 +193,91 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             LocationAttribute la = JSONParser.parseLocationForcast(forecastJsonStr);
 
-            long locationId = addLocation(locationSetting, la.getCityName(), Double.parseDouble(la.getLati())
-                    , Double.parseDouble(la.getLongi()));
+            if (la != null) {
+                long locationId = addLocation(locationSetting, la.getCityName(), Double.parseDouble(la.getLati())
+                        , Double.parseDouble(la.getLongi()));
 
-            List<WeatherAttribute> lsWeather = JSONParser.parseWeatherForcast(forecastJsonStr, locationId + "");
+                List<WeatherAttribute> lsWeather = JSONParser.parseWeatherForcast(forecastJsonStr, locationId + "");
 
-            // Insert the new weather information into the database
-            Vector<ContentValues> cVVector = new Vector<ContentValues>(lsWeather.size());
+                // Insert the new weather information into the database
+                Vector<ContentValues> cVVector = new Vector<ContentValues>(lsWeather.size());
 
-            // OWM returns daily forecasts based upon the local time of the city that is being
-            // asked for, which means that we need to know the GMT offset to translate this data
-            // properly.
+                // OWM returns daily forecasts based upon the local time of the city that is being
+                // asked for, which means that we need to know the GMT offset to translate this data
+                // properly.
 
-            // Since this data is also sent in-order and the first day is always the
-            // current day, we're going to take advantage of that to get a nice
-            // normalized UTC date for all of our weather.
+                // Since this data is also sent in-order and the first day is always the
+                // current day, we're going to take advantage of that to get a nice
+                // normalized UTC date for all of our weather.
 
-            Time dayTime = new Time();
-            dayTime.setToNow();
+                Time dayTime = new Time();
+                dayTime.setToNow();
 
-            // we start at the day returned by local time. Otherwise this is a mess.
-            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
+                // we start at the day returned by local time. Otherwise this is a mess.
+                int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
 
-            // now we work exclusively in UTC
-            dayTime = new Time();
+                // now we work exclusively in UTC
+                dayTime = new Time();
 
-            for (int i = 0; i < lsWeather.size(); i++) {
+                for (int i = 0; i < lsWeather.size(); i++) {
 
-                // Cheating to convert this to UTC time, which is what we want anyhow
-                long dateTime = dayTime.setJulianDay(julianStartDay + i);
+                    // Cheating to convert this to UTC time, which is what we want anyhow
+                    long dateTime = dayTime.setJulianDay(julianStartDay + i);
 
-                // These are the values that will be collected.
+                    // These are the values that will be collected.
 
-                WeatherAttribute wa = lsWeather.get(i);
-                ContentValues weatherValues = new ContentValues();
+                    WeatherAttribute wa = lsWeather.get(i);
+                    ContentValues weatherValues = new ContentValues();
 
-                weatherValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationId);
-                weatherValues.put(WeatherContract.WeatherEntry.DATE, dateTime);
-                weatherValues.put(WeatherContract.WeatherEntry.HUMIDITY, wa.getHumidity());
-                weatherValues.put(WeatherContract.WeatherEntry.PRESSURE, wa.getPressure());
-                weatherValues.put(WeatherContract.WeatherEntry.WIND_SPEED, wa.getWindSpeed());
-                weatherValues.put(WeatherContract.WeatherEntry.DEGREES, wa.getDegree());
-                weatherValues.put(WeatherContract.WeatherEntry.MAX, wa.getMax());
-                weatherValues.put(WeatherContract.WeatherEntry.MIN, wa.getMin());
-                weatherValues.put(WeatherContract.WeatherEntry.SHORT_DESC, wa.getDescription());
-                weatherValues.put(WeatherContract.WeatherEntry.WEATHER_ID, wa.getWeather_id());
+                    weatherValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationId);
+                    weatherValues.put(WeatherContract.WeatherEntry.DATE, dateTime);
+                    weatherValues.put(WeatherContract.WeatherEntry.HUMIDITY, wa.getHumidity());
+                    weatherValues.put(WeatherContract.WeatherEntry.PRESSURE, wa.getPressure());
+                    weatherValues.put(WeatherContract.WeatherEntry.WIND_SPEED, wa.getWindSpeed());
+                    weatherValues.put(WeatherContract.WeatherEntry.DEGREES, wa.getDegree());
+                    weatherValues.put(WeatherContract.WeatherEntry.MAX, wa.getMax());
+                    weatherValues.put(WeatherContract.WeatherEntry.MIN, wa.getMin());
+                    weatherValues.put(WeatherContract.WeatherEntry.SHORT_DESC, wa.getDescription());
+                    weatherValues.put(WeatherContract.WeatherEntry.WEATHER_ID, wa.getWeather_id());
 
-                cVVector.add(weatherValues);
+                    cVVector.add(weatherValues);
+                }
+
+                int inserted = 0;
+                // add to database
+                if (cVVector.size() > 0) {
+                    ContentValues[] cv = new ContentValues[cVVector.size()];
+                    cVVector.toArray(cv);
+                    inserted = getContext().getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cv);
+
+                    if (AppConstant.DEVELOPER_TRACK)
+                        Log.d(TAG, "getWeatherDataFromJson, Data Inserted" + inserted);
+
+                    // Delete Previous Days Data
+                    String where = WeatherContract.WeatherEntry.DATE + "<=?";
+                    String values[] = {Long.toString(dayTime.setJulianDay(julianStartDay - 1))};
+                    long countDeleted = getContext().getContentResolver().delete(WeatherContract.WeatherEntry.CONTENT_URI, where, values);
+                    if (AppConstant.DEVELOPER_TRACK)
+                        Log.d(TAG, "getWeatherDataFromJson, Data Deleted" + countDeleted);
+
+                    notifyWeather();
+                }
+
+                if (AppConstant.DEBUG)
+                    Log.d(TAG, TAG + " Complete. " + inserted + " Inserted");
+            }else
+            {
+                  /*Till System detects Location is valid or not, mark it as unknown*/
+//                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//                EditTextPreference editTextPreference  = (EditTextPreference);
+//                editTextPreference.setTitle(getString(R.string.pref_location_unknown_description));
+//                updateEmptyView();
             }
-
-            int inserted = 0;
-            // add to database
-            if (cVVector.size() > 0) {
-                ContentValues[] cv = new ContentValues[cVVector.size()];
-                cVVector.toArray(cv);
-                inserted = getContext().getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cv);
-
-                if (AppConstant.DEVELOPER_TRACK)
-                    Log.d(TAG, "getWeatherDataFromJson, Data Inserted" + inserted);
-
-                // Delete Previous Days Data
-                String where = WeatherContract.WeatherEntry.DATE + "<=?";
-                String values[] = {Long.toString(dayTime.setJulianDay(julianStartDay - 1))};
-                long countDeleted = getContext().getContentResolver().delete(WeatherContract.WeatherEntry.CONTENT_URI, where, values);
-                if (AppConstant.DEVELOPER_TRACK)
-                    Log.d(TAG, "getWeatherDataFromJson, Data Deleted" + countDeleted);
-
-                notifyWeather();
-            }
-
-            if (AppConstant.DEBUG)
-                Log.d(TAG, TAG + " Complete. " + inserted + " Inserted");
 
         } catch (JSONException e) {
             if (AppConstant.DEVELOPER_TRACK)
                 Log.e(TAG, e.getMessage(), e);
             e.printStackTrace();
-
             throw e;
         }
     }
@@ -483,7 +490,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     /*Sets the location preference into shared preference */
-    static private void setsLocationPreference(Context context, @locationStatus int location_status) {
+    public static void setsLocationPreference(Context context, @locationStatus int location_status) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putInt(context.getString(R.string.pref_keys_location_key_status), location_status);

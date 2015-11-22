@@ -5,6 +5,10 @@ package in.udacity.learning.web_services;
  */
 public interface WebServiceParsingKeys {
 
+    interface errorKeys{
+        String COD = "cod";
+        String MESSAGE = "message";
+    }
     interface weatherKeys {
         String MIN = "min";
         String MAX = "max";

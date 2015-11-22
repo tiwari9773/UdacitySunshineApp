@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         String location = Utility.getPreferredLocation(this);
 
         if (location != null && !location.equals(mLocation)) {
-            //ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_ID);
+            Utility.resetLocationStatus(this);
             ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.frag_container);
             if (ff != null) {
                 ff.onLocationChange();
@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }

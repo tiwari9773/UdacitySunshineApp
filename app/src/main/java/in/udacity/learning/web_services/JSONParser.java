@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +28,8 @@ import in.udacity.learning.model.LocationAttribute;
 import in.udacity.learning.model.WeatherAttribute;
 import in.udacity.learning.shunshine.app.MyApplication;
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.sync.SunshineSyncAdapter;
+import in.udacity.learning.utility.Utility;
 
 /**
  * Created by Lokesh on 06-09-2015.
@@ -85,17 +89,31 @@ public class JSONParser {
     }
 
     // parse value of location table
-    public static LocationAttribute parseLocationForcast(String jSonString) throws JSONException{
+    public static LocationAttribute parseLocationForcast(String jSonString) throws JSONException {
         LocationAttribute la = null;
         try {
             JSONObject jsonObject = new JSONObject(jSonString);
+            if (jsonObject.has(WebServiceParsingKeys.errorKeys.COD)) {
+                int code = jsonObject.getInt(WebServiceParsingKeys.errorKeys.COD);
+                switch (code) {
+                    case HttpURLConnection.HTTP_OK:
+                        SunshineSyncAdapter.setsLocationPreference(MyApplication.getContext(), SunshineSyncAdapter.LOCATION_STATUS_OK);
+                        break;
+                    case HttpURLConnection.HTTP_NOT_FOUND:
+                        SunshineSyncAdapter.setsLocationPreference(MyApplication.getContext(), SunshineSyncAdapter.LOCATION_STATUS_INVALID);
+                        return null;
+                    default:
+                        SunshineSyncAdapter.setsLocationPreference(MyApplication.getContext(), SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN);
+                        return null;
+                }
+            }
+
             jsonObject = jsonObject.getJSONObject(WebServiceParsingKeys.locationKeys.CITY);
 
             //set Time
             Calendar dayTime = new GregorianCalendar();
             Date date = new Date();
             dayTime.setTime(date);
-
 
             String id = jsonObject.getString(WebServiceParsingKeys.locationKeys.ID);
             String city_name = jsonObject.getString(WebServiceParsingKeys.locationKeys.CITY_NAME);
@@ -106,12 +124,12 @@ public class JSONParser {
             String lon = jsonObject.getString(WebServiceParsingKeys.locationKeys.LONGI);
 
             la = new LocationAttribute(id, city_name, lat, lon);
-
         } catch (JSONException e) {
             Log.e(TAG, "parseLocationForcast " + " " + e.getMessage() + " " + e.getCause() + " " + e.getLocalizedMessage());
             e.printStackTrace();
             throw e;
         }
+
         return la;
     }
 
