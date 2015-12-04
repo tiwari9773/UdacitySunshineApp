@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "in.udacity.learning.shunshine.app.SettingsActivity"/>
+      <point      
+        x = "1748"      
+        y = "120"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "in.udacity.learning.shunshine.app.DetailActivity"/>
+      <point      
+        x = "132"      
+        y = "168"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "in.udacity.learning.shunshine.app.MainActivity"/>
+      <point      
+        x = "920"      
+        y = "144"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>

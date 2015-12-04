@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/in.udacity.learning.shunshine.app">
 
-    <EditTextPreference
+    <in.udacity.learning.custom_view.LocationEditTextPreference
+        custom:min_length="3"
         android:defaultValue="@string/pref_location_default"
         android:key="@string/pref_keys_location"
         android:singleLine="true"

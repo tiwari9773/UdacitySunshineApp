@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="location_edit_text_preference">
+        <attr name="min_length" format="integer"></attr>
+    </declare-styleable>
+</resources>
