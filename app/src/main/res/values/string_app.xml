@@ -27,10 +27,27 @@
     <string name="pref_icon_title">Icon Option</string>
     <string name="pref_icon_summery">Default</string>
     <string name="pref_key_icon">pref_color</string>
-    <string-array name="arr_icon_list">
-        <item>Mono</item>
-        <item>Colored</item>
-        <item>Default</item>
+
+    <!-- Names of the art packs available -->
+    <string-array name="pref_art_pack_options">
+        <item>@string/pref_art_pack_label_sunshine</item>
+        <item>@string/pref_art_pack_label_mono</item>
+        <item>@string/pref_art_pack_label_colored</item>
+    </string-array>
+
+    <!-- Label for Sunshine option in art pack preference [CHAR LIMIT=25] -->
+    <string name="pref_art_pack_label_sunshine">Sunshine</string>
+
+    <!-- Label for cute dogs option in art pack preference [CHAR LIMIT=25] -->
+    <string name="pref_art_pack_label_colored">Colored</string>
+
+    <string name="pref_art_pack_label_mono">Mono</string>
+
+    <!-- Format for retrieving art from an external source [CHAR LIMIT=NONE] -->
+    <string-array name="pref_art_pack_values">
+        <item>@string/pref_art_pack_sunshine</item>
+        <item>@string/pref_art_pack_mono</item>
+        <item>@string/pref_art_pack_colored</item>
     </string-array>
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
@@ -90,9 +107,18 @@
 
     <!-- Date format [CHAR LIMIT=NONE] -->
     <string name="format_full_friendly_date"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="day">%2$s</xliff:g></string>
+
     <!-- Format for retrieving art from an external source [CHAR LIMIT=NONE] -->
     <string name="format_art_url" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_<xliff:g id="description">%s</xliff:g>.png</string>
 
+    <!-- Value in SharedPreferences for Sunshine art pack option [CHAR LIMIT=NONE] -->
+    <string name="pref_art_pack_sunshine" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-xxhdpi/art_%s.png</string>
+
+    <!-- Value in SharedPreferences for cute dogs art pack  option [CHAR LIMIT=NONE] -->
+    <string name="pref_art_pack_mono" translatable="false">https://github.com/udacity/sunshine_icons/tree/master/Archive/Mono/art_%s.png</string>
+
+    <!-- Value in SharedPreferences for cute dogs art pack  option [CHAR LIMIT=NONE] -->
+    <string name="pref_art_pack_colored" translatable="false">https://github.com/udacity/sunshine_icons/tree/master/Archive/Colored/art_%s.png</string>
 
     <!-- A11y -->
     <string name="a11y_forecast">Forecast: <xliff:g id="condition">%1$s</xliff:g></string>

@@ -44,7 +44,7 @@ public class SettingsFragment extends PreferenceFragment
         Preference edit_preference = findPreference(getString(R.string.pref_keys_location));
         bindPreferenceSummaryToValue(edit_preference);
 
-        Preference edit_icon_pack = findPreference(getString(R.string.pref_icon_key));
+        Preference edit_icon_pack = findPreference(getString(R.string.pref_key_icon));
         bindPreferenceSummaryToValue(edit_icon_pack);
     }
 

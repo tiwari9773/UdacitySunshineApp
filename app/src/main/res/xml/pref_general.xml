@@ -20,10 +20,11 @@
         android:title="@string/pref_title_units" />
 
     <ListPreference
+        android:key="@string/pref_key_icon"
         android:defaultValue="@string/pref_icon_color_default"
         android:dialogTitle="@string/pref_icon_color_dialog_title"
-        android:entryValues="@array/arr_unit_list"
-        android:entries="@array/arr_icon_list"
+        android:entryValues="@array/pref_art_pack_values"
+        android:entries="@array/pref_art_pack_options"
         android:summary="@string/pref_icon_summery"
         android:title="@string/pref_icon_title" />
 
