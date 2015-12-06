@@ -4,8 +4,10 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
 
-    <string name="pref_heading" translatable="false">Sunshine Setting</string>
+    <string name="sync_account_type">sunshine.udacity.com</string>
+    <string name="content_authority">in.udacity.learning.shunshine.app</string>
 
+    <string name="pref_heading" translatable="false">Sunshine Setting</string>
     <string name="pref_title_units" translatable="false">Temperature Unit</string>
     <string name="pref_unit_metric">metric</string>
     <string name="pref_unit_imperial">imperial</string>
@@ -14,8 +16,22 @@
         <item>imperial</item>
     </string-array>
 
-    <string name="sync_account_type">sunshine.udacity.com</string>
-    <string name="content_authority">in.udacity.learning.shunshine.app</string>
+    <!-- Strings related to Notification preference -->
+    <string name="pref_last_notification" translatable="false">last_notification</string>
+    <string name="pref_notification_summery_on">Notification Enabled</string>
+    <string name="pref_notification_summery_off">Notification Disabled</string>
+
+    <!--String for color Icon-->
+    <string name="pref_icon_color_default">Colored</string>
+    <string name="pref_icon_color_dialog_title">Icon Option</string>
+    <string name="pref_icon_title">Icon Option</string>
+    <string name="pref_icon_summery">Default</string>
+    <string name="pref_key_icon">pref_color</string>
+    <string-array name="arr_icon_list">
+        <item>Mono</item>
+        <item>Colored</item>
+        <item>Default</item>
+    </string-array>
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
@@ -36,6 +52,11 @@
     <!-- Strings used when displaying the state of the Location in settings -->
     <string name="pref_location_error_description">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
     <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+
+    <!--Configuration Related Stuff-->
+    <string name="config_default_format" translatable="false">json</string>
+    <string name="config_default_unit_type" translatable="false">metric</string>
+    <string name="config_default_days" translatable="false">14</string>
 
 
     <!-- Strings for formatting weather-related data -->
@@ -59,16 +80,6 @@
 
     <!-- Notification Format -->
     <string name="format_notification">Forecast: <xliff:g id="condition">%1$s</xliff:g> High: <xliff:g id="high">%2$s</xliff:g> Low: <xliff:g id="low">%3$s</xliff:g></string>
-
-    <!-- Strings related to Notification preference -->
-    <string name="pref_last_notification" translatable="false">last_notification</string>
-    <string name="pref_notification_summery_on">Notification Enabled</string>
-    <string name="pref_notification_summery_off">Notification Disabled</string>
-
-    <!--Configuration Related Stuff-->
-    <string name="config_default_format" translatable="false">json</string>
-    <string name="config_default_unit_type" translatable="false">metric</string>
-    <string name="config_default_days" translatable="false">14</string>
 
     <!--Message related to app-->
     <string name="msg_no_weather_info">No Weather Information Available</string>

@@ -3,12 +3,12 @@
     xmlns:custom="http://schemas.android.com/apk/res/in.udacity.learning.shunshine.app">
 
     <in.udacity.learning.custom_view.LocationEditTextPreference
-        custom:min_length="3"
         android:defaultValue="@string/pref_location_default"
         android:key="@string/pref_keys_location"
         android:singleLine="true"
         android:summary="@string/pref_location_default"
-        android:title="@string/pref_location_label" />
+        android:title="@string/pref_location_label"
+        custom:min_length="3" />
 
     <ListPreference
         android:defaultValue="@string/pref_unit_metric"
@@ -19,10 +19,18 @@
         android:summary="@string/pref_unit_metric"
         android:title="@string/pref_title_units" />
 
+    <ListPreference
+        android:defaultValue="@string/pref_icon_color_default"
+        android:dialogTitle="@string/pref_icon_color_dialog_title"
+        android:entryValues="@array/arr_unit_list"
+        android:entries="@array/arr_icon_list"
+        android:summary="@string/pref_icon_summery"
+        android:title="@string/pref_icon_title" />
+
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="@string/pref_keys_notification"
-        android:summaryOn="@string/pref_notification_summery_on"
         android:summaryOff="@string/pref_notification_summery_off"
+        android:summaryOn="@string/pref_notification_summery_on"
         android:title="Notification" />
 </PreferenceScreen>

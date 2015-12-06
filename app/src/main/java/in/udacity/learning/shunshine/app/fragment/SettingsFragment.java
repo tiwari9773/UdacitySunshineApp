@@ -43,6 +43,9 @@ public class SettingsFragment extends PreferenceFragment
 
         Preference edit_preference = findPreference(getString(R.string.pref_keys_location));
         bindPreferenceSummaryToValue(edit_preference);
+
+        Preference edit_icon_pack = findPreference(getString(R.string.pref_icon_key));
+        bindPreferenceSummaryToValue(edit_icon_pack);
     }
 
     @Override
@@ -121,6 +124,9 @@ public class SettingsFragment extends PreferenceFragment
             bindPreferenceSummaryToValue(locationPreference);
         } else if (key.equals(getString(R.string.pref_keys_unit_type))) {
             // units have changed. update lists of weather entries accordingly
+            getActivity().getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+        }else if ( key.equals(getString(R.string.pref_key_icon)) ) {
+            // art pack have changed. update lists of weather entries accordingly
             getActivity().getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
         }
     }

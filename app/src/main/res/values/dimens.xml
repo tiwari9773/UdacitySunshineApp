@@ -7,4 +7,8 @@
     <dimen name="margin_tiny">4dp</dimen>
     <dimen name="default_height_list">50dp</dimen>
     <dimen name="list_header_today_menu_padding_60">60dp</dimen>
+
+    <!--Use defaut Icon size for below 17 version-->
+    <dimen name="notification_large_icon_default">48dp</dimen>
+
 </resources>

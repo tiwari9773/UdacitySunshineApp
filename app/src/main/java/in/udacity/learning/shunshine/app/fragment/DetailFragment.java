@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.shunshine.app.R;
@@ -183,6 +185,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
             // Use placeholder Image
             mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+
+            // Use weather art image
+            Glide.with(this)
+                    .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
+                    .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                    .crossFade()
+                    .into(mIconView);
 
             // Content Description
             mIconView.setContentDescription(data.getString(ForecastFragment.COL_WEATHER_DESC));

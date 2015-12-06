@@ -1,63 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingLeft="@dimen/list_header_today_menu_padding_60"
-    android:paddingStart="@dimen/list_header_today_menu_padding_60"
+    android:layout_height="match_parent"
     android:background="@color/primary"
-    android:layout_height="match_parent">
+    android:paddingLeft="@dimen/list_header_today_menu_padding_60"
+    android:paddingStart="@dimen/list_header_today_menu_padding_60">
 
     <LinearLayout
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:textColor="@color/white"
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
 
         <TextView
-            android:textColor="@color/white"
-            android:textSize="72sp"
-            android:fontFamily="sans-serif-light"
             android:id="@+id/tv_max_temp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/white"
+            android:textSize="72sp" />
 
         <TextView
-            android:textColor="@color/white"
-            android:textSize="36sp"
             android:id="@+id/tv_min_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginStart="@dimen/default_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/white"
+            android:textSize="36sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_weather_thumbnail"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true" />
 
         <TextView
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_gravity="center_horizontal"
-            android:textAppearance="?android:textAppearanceLarge"
             android:id="@+id/tv_weather_desc"
-            android:textSize="22sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
     </LinearLayout>
 
 
