@@ -117,23 +117,31 @@ public class ForecastAdapter extends CursorAdapter {
         }
 
         // Content Description
-        viewHolder.iconView.setContentDescription(cursor.getString(ForecastFragment.COL_WEATHER_DESC));
+        // For accessibility, we don't want a content description for the icon field
+        // because the information is repeated in the description view and the icon
+        // is not individually selectable
+        //viewHolder.iconView.setContentDescription(cursor.getString(ForecastFragment.COL_WEATHER_DESC));
         //Read Date
         long dayInMillis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(mContext, dayInMillis));
 
-        viewHolder.descriptionView.setText(cursor.getString(ForecastFragment.COL_WEATHER_DESC));
+        String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
+        viewHolder.descriptionView.setText(description);
+        viewHolder.descriptionView.setContentDescription(context.getString(R.string.a11y_forecast, description));
 
         // Read user preference for metric or imperial temperature units
-        boolean isMetric = Utility.isMetric(context);
+        //boolean isMetric = Utility.isMetric(context);
 
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(mContext, low));
-        viewHolder.lowTempView.setContentDescription("Minimtum Temperature is " + Utility.formatTemperature(mContext, low));
+        String strLow = Utility.formatTemperature(mContext, low);
+        viewHolder.lowTempView.setText(strLow);
+        viewHolder.lowTempView.setContentDescription(context.getString(R.string.a11y_low_temp, strLow));
+
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(mContext, high));
-        viewHolder.highTempView.setContentDescription("Maximum Temperature is " + Utility.formatTemperature(mContext, high));
+        String strHigh = Utility.formatTemperature(mContext, high);
+        viewHolder.highTempView.setText(strHigh);
+        viewHolder.highTempView.setContentDescription(context.getString(R.string.a11y_high_temp, strHigh));
     }
 
     @Override
