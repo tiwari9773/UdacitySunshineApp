@@ -13,6 +13,8 @@
     <!-- Other Color-->
     <color name="tranparent">#00000000</color>
 
+    <color name="grey_700">#646464</color>
+
     <color name="black">#000000</color>
     <color name="gray">#808080</color>
     <color name="silver">#C0C0C0</color>
@@ -33,6 +35,11 @@
 
     <color name="grey">#cccccc</color>
     <color name="sunshine_light_blue">#ff64c2f4</color>
+
+
+    <!-- our detail accent colors -->
+    <color name="detail_accent_pane_background">#455A64</color>
+    <color name="detail_accent_label">#90A4AE</color>
 
 </resources>
 

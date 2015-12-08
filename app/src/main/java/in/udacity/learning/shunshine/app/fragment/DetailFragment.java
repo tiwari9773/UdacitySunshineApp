@@ -82,7 +82,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_WEATHER_CONDITION_ID = 9;
 
     private ImageView mIconView;
-    private TextView mFriendlyDateView;
+
     private TextView mDateView;
     private TextView mDescriptionView;
     private TextView mHighTempView;
@@ -99,23 +99,26 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(DetailFragment.DETAIL_URI);
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        initialise(rootView);
+        return rootView;
+    }
+
+    private void initialise(View rootView) {
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
         mDateView = (TextView) rootView.findViewById(R.id.detail_date_textview);
-        mFriendlyDateView = (TextView) rootView.findViewById(R.id.detail_day_textview);
+
         mDescriptionView = (TextView) rootView.findViewById(R.id.detail_forecast_textview);
         mHighTempView = (TextView) rootView.findViewById(R.id.detail_high_textview);
         mLowTempView = (TextView) rootView.findViewById(R.id.detail_low_textview);
         mHumidityView = (TextView) rootView.findViewById(R.id.detail_humidity_textview);
         mWindView = (TextView) rootView.findViewById(R.id.detail_wind_textview);
         mPressureView = (TextView) rootView.findViewById(R.id.detail_pressure_textview);
-        return rootView;
     }
 
     @Override
@@ -200,8 +203,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             long date = data.getLong(COL_WEATHER_DATE);
             String friendlyDateText = Utility.getDayName(getActivity(), date);
             String dateText = Utility.getFormattedMonthDay(getActivity(), date);
-            mFriendlyDateView.setText(friendlyDateText);
-            mDateView.setText(dateText);
+            mDateView.setText(friendlyDateText+","+dateText);
 
             // Read description from cursor and update view
             String description = Utility.getStringForWeatherCondition(getActivity(), weatherId);
