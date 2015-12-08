@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/today_touch_selector"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
     android:paddingLeft="@dimen/list_header_today_menu_padding_60"
     android:paddingStart="@dimen/list_header_today_menu_padding_60">
 
@@ -17,6 +19,8 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/white" />
 
         <TextView

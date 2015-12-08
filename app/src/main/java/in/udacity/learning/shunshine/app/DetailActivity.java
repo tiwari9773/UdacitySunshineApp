@@ -23,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Intent in = getIntent();
