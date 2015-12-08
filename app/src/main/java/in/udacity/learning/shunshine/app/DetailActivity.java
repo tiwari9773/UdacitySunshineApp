@@ -22,7 +22,8 @@ public class DetailActivity extends AppCompatActivity {
     private void initialize(Bundle savedInstanceState) {
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Intent in = getIntent();
         String weatherRep = "";

@@ -28,7 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
     private void initialize() {
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction()

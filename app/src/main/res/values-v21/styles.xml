@@ -8,6 +8,12 @@
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:textColor">@color/primary_text</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:toolbarStyle">@style/Toolbar</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
 </resources>

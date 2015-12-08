@@ -145,7 +145,7 @@ public class TestProvider extends AndroidTestCase {
      This test uses the database directly to insert and then uses the ContentProvider to
      read out the data.  Uncomment this test to see if your location queries are
      performing correctly.
-  */
+    */
 //    public void testBasicLocationQueries() {
 //        // insert our test records into the database
 //        DBHelper dbHelper = new DBHelper(mContext);
