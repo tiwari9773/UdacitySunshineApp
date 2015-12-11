@@ -5,17 +5,32 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include layout="@layout/layout_toolbar"></include>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/listPreferredItemHeight"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:scaleType="center"
+            android:src="@drawable/ic_logo" />
+        />
+    </android.support.v7.widget.Toolbar>
 
     <fragment
         android:id="@+id/frag_container"
         android:name="in.udacity.learning.shunshine.app.fragment.ForecastFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
         tools:layout="@layout/fragment_main"></fragment>
 
 </LinearLayout>

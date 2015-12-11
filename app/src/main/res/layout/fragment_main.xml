@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ListView
+        android:divider="@null"
         android:id="@+id/lv_weather_list"
         style="@style/ForecastTodayStyle"
         android:layout_width="match_parent"
@@ -12,14 +13,14 @@
 
     <TextView
         android:id="@+id/tv_empty_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:gravity="center"
         android:text="@string/msg_no_weather_info"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-</LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"/>
+</FrameLayout>

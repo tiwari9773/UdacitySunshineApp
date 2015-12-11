@@ -31,9 +31,10 @@ import in.udacity.learning.utility.Utility;
 
 public class MainActivity extends AppCompatActivity implements ForecastFragment.Callback {
 
-    private Toolbar mToolbar;
     private final String TAG = MainActivity.class.getName();
 
+    private Toolbar mToolbar;
+    
     private static final String DETAIL_FRAGMENT_TAG = "DFTAG";
     private String mLocation;
     private boolean mTwoPane = false;
@@ -61,12 +62,10 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         //setup toolbar to have more control over Actionbar /** Kindly guide on this
         // is this good approach
-        // 1. When to use inbuild Actionbar?
+        // 1. When to use inbuilt Actionbar?
         // 2. When to use toolbar ?*/
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_logo);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if (findViewById(R.id.weather_detail_container) != null) {

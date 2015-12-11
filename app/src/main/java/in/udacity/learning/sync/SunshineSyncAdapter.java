@@ -335,8 +335,9 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
      * @param context The context used to access the account service
      */
     public static void syncImmediately(Context context) {
-        if (AppConstant.DEVELOPER_TRACK)
+        if (AppConstant.DEVELOPER_TRACK) {
             Log.d("LOG", "syncImmediately Called.");
+        }
 
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
