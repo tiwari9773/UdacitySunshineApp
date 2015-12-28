@@ -9,7 +9,7 @@ import in.udacity.learning.shunshine.app.fragment.DetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
     private DetailFragment mDetailFragment;
-    private Toolbar mToolbar;
+   // private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +20,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initialize(Bundle savedInstanceState) {
-        mToolbar = (Toolbar) findViewById(R.id.tb_main);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        mToolbar = (Toolbar) findViewById(R.id.tb_main);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Intent in = getIntent();
         String weatherRep = "";
