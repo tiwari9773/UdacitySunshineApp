@@ -20,12 +20,10 @@
         android:title="@string/pref_title_units" />
 
     <ListPreference
-        android:key="@string/pref_key_icon"
-        android:defaultValue="@string/pref_icon_color_default"
-        android:dialogTitle="@string/pref_icon_color_dialog_title"
-        android:entryValues="@array/pref_art_pack_values"
+        android:defaultValue="@string/pref_art_pack_sunshine"
         android:entries="@array/pref_art_pack_options"
-        android:summary="@string/pref_icon_summery"
+        android:entryValues="@array/pref_art_pack_values"
+        android:key="@string/pref_key_icon"
         android:title="@string/pref_icon_title" />
 
     <CheckBoxPreference

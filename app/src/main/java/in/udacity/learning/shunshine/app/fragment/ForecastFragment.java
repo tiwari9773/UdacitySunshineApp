@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
@@ -202,10 +204,14 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
             }
         });
 
-        // Lets keep first Item Selected if it is tablet
-        if (((MainActivity) getActivity()).ismTwoPane())
-            mlsView.setSelection(0);
+
+//        // Lets keep first Item Selected if it is tablet
+//        if (((MainActivity) getActivity()).ismTwoPane()) {
+//            mlsView.setSelection(0);
+//        }
+
     }
+
 
     private void openPreferedMapLocation() {
 
@@ -331,15 +337,35 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
-        if (mSelectionPostion != ListView.INVALID_POSITION)
-            mlsView.setSelection(mSelectionPostion);
-        // mlsView.smoothScrollToPosition(mSelectionPostion);
 
-        /*Update the View*/
+         /*Update the View*/
         updateEmptyView();
 
-        if (AppConstant.DEBUG)
+        if (mSelectionPostion != ListView.INVALID_POSITION)
+            mlsView.setSelection(mSelectionPostion);
+
+        /*If two pan and nothing is selected yet make first one selected*/
+        if (((MainActivity) getActivity()).ismTwoPane() && (mSelectionPostion == ListView.INVALID_POSITION)) {
+
+            final int WHAT = 1;
+            Handler handler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == WHAT) {
+                        mlsView.setSelection(0);
+                        mlsView.setItemChecked(0, true);
+                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
+                    }
+                }
+            };
+            handler.sendEmptyMessage(WHAT);
+
+        }
+
+        if (AppConstant.DEBUG) {
             Log.d(TAG, "onLoadFinished Position" + mSelectionPostion);
+        }
+
     }
 
     @Override

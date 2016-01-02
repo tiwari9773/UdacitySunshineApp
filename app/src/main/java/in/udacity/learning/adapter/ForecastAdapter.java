@@ -27,47 +27,19 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
     private static final int VIEW_TYPE_COUNT = 2;
 
+    // Flag to determine if we want to use a separate view for "today".
+    private boolean mUseTodayLayout = true;
 
     public void setmUseTodayLayout(boolean mUseTodayLayout) {
         this.mUseTodayLayout = mUseTodayLayout;
 
     }
 
-    // Flag to determine if we want to use a separate view for "today".
-    private boolean mUseTodayLayout = true;
-
     public ForecastAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 
-    /**
-     * Prepare the weather high/lows for presentation.
-     */
-    private String formatHighLows(double high, double low) {
-        boolean isMetric = Utility.isMetric(mContext);
-        String highLowStr = Utility.formatTemperature(mContext, high) + "/" + Utility.formatTemperature(mContext, low);
-        return highLowStr;
-    }
-
-    /*
-        This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string.
-     */
-    private String convertCursorRowToUXFormat(Cursor cursor) {
-
-        String highAndLow = formatHighLows(
-                cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP),
-                cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP));
-
-        return Utility.formatDate(cursor.getLong(ForecastFragment.COL_WEATHER_DATE)) +
-                " - " + cursor.getString(ForecastFragment.COL_WEATHER_DESC) +
-                " - " + highAndLow;
-    }
-
-
-    /*
-     Remember that these views are reused as needed.
-         */
+    /* Remember that these views are reused as needed. */
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
@@ -112,8 +84,7 @@ public class ForecastAdapter extends CursorAdapter {
             }
             default: {
                 // Get weather icon
-                fallbackIconId = Utility.getIconResourceForWeatherCondition(
-                        cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID));
+                fallbackIconId = Utility.getIconResourceForWeatherCondition(weatherId);
                 break;
             }
         }
@@ -180,5 +151,4 @@ public class ForecastAdapter extends CursorAdapter {
             highTempView = (TextView) view.findViewById(R.id.tv_max_temp);
         }
     }
-
 }

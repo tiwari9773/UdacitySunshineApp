@@ -189,15 +189,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             // Read weather condition ID from cursor
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
             // Use placeholder Image
-            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
-
-            // Use weather art image
-            Glide.with(this)
-                    .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
-                    .error(Utility.getArtResourceForWeatherCondition(weatherId))
-                    .crossFade()
-                    .into(mIconView);
-
+            if ( Utility.usingLocalGraphics(getActivity()) ) {
+                mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+            }else {
+                // Use weather art image
+                Glide.with(this)
+                        .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
+                        .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                        .crossFade()
+                        .into(mIconView);
+            }
             // Content Description
             mIconView.setContentDescription(data.getString(ForecastFragment.COL_WEATHER_DESC));
 
