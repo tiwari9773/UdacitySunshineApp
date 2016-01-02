@@ -14,6 +14,7 @@ import android.support.v4.content.Loader;
 
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -107,7 +109,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             mUri = arguments.getParcelable(DetailFragment.DETAIL_URI);
         }
 
-        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_detail_start, container, false);
         initialise(rootView);
         return rootView;
     }
@@ -133,7 +135,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if ( getActivity() instanceof DetailActivity){
+        if (getActivity() instanceof DetailActivity) {
             // Inflate the menu; this adds items to the action bar if it is present.
             inflater.inflate(R.menu.menu_detail, menu);
             finishCreatingMenu(menu);
@@ -180,18 +182,29 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                     null,
                     null
             );
+
+        ViewParent vp = getView().getParent();
+        if (vp instanceof CardView) {
+            ((View) vp).setVisibility(View.INVISIBLE);
+        }
         return null;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null && data.moveToFirst()) {
+
+            ViewParent vp = getView().getParent();
+            if (vp instanceof CardView) {
+                ((View) vp).setVisibility(View.VISIBLE);
+            }
+
             // Read weather condition ID from cursor
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
             // Use placeholder Image
-            if ( Utility.usingLocalGraphics(getActivity()) ) {
+            if (Utility.usingLocalGraphics(getActivity())) {
                 mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
-            }else {
+            } else {
                 // Use weather art image
                 Glide.with(this)
                         .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
@@ -206,7 +219,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             long date = data.getLong(COL_WEATHER_DATE);
             String friendlyDateText = Utility.getDayName(getActivity(), date);
             String dateText = Utility.getFormattedMonthDay(getActivity(), date);
-            mDateView.setText(friendlyDateText+","+dateText);
+            mDateView.setText(friendlyDateText + "," + dateText);
 
             // Read description from cursor and update view
             String description = Utility.getStringForWeatherCondition(getActivity(), weatherId);
@@ -251,23 +264,23 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                 mShareActionProvider.setShareIntent(createShareForecastIntent());
             }
 
-            AppCompatActivity activity = (AppCompatActivity)getActivity();
+            AppCompatActivity activity = (AppCompatActivity) getActivity();
             Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
 
             // We need to start the enter transition after the data has loaded
             if (activity instanceof DetailActivity) {
                 activity.supportStartPostponedEnterTransition();
 
-                if ( null != toolbarView ) {
+                if (null != toolbarView) {
                     activity.setSupportActionBar(toolbarView);
 
                     activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
                     activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
             } else {
-                if ( null != toolbarView ) {
+                if (null != toolbarView) {
                     Menu menu = toolbarView.getMenu();
-                    if ( null != menu ) menu.clear();
+                    if (null != menu) menu.clear();
                     toolbarView.inflateMenu(R.menu.menu_detail);
                     finishCreatingMenu(toolbarView.getMenu());
                 }
