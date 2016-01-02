@@ -4,7 +4,11 @@
     android:id="@+id/parentPanel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/touch_selector">
+    android:background="@drawable/touch_selector"
+    android:paddingEnd="@dimen/list_item_extra_padding"
+    android:paddingLeft="@dimen/list_item_extra_padding"
+    android:paddingRight="@dimen/list_item_extra_padding"
+    android:paddingStart="@dimen/list_item_extra_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
