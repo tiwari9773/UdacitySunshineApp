@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -112,7 +113,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     private final String POS_KEY = "pos_key";
 
     //List View which holds list
-    private ListView mlsView;
+    private RecyclerView mlsView;
 
     //Set layout bit if on mobile else small for tablet
     private boolean mUseTodayLayout;
@@ -185,24 +186,24 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     public void initialize(View view) {
 
-        mlsView = (ListView) view.findViewById(R.id.lv_weather_list);
-        mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
+        mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
+       // mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
 
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-        mlsView.setAdapter(mForecastAdapter);
-
-        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectionPostion = position;
-                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                onClickWeather(cursor);
-            }
-        });
+//        mlsView.setAdapter(mForecastAdapter);
+//
+//        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                mSelectionPostion = position;
+//                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+//                onClickWeather(cursor);
+//            }
+//        });
 
 
 //        // Lets keep first Item Selected if it is tablet
@@ -341,24 +342,24 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
          /*Update the View*/
         updateEmptyView();
 
-        if (mSelectionPostion != ListView.INVALID_POSITION)
-            mlsView.setSelection(mSelectionPostion);
+//        if (mSelectionPostion != ListView.INVALID_POSITION)
+//            mlsView.setSelection(mSelectionPostion);
 
         /*If two pan and nothing is selected yet make first one selected*/
         if (((MainActivity) getActivity()).ismTwoPane() && (mSelectionPostion == ListView.INVALID_POSITION)) {
 
-            final int WHAT = 1;
-            Handler handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if (msg.what == WHAT) {
-                        mlsView.setSelection(0);
-                        mlsView.setItemChecked(0, true);
-                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
-                    }
-                }
-            };
-            handler.sendEmptyMessage(WHAT);
+//            final int WHAT = 1;
+//            Handler handler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    if (msg.what == WHAT) {
+//                        mlsView.setSelection(0);
+//                        mlsView.setItemChecked(0, true);
+//                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
+//                    }
+//                }
+//            };
+  //          handler.sendEmptyMessage(WHAT);
 
         }
 
