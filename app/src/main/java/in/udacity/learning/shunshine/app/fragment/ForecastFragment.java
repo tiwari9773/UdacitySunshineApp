@@ -190,31 +190,25 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
         View v = view.findViewById(R.id.tv_empty_view);
 
-        // The CursorAdapter will take data from our cursor and populate the ListView
-        // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
-        // up with an empty list the first time we run.
-
-        //mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         mForecastAdapter = new ForecastAdapter(this, getActivity(), v);
         mlsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mlsView.setAdapter(mForecastAdapter);
-//        mlsView.setAdapter(mForecastAdapter);
-//
-//        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                mSelectionPostion = position;
-//                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-//                onClickWeather(cursor);
-//            }
-//        });
 
-
-//        // Lets keep first Item Selected if it is tablet
-//        if (((MainActivity) getActivity()).ismTwoPane()) {
-//            mlsView.setSelection(0);
-//        }
-
+        final View parallax = view.findViewById(R.id.parallax_bar);
+        if (parallax != null) {
+            mlsView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    int max = parallax.getHeight();
+                    if (dy > 0) {
+                        parallax.setTranslationY(Math.max(-max,parallax.getTranslationY()-dy/2));
+                    } else {
+                        parallax.setTranslationY(Math.min(0,parallax.getTranslationY()-dy/2));
+                    }
+                }
+            });
+        }
     }
 
 
@@ -244,6 +238,13 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
                 }
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mlsView!=null)
+        mlsView.clearOnScrollListeners();
     }
 
     @Override

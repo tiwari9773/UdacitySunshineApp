@@ -19,7 +19,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/appbar"
+        android:id="@+id/parallax_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -41,6 +41,7 @@
     </LinearLayout>
 
     <include
+        android:layout_marginTop="24dp"
         layout="@layout/fragment_main_base"
         android:layout_width="@dimen/landscape_forecast_view_width"
         android:layout_height="match_parent"
