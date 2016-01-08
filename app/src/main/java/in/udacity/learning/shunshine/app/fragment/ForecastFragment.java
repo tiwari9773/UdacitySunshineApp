@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -187,13 +188,16 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     public void initialize(View view) {
 
         mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
-       // mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
+        // mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
 
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
 
-        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
+        //mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
+        mForecastAdapter = new ForecastAdapter(getActivity());
+        mlsView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mlsView.setAdapter(mForecastAdapter);
 //        mlsView.setAdapter(mForecastAdapter);
 //
 //        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -306,7 +310,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
          use to determine why they aren't seeing weather.
       */
     private void updateEmptyView() {
-        if (mForecastAdapter.getCount() == 0) {
+        if (mForecastAdapter.getItemCount() == 0) {
             int message = R.string.msg_no_weather_info;
             TextView tv = (TextView) getView().findViewById(R.id.tv_empty_view);
             if (null != tv) {
@@ -359,7 +363,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 //                    }
 //                }
 //            };
-  //          handler.sendEmptyMessage(WHAT);
+            //          handler.sendEmptyMessage(WHAT);
 
         }
 
