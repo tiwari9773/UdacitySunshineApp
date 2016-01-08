@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import in.udacity.learning.dbhelper.WeatherContract;
+import in.udacity.learning.framework.OnWeatherItemClickListener;
+import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.utility.Utility;
@@ -26,7 +29,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
-    private static final int VIEW_TYPE_COUNT = 2;
 
     // Flag to determine if we want to use a separate view for "today".
     private boolean mUseTodayLayout = true;
@@ -34,12 +36,18 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     private Cursor mCursor;
     final private Context mContext;
 
+    private OnWeatherItemClickListener onWeatherItemClickListener;
+
+    private  View emptyView;
+
     public void setmUseTodayLayout(boolean mUseTodayLayout) {
         this.mUseTodayLayout = mUseTodayLayout;
     }
 
-    public ForecastAdapter(Context context) {
+    public ForecastAdapter(OnWeatherItemClickListener onWeatherItemClickListener, Context context,View emptyView) {
+        this.onWeatherItemClickListener = onWeatherItemClickListener;
         mContext = context;
+        this.emptyView = emptyView;
     }
 
     /* Remember that these views are reused as needed. */
@@ -78,7 +86,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         int fallbackIconId;
         switch (viewType) {
             case VIEW_TYPE_TODAY: {
-
                 fallbackIconId = Utility.getArtResourceForWeatherCondition(weatherId);
                 break;
             }
@@ -153,12 +160,22 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             descriptionView = (TextView) view.findViewById(R.id.tv_weather_desc);
             lowTempView = (TextView) view.findViewById(R.id.tv_min_temp);
             highTempView = (TextView) view.findViewById(R.id.tv_max_temp);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCursor.moveToPosition(getLayoutPosition());
+                    long date = mCursor.getLong(mCursor.getColumnIndex(WeatherContract.WeatherEntry.DATE));
+                    onWeatherItemClickListener.onClickWeather(date);
+                }
+            });
         }
     }
 
     public void swapCursor(Cursor newCursor) {
         mCursor = newCursor;
         notifyDataSetChanged();
+        emptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     public Cursor getCursor() {

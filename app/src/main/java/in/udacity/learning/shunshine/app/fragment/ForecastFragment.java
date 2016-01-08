@@ -108,7 +108,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     private static final int FORECAST_LOADER = 0;
 
     // Holds the clicked position of Item, remember to make at that place list when user rotates
-    private int mSelectionPostion = -1;
+    private int mSelectionPostion = RecyclerView.NO_POSITION;
 
     // key to holds selection position
     private final String POS_KEY = "pos_key";
@@ -188,14 +188,14 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     public void initialize(View view) {
 
         mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
-        // mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
+        View v = view.findViewById(R.id.tv_empty_view);
 
         // The CursorAdapter will take data from our cursor and populate the ListView
         // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
         // up with an empty list the first time we run.
 
         //mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-        mForecastAdapter = new ForecastAdapter(getActivity());
+        mForecastAdapter = new ForecastAdapter(this, getActivity(), v);
         mlsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mlsView.setAdapter(mForecastAdapter);
 //        mlsView.setAdapter(mForecastAdapter);
@@ -260,14 +260,12 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     }
 
     @Override
-    public void onClickWeather(Cursor cursor) {
+    public void onClickWeather(long date) {
 
-        if (cursor != null) {
-            String locationSetting = Utility.getPreferredLocation(getActivity());
-            ((Callback) getActivity()).onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-            ));
-        }
+        String locationSetting = Utility.getPreferredLocation(getActivity());
+        ((Callback) getActivity()).onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                locationSetting, date
+        ));
     }
 
 
