@@ -7,11 +7,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_weather_list"
-        style="@style/ForecastTodayStyle"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/tv_empty_view"
