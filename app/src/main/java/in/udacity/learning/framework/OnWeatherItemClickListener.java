@@ -7,5 +7,5 @@ import android.database.Cursor;
  */
 public interface OnWeatherItemClickListener {
 
-     void onClickWeather(Cursor position);
+     void onClickWeather(long date);
 }

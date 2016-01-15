@@ -37,5 +37,6 @@
     <dimen name="detail_container_bottom_margin">@dimen/abc_action_bar_default_height_material</dimen>
     <!-- The amount we want the details view to overlap the app bar -->
     <dimen name="details_app_bar_overlap">24dp</dimen>
+    <dimen name="landscape_forecast_view_width">360dp</dimen>
 
 </resources>

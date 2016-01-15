@@ -19,6 +19,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -106,13 +108,13 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     private static final int FORECAST_LOADER = 0;
 
     // Holds the clicked position of Item, remember to make at that place list when user rotates
-    private int mSelectionPostion = -1;
+    private int mSelectionPostion = RecyclerView.NO_POSITION;
 
     // key to holds selection position
     private final String POS_KEY = "pos_key";
 
     //List View which holds list
-    private ListView mlsView;
+    private RecyclerView mlsView;
 
     //Set layout bit if on mobile else small for tablet
     private boolean mUseTodayLayout;
@@ -185,31 +187,28 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
     public void initialize(View view) {
 
-        mlsView = (ListView) view.findViewById(R.id.lv_weather_list);
-        mlsView.setEmptyView(view.findViewById(R.id.tv_empty_view));
+        mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
+        View v = view.findViewById(R.id.tv_empty_view);
 
-        // The CursorAdapter will take data from our cursor and populate the ListView
-        // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
-        // up with an empty list the first time we run.
-
-        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
+        mForecastAdapter = new ForecastAdapter(this, getActivity(), v);
+        mlsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mlsView.setAdapter(mForecastAdapter);
 
-        mlsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectionPostion = position;
-                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                onClickWeather(cursor);
-            }
-        });
-
-
-//        // Lets keep first Item Selected if it is tablet
-//        if (((MainActivity) getActivity()).ismTwoPane()) {
-//            mlsView.setSelection(0);
-//        }
-
+        final View parallax = view.findViewById(R.id.parallax_bar);
+        if (parallax != null) {
+            mlsView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    int max = parallax.getHeight();
+                    if (dy > 0) {
+                        parallax.setTranslationY(Math.max(-max,parallax.getTranslationY()-dy/2));
+                    } else {
+                        parallax.setTranslationY(Math.min(0,parallax.getTranslationY()-dy/2));
+                    }
+                }
+            });
+        }
     }
 
 
@@ -242,6 +241,13 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mlsView!=null)
+        mlsView.clearOnScrollListeners();
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(FORECAST_LOADER, null, this);
@@ -255,14 +261,12 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     }
 
     @Override
-    public void onClickWeather(Cursor cursor) {
+    public void onClickWeather(long date) {
 
-        if (cursor != null) {
-            String locationSetting = Utility.getPreferredLocation(getActivity());
-            ((Callback) getActivity()).onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-            ));
-        }
+        String locationSetting = Utility.getPreferredLocation(getActivity());
+        ((Callback) getActivity()).onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                locationSetting, date
+        ));
     }
 
 
@@ -305,7 +309,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
          use to determine why they aren't seeing weather.
       */
     private void updateEmptyView() {
-        if (mForecastAdapter.getCount() == 0) {
+        if (mForecastAdapter.getItemCount() == 0) {
             int message = R.string.msg_no_weather_info;
             TextView tv = (TextView) getView().findViewById(R.id.tv_empty_view);
             if (null != tv) {
@@ -341,24 +345,24 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
          /*Update the View*/
         updateEmptyView();
 
-        if (mSelectionPostion != ListView.INVALID_POSITION)
-            mlsView.setSelection(mSelectionPostion);
+//        if (mSelectionPostion != ListView.INVALID_POSITION)
+//            mlsView.setSelection(mSelectionPostion);
 
         /*If two pan and nothing is selected yet make first one selected*/
         if (((MainActivity) getActivity()).ismTwoPane() && (mSelectionPostion == ListView.INVALID_POSITION)) {
 
-            final int WHAT = 1;
-            Handler handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if (msg.what == WHAT) {
-                        mlsView.setSelection(0);
-                        mlsView.setItemChecked(0, true);
-                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
-                    }
-                }
-            };
-            handler.sendEmptyMessage(WHAT);
+//            final int WHAT = 1;
+//            Handler handler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    if (msg.what == WHAT) {
+//                        mlsView.setSelection(0);
+//                        mlsView.setItemChecked(0, true);
+//                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
+//                    }
+//                }
+//            };
+            //          handler.sendEmptyMessage(WHAT);
 
         }
 
