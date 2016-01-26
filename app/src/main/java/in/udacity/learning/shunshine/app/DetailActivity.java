@@ -43,6 +43,9 @@ public class DetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.weather_detail_container, mDetailFragment)
                     .commit();
+
+            //Being Here is means we are in animation mode
+            supportPostponeEnterTransition();
         }
     }
 
