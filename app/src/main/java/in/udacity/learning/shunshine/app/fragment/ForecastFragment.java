@@ -1,18 +1,13 @@
 package in.udacity.learning.shunshine.app.fragment;
 
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +16,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,27 +24,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import in.udacity.learning.adapter.ForecastAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
-import in.udacity.learning.logger.L;
 import in.udacity.learning.network.NetWorkInfoUtility;
-import in.udacity.learning.service.SunshineService;
-import in.udacity.learning.shunshine.app.DetailActivity;
 import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
-import in.udacity.learning.shunshine.app.SettingsActivity;
 import in.udacity.learning.sync.SunshineSyncAdapter;
 import in.udacity.learning.utility.Utility;
-import in.udacity.learning.web_services.FetchWeatherTask;
 
 /**
  * Created by Lokesh on 05-09-2015.
@@ -66,7 +55,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri dateUri);
+        public void onItemSelected(Uri dateUri, ForecastAdapter.ForecastAdapterViewHolder vh);
     }
 
     // For the forecast view we're showing only a small subset of the stored data.
@@ -114,10 +103,14 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     private final String POS_KEY = "pos_key";
 
     //List View which holds list
-    private RecyclerView mlsView;
+    private RecyclerView mRecyclerView;
 
     //Set layout bit if on mobile else small for tablet
     private boolean mUseTodayLayout;
+
+    private boolean mAutoSelectView;
+    private int mChoiceMode;
+    private boolean mHoldForTransition;
 
     public ForecastFragment() {
     }
@@ -168,49 +161,71 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
+        super.onInflate(activity, attrs, savedInstanceState);
+        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.forcast_fragment,
+                0, 0);
+        mChoiceMode = a.getInt(R.styleable.forcast_fragment_android_choiceMode, AbsListView.CHOICE_MODE_NONE);
+        mAutoSelectView = a.getBoolean(R.styleable.forcast_fragment_autoSelectView, false);
+        mHoldForTransition = a.getBoolean(R.styleable.forcast_fragment_sharedElementTransition, false);
+        a.recycle();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey(POS_KEY))
-            mSelectionPostion = savedInstanceState.getInt(POS_KEY);
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        initialize(view);
+        initialize(view,savedInstanceState);
 
         return view;
+    }
+
+    public void initialize(View view, Bundle savedInstanceState) {
+
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
+        View emptyView = view.findViewById(R.id.tv_empty_view);
+
+        mForecastAdapter = new ForecastAdapter(this, getActivity(), emptyView, mChoiceMode);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mForecastAdapter);
+
+        final View parallax = view.findViewById(R.id.parallax_bar);
+        if (parallax != null) {
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    int max = parallax.getHeight();
+                    if (dy > 0) {
+                        parallax.setTranslationY(Math.max(-max, parallax.getTranslationY() - dy / 2));
+                    } else {
+                        parallax.setTranslationY(Math.min(0, parallax.getTranslationY() - dy / 2));
+                    }
+                }
+            });
+        }
+
+        // If there's instance state, mine it for useful information.
+        // The end-goal here is that the user never knows that turning their device sideways
+        // does crazy lifecycle related things.  It should feel like some stuff stretched out,
+        // or magically appeared to take advantage of room, but data or place in the app was never
+        // actually *lost*.
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(POS_KEY)) {
+                // The Recycler View probably hasn't even been populated yet.  Actually perform the
+                // swapout in onLoadFinished.
+                mSelectionPostion = savedInstanceState.getInt(POS_KEY);
+            }
+            mForecastAdapter.onRestoreInstanceState(savedInstanceState);
+        }
     }
 
     public void onLocationChange() {
         updateWeatherApp();
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
-
-    public void initialize(View view) {
-
-        mlsView = (RecyclerView) view.findViewById(R.id.lv_weather_list);
-        View v = view.findViewById(R.id.tv_empty_view);
-
-        mForecastAdapter = new ForecastAdapter(this, getActivity(), v);
-        mlsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mlsView.setAdapter(mForecastAdapter);
-
-        final View parallax = view.findViewById(R.id.parallax_bar);
-        if (parallax != null) {
-            mlsView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    int max = parallax.getHeight();
-                    if (dy > 0) {
-                        parallax.setTranslationY(Math.max(-max,parallax.getTranslationY()-dy/2));
-                    } else {
-                        parallax.setTranslationY(Math.min(0,parallax.getTranslationY()-dy/2));
-                    }
-                }
-            });
-        }
-    }
-
 
     private void openPreferedMapLocation() {
 
@@ -241,32 +256,34 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(mlsView!=null)
-        mlsView.clearOnScrollListeners();
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        // We hold for transition here just in-case the activity
+        // needs to be re-created. In a standard return transition,
+        // this doesn't actually make a difference.
+        if (mHoldForTransition) {
+            getActivity().supportPostponeEnterTransition();
+        }
         getLoaderManager().initLoader(FORECAST_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (mSelectionPostion != ListView.INVALID_POSITION)
             outState.putInt(POS_KEY, mSelectionPostion);
+
+        mForecastAdapter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onClickWeather(long date) {
+    public void onClickWeather(long date, ForecastAdapter.ForecastAdapterViewHolder vh) {
 
         String locationSetting = Utility.getPreferredLocation(getActivity());
         ((Callback) getActivity()).onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                locationSetting, date
-        ));
+                locationSetting, date)
+                , vh);
+        mSelectionPostion = vh.getAdapterPosition();
     }
 
 
@@ -341,29 +358,43 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+        if (mSelectionPostion != RecyclerView.NO_POSITION) {
+            // If we don't need to restart the loader, and there's a desired position to restore
+            // to, do so now.
+            mRecyclerView.smoothScrollToPosition(mSelectionPostion);
+        }
 
          /*Update the View*/
         updateEmptyView();
 
-//        if (mSelectionPostion != ListView.INVALID_POSITION)
-//            mlsView.setSelection(mSelectionPostion);
+        if ( data.getCount() == 0 ) {
+            getActivity().supportStartPostponedEnterTransition();
+        } else {
+            mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    // Since we know we're going to get items, we keep the listener around until
+                    // we see Children.
+                    if (mRecyclerView.getChildCount() > 0) {
+                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        int itemPosition = mForecastAdapter.getSelectedItemPosition();
+                        if ( RecyclerView.NO_POSITION == itemPosition )
+                            itemPosition = 0;
 
-        /*If two pan and nothing is selected yet make first one selected*/
-        if (((MainActivity) getActivity()).ismTwoPane() && (mSelectionPostion == ListView.INVALID_POSITION)) {
+                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(itemPosition);
+                        if ( null != vh && mAutoSelectView ) {
+                            mForecastAdapter.selectView( vh );
+                        }
 
-//            final int WHAT = 1;
-//            Handler handler = new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    if (msg.what == WHAT) {
-//                        mlsView.setSelection(0);
-//                        mlsView.setItemChecked(0, true);
-//                        mlsView.performItemClick(mlsView.getSelectedView(), 0, 0);
-//                    }
-//                }
-//            };
-            //          handler.sendEmptyMessage(WHAT);
-
+                        if ( mHoldForTransition ) {
+                            getActivity().supportStartPostponedEnterTransition();
+                        }
+                        return true;
+                    }
+                  return false;
+                  }
+                }
+            );
         }
 
         if (AppConstant.DEBUG) {
@@ -385,4 +416,13 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
             }
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != mRecyclerView) {
+            mRecyclerView.clearOnScrollListeners();
+        }
+    }
+
 }

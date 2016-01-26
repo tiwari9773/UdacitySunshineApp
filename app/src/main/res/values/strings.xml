@@ -12,5 +12,6 @@
 
     <!-- For labelling tomorrow's forecast [CHAR LIMIT=15] -->
     <string name="tomorrow">Tomorrow</string>
+    <string name="transi_name_selected_day" translatable="false">selected_day</string>
 
 </resources>

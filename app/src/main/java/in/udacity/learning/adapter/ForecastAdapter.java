@@ -2,6 +2,9 @@ package in.udacity.learning.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,16 +41,19 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     private OnWeatherItemClickListener onWeatherItemClickListener;
 
-    private  View emptyView;
+    private View emptyView;
+    final private ItemChoiceManager mICM;
 
     public void setmUseTodayLayout(boolean mUseTodayLayout) {
         this.mUseTodayLayout = mUseTodayLayout;
     }
 
-    public ForecastAdapter(OnWeatherItemClickListener onWeatherItemClickListener, Context context,View emptyView) {
+    public ForecastAdapter(OnWeatherItemClickListener onWeatherItemClickListener, Context context, View emptyView, int choiceMode) {
         this.onWeatherItemClickListener = onWeatherItemClickListener;
         mContext = context;
         this.emptyView = emptyView;
+        mICM = new ItemChoiceManager(this);
+        mICM.setChoiceMode(choiceMode);
     }
 
     /* Remember that these views are reused as needed. */
@@ -102,6 +108,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
                 .crossFade()
                 .into(forecastAdapterViewHolder.iconView);
 
+        ViewCompat.setTransitionName(forecastAdapterViewHolder.iconView, "iconView" + position);
+
         // For accessibility, we don't want a content description for the icon field
         // because the information is repeated in the description view and the icon
         // is not individually selectable
@@ -129,7 +137,18 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         String strHigh = Utility.formatTemperature(mContext, high);
         viewHolder.highTempView.setText(strHigh);
         viewHolder.highTempView.setContentDescription(mContext.getString(R.string.a11y_high_temp, strHigh));
+
+        mICM.onBindViewHolder(forecastAdapterViewHolder, position);
     }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        mICM.onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        mICM.onSaveInstanceState(outState);
+    }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -146,7 +165,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     /**
      * Cache of the children views for a forecast list item.
      */
-    public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView iconView;
         public final TextView dateView;
         public final TextView descriptionView;
@@ -160,16 +179,28 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
             descriptionView = (TextView) view.findViewById(R.id.tv_weather_desc);
             lowTempView = (TextView) view.findViewById(R.id.tv_min_temp);
             highTempView = (TextView) view.findViewById(R.id.tv_max_temp);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCursor.moveToPosition(getLayoutPosition());
-                    long date = mCursor.getLong(mCursor.getColumnIndex(WeatherContract.WeatherEntry.DATE));
-                    onWeatherItemClickListener.onClickWeather(date);
-                }
-            });
+            view.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mCursor.moveToPosition(position);
+            long date = mCursor.getLong(mCursor.getColumnIndex(WeatherContract.WeatherEntry.DATE));
+            onWeatherItemClickListener.onClickWeather(date, ForecastAdapterViewHolder.this);
+            mICM.onClick(ForecastAdapterViewHolder.this);
+        }
+    }
+
+    public void selectView(RecyclerView.ViewHolder viewHolder) {
+        if ( viewHolder instanceof ForecastAdapterViewHolder ) {
+            ForecastAdapterViewHolder vfh = (ForecastAdapterViewHolder)viewHolder;
+            vfh.onClick(vfh.itemView);
+        }
+    }
+
+    public int getSelectedItemPosition() {
+        return mICM.getSelectedItemPosition();
     }
 
     public void swapCursor(Cursor newCursor) {

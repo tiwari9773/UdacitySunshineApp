@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_weather_list"
         style="@style/ForecastTodayStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"></ListView>
+        android:divider="@null"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/tv_empty_view"

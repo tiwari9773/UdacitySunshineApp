@@ -3,4 +3,10 @@
     <declare-styleable name="location_edit_text_preference">
         <attr name="min_length" format="integer"></attr>
     </declare-styleable>
+
+    <declare-styleable name="forcast_fragment">
+        <attr name="android:choiceMode"/>
+        <attr name="autoSelectView" format="boolean"/>
+        <attr name="sharedElementTransition" format="boolean"></attr>
+    </declare-styleable>
 </resources>

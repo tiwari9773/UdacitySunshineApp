@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import in.udacity.learning.adapter.ForecastAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.DBHelper;
 import in.udacity.learning.dbhelper.WeatherContract;
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
     private final String TAG = MainActivity.class.getName();
 
     private Toolbar mToolbar;
-    
+
     private static final String DETAIL_FRAGMENT_TAG = "DFTAG";
     private String mLocation;
     private boolean mTwoPane = false;
@@ -51,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         setContentView(R.layout.activity_main);
 
         initialize(savedInstanceState);
-
         SunshineSyncAdapter.initializeSyncAdapter(this);
+
         //Write database to inspect
         //writeDatabase();
     }
@@ -134,6 +139,31 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemSelected(Uri contentUri, ForecastAdapter.ForecastAdapterViewHolder vh) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = new Bundle();
+            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container, fragment, DETAIL_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            Pair pair = new Pair<View, String>(vh.iconView, getString(R.string.transi_name_selected_day));
+
+            Intent intent = new Intent(this, DetailActivity.class).setData(contentUri);
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,pair);
+            ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
+        }
+    }
+
+
     /*Copy database outside to check data*/
     private void writeDatabase() {
         String path = getApplicationInfo().dataDir + "/databases/" + DBHelper.DATABASE_NAME;
@@ -185,29 +215,5 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
                 }
         }
 
-
     }
-
-    @Override
-    public void onItemSelected(Uri contentUri) {
-        if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle args = new Bundle();
-            args.putParcelable(DetailFragment.DETAIL_URI, contentUri);
-
-            DetailFragment fragment = new DetailFragment();
-            fragment.setArguments(args);
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.weather_detail_container, fragment, DETAIL_FRAGMENT_TAG)
-                    .commit();
-        } else {
-            Intent intent = new Intent(this, DetailActivity.class)
-                    .setData(contentUri);
-            startActivity(intent);
-        }
-    }
-
 }

@@ -8,6 +8,13 @@
         <item name="toolbarStyle">@style/Toolbar</item>
     </style>
 
+    <style name="AppTheme.Main" parent="AppTheme">
+
+    </style>
+
+    <style name="AppTheme.Detail" parent="AppTheme">
+
+    </style>
 
     <!-- Settings activity theme. -->
     <style name="SettingsTheme" parent="AppTheme">

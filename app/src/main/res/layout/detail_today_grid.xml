@@ -29,6 +29,7 @@
 
 
     <ImageView
+        android:transitionName="@string/transi_name_selected_day"
         android:id="@+id/detail_icon"
         android:layout_width="0dp"
         android:adjustViewBounds="true"

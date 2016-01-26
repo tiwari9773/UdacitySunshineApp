@@ -82,6 +82,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@id/layout_center"
         android:layout_below="@id/appbar"
+        android:choiceMode="singleChoice"
+        app:autoSelectView="true"
         tools:layout="@android:layout/list_content" />
 
 
