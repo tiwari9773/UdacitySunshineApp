@@ -1,19 +1,23 @@
 package in.udacity.learning.shunshine.app.fragment;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -177,7 +181,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        initialize(view,savedInstanceState);
+        initialize(view, savedInstanceState);
 
         return view;
     }
@@ -207,6 +211,25 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
             });
         }
 
+        final AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.appbar);
+        if (appBarLayout != null) {
+            ViewCompat.setElevation(appBarLayout, 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        if (recyclerView.computeVerticalScrollOffset() == 0) {
+                            appBarLayout.setElevation(0);
+                        } else {
+                            appBarLayout.setElevation(appBarLayout.getTargetElevation());
+                        }
+                    }
+                });
+            }
+        }
         // If there's instance state, mine it for useful information.
         // The end-goal here is that the user never knows that turning their device sideways
         // does crazy lifecycle related things.  It should feel like some stuff stretched out,
@@ -368,33 +391,33 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
          /*Update the View*/
         updateEmptyView();
 
-        if ( data.getCount() == 0 ) {
+        if (data.getCount() == 0) {
             getActivity().supportStartPostponedEnterTransition();
         } else {
             mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    // Since we know we're going to get items, we keep the listener around until
-                    // we see Children.
-                    if (mRecyclerView.getChildCount() > 0) {
-                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int itemPosition = mForecastAdapter.getSelectedItemPosition();
-                        if ( RecyclerView.NO_POSITION == itemPosition )
-                            itemPosition = 0;
+                                                                         @Override
+                                                                         public boolean onPreDraw() {
+                                                                             // Since we know we're going to get items, we keep the listener around until
+                                                                             // we see Children.
+                                                                             if (mRecyclerView.getChildCount() > 0) {
+                                                                                 mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                                                                                 int itemPosition = mForecastAdapter.getSelectedItemPosition();
+                                                                                 if (RecyclerView.NO_POSITION == itemPosition)
+                                                                                     itemPosition = 0;
 
-                        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(itemPosition);
-                        if ( null != vh && mAutoSelectView ) {
-                            mForecastAdapter.selectView( vh );
-                        }
+                                                                                 RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForAdapterPosition(itemPosition);
+                                                                                 if (null != vh && mAutoSelectView) {
+                                                                                     mForecastAdapter.selectView(vh);
+                                                                                 }
 
-                        if ( mHoldForTransition ) {
-                            getActivity().supportStartPostponedEnterTransition();
-                        }
-                        return true;
-                    }
-                  return false;
-                  }
-                }
+                                                                                 if (mHoldForTransition) {
+                                                                                     getActivity().supportStartPostponedEnterTransition();
+                                                                                 }
+                                                                                 return true;
+                                                                             }
+                                                                             return false;
+                                                                         }
+                                                                     }
             );
         }
 
