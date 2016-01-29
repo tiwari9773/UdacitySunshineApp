@@ -50,6 +50,9 @@
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
 
+    <!-- Content description for the get current location button in the location preference -->
+    <string name="pref_current_location_desc">Use my location</string>
+
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">Mumbai</string>
 

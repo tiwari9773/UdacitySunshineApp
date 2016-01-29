@@ -16,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,6 +31,7 @@ import in.udacity.learning.adapter.ForecastAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.DBHelper;
 import in.udacity.learning.dbhelper.WeatherContract;
+import in.udacity.learning.gcm.RegistrationIntentService;
 import in.udacity.learning.shunshine.app.fragment.DetailFragment;
 import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
 import in.udacity.learning.logger.L;
@@ -37,16 +41,13 @@ import in.udacity.learning.utility.Utility;
 public class MainActivity extends AppCompatActivity implements ForecastFragment.Callback {
 
     private final String TAG = MainActivity.class.getName();
-
-    private Toolbar mToolbar;
-
     private static final String DETAIL_FRAGMENT_TAG = "DFTAG";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+
     private String mLocation;
     private boolean mTwoPane = false;
-
-    public boolean ismTwoPane() {
-        return mTwoPane;
-    }
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,23 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         initialize(savedInstanceState);
         SunshineSyncAdapter.initializeSyncAdapter(this);
+
+        // If Google Play Services is up to date, we'll want to register GCM. If it is not, we'll
+        // skip the registration and this device will not receive any downstream messages from
+        // our fake server. Because weather alerts are not a core feature of the app, this should
+        // not affect the behavior of the app, from a user perspective.
+        if (checkPlayServices()) {
+            // Because this is the initial creation of the app, we'll want to be certain we have
+            // a token. If we do not, then we will start the IntentService that will register this
+            // application with GCM.
+            SharedPreferences sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+            boolean sentToken = sharedPreferences.getBoolean(SENT_TOKEN_TO_SERVER, false);
+            if (!sentToken) {
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                startService(intent);
+            }
+        }
 
         //Write database to inspect
         //writeDatabase();
@@ -117,6 +135,10 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
         }
     }
 
+    public boolean ismTwoPane() {
+        return mTwoPane;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,11 +181,31 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             Pair pair = new Pair<View, String>(vh.iconView, getString(R.string.transi_name_selected_day));
 
             Intent intent = new Intent(this, DetailActivity.class).setData(contentUri);
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this,pair);
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair);
             ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
         }
     }
 
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 
     /*Copy database outside to check data*/
     private void writeDatabase() {

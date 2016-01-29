@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.STORAGE" />
 
     <!-- Permissions required by the sync adapter -->
@@ -12,12 +13,48 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="in.udacity.learning.shunshine.app.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="in.udacity.learning.shunshine.app.permission.C2D_MESSAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme.Main">
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="in.udacity.learning.gcm.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="in.udacity.learning.gcm.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="in.udacity.learning.gcm.RegistrationIntentService"
+            android:exported="false" >
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -28,10 +65,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/AppTheme.Detail"
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Detail"></activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_setting"
@@ -67,6 +104,9 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBcSCC960GpP0kPcUxz0BRJ4vxc7yxNF00" />
     </application>
 
 </manifest>
