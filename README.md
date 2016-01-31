@@ -43,7 +43,7 @@ Take it and study about android coding
 ![Screenshot](/presentation/home_land.png)
 ![Screenshot](/presentation/detail_land.png)
 </br>
-![Screenshot](/presentation/setting.png)
+![Screenshot](/presentation/Setting.png)
 </br>
 # Tablet Screenshot 10 inch
 ---------------------
