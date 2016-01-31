@@ -60,6 +60,10 @@ import in.udacity.learning.web_services.WebServiceURL;
 public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
     public final String TAG = SunshineSyncAdapter.class.getSimpleName();
 
+    public static final String ACTION_DATA_UPDATED =
+            "in.udacity.learning.shunshine.app.ACTION_DATA_UPDATED";
+
+
     // Interval at which to sync with the weather, in seconds.
     // 60 seconds (1 minute) * 180 = 3 hours
     public static final int SYNC_INTERVAL = 60 * 180;
@@ -103,7 +107,13 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         if (AppConstant.DEVELOPER_TRACK)
             Log.d(TAG, "Starting sync");
 
-        String locationQuery = Utility.getPreferredLocation(getContext());
+
+        // We no longer need just the location String, but also potentially the latitude and
+        // longitude, in case we are syncing based on a new Place Picker API result.
+        Context context = getContext();
+        String locationQuery = Utility.getPreferredLocation(context);
+        String locationLatitude = String.valueOf(Utility.getLocationLatitude(context));
+        String locationLongitude = String.valueOf(Utility.getLocationLongitude(context));
 
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
@@ -123,15 +133,22 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             // http://openweathermap.org/API#forecast
             final String FORECAST_BASE_URL = WebServiceURL.baseURLWeatherForcast;
 
-            Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(WebServiceURL.QUERY, locationQuery)
-                    .appendQueryParameter(WebServiceURL.MODE, format)
+            Uri.Builder uriBuilder = Uri.parse(FORECAST_BASE_URL).buildUpon();
+
+            if (Utility.isLocationLatLonAvailable(context)) {
+                uriBuilder.appendQueryParameter(WebServiceURL.LAT_PARAM, locationLatitude)
+                        .appendQueryParameter(WebServiceURL.LON_PARAM, locationLongitude);
+            } else {
+                uriBuilder.appendQueryParameter(WebServiceURL.QUERY, locationQuery);
+            }
+
+            uriBuilder.appendQueryParameter(WebServiceURL.MODE, format)
                     .appendQueryParameter(WebServiceURL.UNIT, units)
                     .appendQueryParameter(WebServiceURL.DAYS, Integer.toString(numDays))
                     .appendQueryParameter(WebServiceURL.KEYS, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
                     .build();
 
-            URL url = new URL(builtUri.toString());
+            URL url = new URL(uriBuilder.build().toString());
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -267,6 +284,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     if (AppConstant.DEVELOPER_TRACK)
                         Log.d(TAG, "getWeatherDataFromJson, Data Deleted" + countDeleted);
 
+                    updateWidgets();
                     notifyWeather();
                 }
 
@@ -287,6 +305,15 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             throw e;
         }
     }
+
+    private void updateWidgets() {
+        Context context = getContext();
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(context.getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
+    }
+
 
     /**
      * Helper method to handle insertion of a new location in the weather database.

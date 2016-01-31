@@ -3,6 +3,7 @@ package in.udacity.learning.custom_view;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -10,11 +11,21 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.shunshine.app.SettingsActivity;
 
 /**
  * Created by Lokesh on 05-12-2015.
@@ -39,6 +50,42 @@ public class LocationEditTextPreference extends EditTextPreference {
             a.recycle();
         }
 
+        // Check to see if Google Play services is available. The Place Picker API is available
+        // through Google Play services, so if this is false, we'll just carry on as though this
+        // feature does not exist. If it is true, however, we can add a widget to our preference.
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(getContext());
+        if (resultCode == ConnectionResult.SUCCESS) {
+            // Add the get current location widget to our location preference
+            setWidgetLayoutResource(R.layout.pref_current_location);
+        }
+
+    }
+
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        View view = super.onCreateView(parent);
+
+        View currentLocation = view.findViewById(R.id.current_location);
+        currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    SettingsActivity activity = (SettingsActivity) getContext();
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    activity.startActivityForResult(builder.build(activity), SettingsActivity.PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+         /*Not adding current Location API because it  is not generating city so avoiding this for now*/
+        //currentLocation.setVisibility(View.GONE); //TODO make is visible once place api is done
+        return view;
     }
 
     @Override
