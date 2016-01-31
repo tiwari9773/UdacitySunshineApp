@@ -115,6 +115,20 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDZIRzUOYvmUl3OUTNQwy4hC6gIx_bPGUI" />
+
+        <service android:name="in.udacity.learning.widget.TodayWidgetIntentService" />
+        <!-- Today Widget -->
+        <receiver
+            android:name="in.udacity.learning.widget.TodayWidgetProvider"
+            android:label="@string/title_widget_today" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_today" />
+        </receiver>
+
     </application>
 
 </manifest>
