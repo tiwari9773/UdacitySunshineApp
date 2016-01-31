@@ -7,6 +7,9 @@ Created sample Weather App using weathermapapi with
 <br>e) Notofication Manager
 <br>f) Authentication
 <br>g) Push Notification
+<br>h) Widget
+<br>i) List Widget
+<br>j) Muzie Wallpaper
 
 This project is purly for study purpose and any student can refer the code.
 <br>Code is written as per material design guideline and reviewed by expertes from udacity
@@ -31,14 +34,23 @@ Take it and study about android coding
 
 # ScreenShot
 ---------------------------
-![Demo](/presentation/sunshine.gif)
-![Screenshot](/presentation/Detail_phone.png)
+![Demo](/presentation/example.gif)
+![Screenshot](/presentation/home_port.png)
 </br>
-![Screenshot](/presentation/Home_phone.png)
-![Screenshot](/presentation/Setting.png)
+![Screenshot](/presentation/home_port.png)
+![Screenshot](/presentation/detail_port.png)
 </br>
-# Tablet Screenshot
+![Screenshot](/presentation/home_land.png)
+![Screenshot](/presentation/detail_land.png)
+</br>
+![Screenshot](/presentation/setting.png)
+</br>
+# Tablet Screenshot 10 inch
 ---------------------
-![Screenshot](/presentation/Home_tab.png)
+![Screenshot](/presentation/home_tab_ten.png)
+
+# Tablet Screenshot 7 inch
+---------------------
+![Screenshot](/presentation/home_tab_seven.png)
 
 
