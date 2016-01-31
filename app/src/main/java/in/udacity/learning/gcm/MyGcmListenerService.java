@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,15 +66,21 @@ public class MyGcmListenerService extends GcmListenerService {
             if ((senderId).equals(from)) {
                 // Process message and then post a notification of the received message.
                 try {
-                    JSONObject jsonObject = new JSONObject(data.getString(EXTRA_DATA));
+
+                    //String d = data.getString(EXTRA_DATA);
+
+                    String d2 = data.toString();
+                    d2 = d2.replace("Bundle","");
+                    JSONArray jsonArray = new JSONArray(d2);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
                     String weather = jsonObject.getString(EXTRA_WEATHER);
                     String location = jsonObject.getString(EXTRA_LOCATION);
                     String alert =
                             String.format(getString(R.string.gcm_weather_alert), weather, location);
                     sendNotification(alert);
                 } catch (JSONException e) {
-                    // JSON parsing failed, so we just let this message go, since GCM is not one
-                    // of our critical features.
+                    Log.e(TAG,e.toString());
                 }
             }
             Log.i(TAG, "Received: " + data.toString());

@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             // application with GCM.
             SharedPreferences sharedPreferences =
                     PreferenceManager.getDefaultSharedPreferences(this);
+
             boolean sentToken = sharedPreferences.getBoolean(SENT_TOKEN_TO_SERVER, false);
             if (!sentToken) {
                 Intent intent = new Intent(this, RegistrationIntentService.class);
