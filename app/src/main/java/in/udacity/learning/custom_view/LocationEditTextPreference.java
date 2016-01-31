@@ -3,6 +3,7 @@ package in.udacity.learning.custom_view;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.shunshine.app.R;
+import in.udacity.learning.shunshine.app.SettingsActivity;
 
 /**
  * Created by Lokesh on 05-12-2015.
@@ -52,7 +57,9 @@ public class LocationEditTextPreference extends EditTextPreference {
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(getContext());
         if (resultCode == ConnectionResult.SUCCESS) {
             // Add the get current location widget to our location preference
-            setWidgetLayoutResource(R.layout.pref_current_location);
+
+            /*Not adding current Location API because it  is not generating city so avoiding this for now*/
+            //setWidgetLayoutResource(R.layout.pref_current_location);
         }
 
     }
@@ -65,8 +72,16 @@ public class LocationEditTextPreference extends EditTextPreference {
         currentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // We'll use a toast for now so that we can test our new preference widget.
-                Toast.makeText(getContext(), "Woo!", Toast.LENGTH_LONG).show();
+
+                try {
+                    SettingsActivity activity = (SettingsActivity) getContext();
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    activity.startActivityForResult(builder.build(activity), SettingsActivity.PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
