@@ -57,9 +57,7 @@ public class LocationEditTextPreference extends EditTextPreference {
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(getContext());
         if (resultCode == ConnectionResult.SUCCESS) {
             // Add the get current location widget to our location preference
-
-            /*Not adding current Location API because it  is not generating city so avoiding this for now*/
-            //setWidgetLayoutResource(R.layout.pref_current_location);
+            setWidgetLayoutResource(R.layout.pref_current_location);
         }
 
     }
@@ -85,6 +83,8 @@ public class LocationEditTextPreference extends EditTextPreference {
             }
         });
 
+         /*Not adding current Location API because it  is not generating city so avoiding this for now*/
+        //currentLocation.setVisibility(View.GONE); //TODO make is visible once place api is done
         return view;
     }
 
