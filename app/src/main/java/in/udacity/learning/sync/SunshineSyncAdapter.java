@@ -50,6 +50,7 @@ import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.model.LocationAttribute;
 import in.udacity.learning.model.WeatherAttribute;
+import in.udacity.learning.muzei.WeatherMuzeiSource;
 import in.udacity.learning.shunshine.app.BuildConfig;
 import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
@@ -285,6 +286,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                         Log.d(TAG, "getWeatherDataFromJson, Data Deleted" + countDeleted);
 
                     updateWidgets();
+                    updateMuzei();
                     notifyWeather();
                 }
 
@@ -314,6 +316,16 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         context.sendBroadcast(dataUpdatedIntent);
     }
 
+
+    private void updateMuzei() {
+        // Muzei is only compatible with Jelly Bean MR1+ devices, so there's no need to update the
+        // Muzei background on lower API level devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Context context = getContext();
+            context.startService(new Intent(ACTION_DATA_UPDATED)
+                    .setClass(context, WeatherMuzeiSource.class));
+        }
+    }
 
     /**
      * Helper method to handle insertion of a new location in the weather database.
