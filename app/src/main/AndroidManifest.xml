@@ -123,7 +123,7 @@
             android:label="@string/title_widget_today" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
+                <action android:name="in.udacity.learning.shunshine.app.ACTION_DATA_UPDATED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_today" />
@@ -136,7 +136,7 @@
             android:enabled="@bool/widget_detail_enabled" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
+                <action android:name="in.udacity.learning.shunshine.app.ACTION_DATA_UPDATED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_detail" />

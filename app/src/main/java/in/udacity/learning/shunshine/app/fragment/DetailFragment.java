@@ -56,8 +56,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private String mForecast;
     private Uri mUri;
 
-
-
     private static final int DETAIL_LOADER = 0;
 
     private static final String[] DETAIL_COLUMNS = {
