@@ -27,8 +27,7 @@ import in.udacity.learning.utility.Utility;
 /**
  * Created by Lokesh on 06-09-2015.
  */
-public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener{
-
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static int PLACE_PICKER_REQUEST = 1000;
     private ImageView mAttribution;
@@ -51,7 +50,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         Preference edit_icon_pack = findPreference(getString(R.string.pref_key_icon));
         bindPreferenceSummaryToValue(edit_icon_pack);
-
 
         // If we are using a PlacePicker location, we need to show attributions.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
