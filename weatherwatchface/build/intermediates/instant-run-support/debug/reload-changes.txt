@@ -1,0 +1,2 @@
+CHANGED,P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\in\udacity\learning\weatherwatchface\MyWeatherWatchFace$Engine$override.class
+CHANGED,P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
