@@ -13,6 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+<!--Since till v14 widget git auto padding so no need to give padding-->
 <resources>
     <dimen name="widget_margin">0dp</dimen>
 </resources>

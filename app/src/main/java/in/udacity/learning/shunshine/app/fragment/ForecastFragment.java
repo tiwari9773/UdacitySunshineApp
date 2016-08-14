@@ -299,7 +299,6 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         super.onSaveInstanceState(outState);
     }
 
-
     @Override
     public void onClickWeather(long date, ForecastAdapter.ForecastAdapterViewHolder vh) {
 
