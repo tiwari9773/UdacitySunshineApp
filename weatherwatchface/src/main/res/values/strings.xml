@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeatherWatchFace</string>
+    <string name="my_analog_name">My Analog</string>
+
+    <string name="fit_am">AM</string>
+    <string name="fit_pm">PM</string>
+</resources>
