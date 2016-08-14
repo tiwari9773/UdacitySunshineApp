@@ -146,21 +146,21 @@ public final class R {
 		public static final int close_button_diameter = 0x7f0c0010;
 		public static final int confirmation_overlay_image_size = 0x7f0c0003;
 		public static final int confirmation_overlay_text_size = 0x7f0c0011;
-		public static final int diag_button_bottom_padding = 0x7f0c0012;
-		public static final int diag_button_bottom_padding_round = 0x7f0c0013;
-		public static final int diag_button_side_padding_right_round = 0x7f0c0014;
-		public static final int diag_content_bottom_padding = 0x7f0c0015;
-		public static final int diag_content_side_padding = 0x7f0c0016;
-		public static final int diag_content_side_padding_round = 0x7f0c0017;
-		public static final int diag_content_top_padding = 0x7f0c0018;
-		public static final int diag_content_top_padding_round = 0x7f0c0019;
-		public static final int diag_floating_height = 0x7f0c001a;
-		public static final int diag_shade_height_rect = 0x7f0c001b;
-		public static final int diag_shade_height_round = 0x7f0c001c;
-		public static final int dismiss_padding = 0x7f0c001d;
-		public static final int item_touch_helper_max_drag_scroll_per_frame = 0x7f0c001e;
+		public static final int diag_button_bottom_padding = 0x7f0c0013;
+		public static final int diag_button_bottom_padding_round = 0x7f0c0014;
+		public static final int diag_button_side_padding_right_round = 0x7f0c0015;
+		public static final int diag_content_bottom_padding = 0x7f0c0016;
+		public static final int diag_content_side_padding = 0x7f0c0017;
+		public static final int diag_content_side_padding_round = 0x7f0c0018;
+		public static final int diag_content_top_padding = 0x7f0c0019;
+		public static final int diag_content_top_padding_round = 0x7f0c001a;
+		public static final int diag_floating_height = 0x7f0c001b;
+		public static final int diag_shade_height_rect = 0x7f0c001c;
+		public static final int diag_shade_height_round = 0x7f0c001d;
+		public static final int dismiss_padding = 0x7f0c0028;
+		public static final int item_touch_helper_max_drag_scroll_per_frame = 0x7f0c003b;
 		public static final int peek_drawer_icon_size = 0x7f0c0004;
-		public static final int progress_spinner_inline_size = 0x7f0c001f;
+		public static final int progress_spinner_inline_size = 0x7f0c003c;
 		public static final int progress_spinner_size = 0x7f0c0005;
 	}
 	public static final class drawable {
