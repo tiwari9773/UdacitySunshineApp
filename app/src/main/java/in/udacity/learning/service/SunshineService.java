@@ -1,34 +1,39 @@
 package in.udacity.learning.service;
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.text.format.Time;
+import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.util.List;
-import java.util.Vector;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.Asset;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
+import com.google.android.gms.wearable.Wearable;
 
-import in.udacity.learning.constant.AppConstant;
+import java.util.Date;
+
 import in.udacity.learning.dbhelper.WeatherContract;
-import in.udacity.learning.model.LocationAttribute;
-import in.udacity.learning.model.WeatherAttribute;
-import in.udacity.learning.web_services.HttpURLConnectionWebService;
-import in.udacity.learning.web_services.JSONParser;
+import in.udacity.learning.shunshine.app.MainActivity;
+import in.udacity.learning.utility.Utility;
 
 /**
  * Created by Lokesh on 19-10-2015.
  */
-public class SunshineService extends IntentService {
+public class SunshineService extends IntentService implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static String TAG = SunshineService.class.getName();
-    public static final String INTENT_LOCATION_QUERY_EXTRA = "lqe";
+
+    private GoogleApiClient googleClient;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -45,154 +50,99 @@ public class SunshineService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String locationQuery = intent.getStringExtra(INTENT_LOCATION_QUERY_EXTRA);
+        // Build a new GoogleApiClient
+        googleClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
-        if (AppConstant.DEBUG)
-            Log.d(TAG, "doInBackground 2");
+        googleClient.connect();
 
-        String unit = "metric";
-        String mode = "json";
-        int days = 14;
-
-        String jSonString = new HttpURLConnectionWebService(mode, unit, days, locationQuery).getWeatherJSON(TAG);
-//        if (jSonString == null) {
-//            // return null;
-//        }
-
-        getWeatherDataFromJson(jSonString, locationQuery);
-        // This will only happen if there was an error getting or parsing the forecast.
-        //return null;
     }
 
+    @Override
+    public void onConnected(Bundle bundle) {
 
-    /**
-     * Take the String representing the complete forecast in JSON Format and
-     * pull out the data we need to construct the Strings needed for the wireframes.
-     * <p/>
-     * Fortunately parsing is easy:  constructor takes the JSON string and converts it
-     * into an Object hierarchy for us.
-     */
-    private void getWeatherDataFromJson(String forecastJsonStr, String locationSetting) {
+        String[] FORECAST_COLUMNS = {
+                WeatherContract.WeatherEntry.WEATHER_ID,
+                WeatherContract.WeatherEntry.SHORT_DESC,
+                WeatherContract.WeatherEntry.MAX,
+                WeatherContract.WeatherEntry.MIN
+        };
+        // these indices must match the projection
+        int INDEX_WEATHER_ID = 0;
+        int INDEX_SHORT_DESC = 1;
+        int INDEX_MAX_TEMP = 2;
+        int INDEX_MIN_TEMP = 3;
 
-        try {
-            LocationAttribute la = JSONParser.parseLocationForcast(forecastJsonStr);
+        // Get today's data from the ContentProvider
+        String location = Utility.getPreferredLocation(this);
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
+                location, System.currentTimeMillis());
+        Cursor data = getContentResolver().query(weatherForLocationUri, FORECAST_COLUMNS, null,
+                null, WeatherContract.WeatherEntry.DATE + " ASC");
+        if (data == null) {
+            return;
+        }
+        if (!data.moveToFirst()) {
+            data.close();
+            return;
+        }
 
-            long locationId = addLocation(locationSetting, la.getCityName(), Double.parseDouble(la.getLati())
-                    , Double.parseDouble(la.getLongi()));
+        // Extract the weather data from the Cursor
+        int weatherId = data.getInt(INDEX_WEATHER_ID);
+        int weatherArtResourceId = Utility.getIconResourceForWeatherCondition(weatherId);
+        String description = data.getString(INDEX_SHORT_DESC);
+        double maxTemp = data.getDouble(INDEX_MAX_TEMP);
+        double minTemp = data.getDouble(INDEX_MIN_TEMP);
+        String formattedMaxTemperature = Utility.formatTemperature(this, maxTemp);
+        String formattedMinTemperature = Utility.formatTemperature(this, minTemp);
 
-            List<WeatherAttribute> lsWeather = JSONParser.parseWeatherForcast(forecastJsonStr, locationId + "");
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), weatherArtResourceId);
+        Asset asset = Utility.getAsset(bitmap);
+        data.close();
+        sendData(formattedMaxTemperature, formattedMinTemperature, asset, description);
+    }
 
-            // Insert the new weather information into the database
-            Vector<ContentValues> cVVector = new Vector<ContentValues>(lsWeather.size());
+    private void sendData(String max, String min, Asset asset, String desc) {
+        // Create a DataMap object and send it to the data layer
+        if (googleClient == null || !googleClient.isConnected()) {
+            return;
+        }
 
-            // OWM returns daily forecasts based upon the local time of the city that is being
-            // asked for, which means that we need to know the GMT offset to translate this data
-            // properly.
+        DataMap dataMap = new DataMap();
+        dataMap.putLong("time", new Date().getTime());
+        dataMap.putString("max", max);
+        dataMap.putString("min", min);
+        dataMap.putString("desc", desc);
+        dataMap.putAsset("thumb", asset);
 
-            // Since this data is also sent in-order and the first day is always the
-            // current day, we're going to take advantage of that to get a nice
-            // normalized UTC date for all of our weather.
-
-            Time dayTime = new Time();
-            dayTime.setToNow();
-
-            // we start at the day returned by local time. Otherwise this is a mess.
-            int julianStartDay = Time.getJulianDay(System.currentTimeMillis(), dayTime.gmtoff);
-
-            // now we work exclusively in UTC
-            dayTime = new Time();
-
-            for (int i = 0; i < lsWeather.size(); i++) {
-
-                // Cheating to convert this to UTC time, which is what we want anyhow
-                long dateTime = dayTime.setJulianDay(julianStartDay + i);
-
-                // These are the values that will be collected.
-
-                WeatherAttribute wa = lsWeather.get(i);
-                ContentValues weatherValues = new ContentValues();
-
-                weatherValues.put(WeatherContract.WeatherEntry.LOCATION_ID, locationId);
-                weatherValues.put(WeatherContract.WeatherEntry.DATE, dateTime);
-                weatherValues.put(WeatherContract.WeatherEntry.HUMIDITY, wa.getHumidity());
-                weatherValues.put(WeatherContract.WeatherEntry.PRESSURE, wa.getPressure());
-                weatherValues.put(WeatherContract.WeatherEntry.WIND_SPEED, wa.getWindSpeed());
-                weatherValues.put(WeatherContract.WeatherEntry.DEGREES, wa.getDegree());
-                weatherValues.put(WeatherContract.WeatherEntry.MAX, wa.getMax());
-                weatherValues.put(WeatherContract.WeatherEntry.MIN, wa.getMin());
-                weatherValues.put(WeatherContract.WeatherEntry.SHORT_DESC, wa.getDescription());
-                weatherValues.put(WeatherContract.WeatherEntry.WEATHER_ID, wa.getWeather_id());
-
-                cVVector.add(weatherValues);
+        Log.i(TAG, "sendData: " + dataMap.toString());
+        // Construct a DataRequest and send over the data layer
+        PutDataMapRequest putDMR = PutDataMapRequest.create(MainActivity.WEARABLE_DATA_PATH);
+        putDMR.getDataMap().putAll(dataMap);
+        PutDataRequest request = putDMR.asPutDataRequest();
+        Wearable.DataApi.putDataItem(googleClient, request).setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
+            @Override
+            public void onResult(DataApi.DataItemResult dataItemResult) {
+                if (dataItemResult.getStatus().isSuccess()) {
+                    Log.v(TAG, "DataMap: " + " sent successfully to data layer ");
+                } else {
+                    // Log an error
+                    Log.v(TAG, "ERROR: failed to send DataMap to data layer");
+                }
             }
-
-            int inserted = 0;
-            // add to database
-            if (cVVector.size() > 0) {
-                ContentValues[] cv = new ContentValues[cVVector.size()];
-                cVVector.toArray(cv);
-                inserted = this.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cv);
-            }
-
-            if (AppConstant.DEBUG)
-                Log.d(TAG, TAG+" Complete. " + inserted + " Inserted");
-
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-            e.printStackTrace();
-        }
+        });
     }
 
-    /**
-     * Helper method to handle insertion of a new location in the weather database.
-     *
-     * @param locationSetting The location string used to request updates from the server.
-     * @param cityName        A human-readable city name, e.g "Mountain View"
-     * @param lat             the latitude of the city
-     * @param lon             the longitude of the city
-     * @return the row ID of the added location.
-     */
-    public long addLocation(String locationSetting, String cityName, double lat, double lon) {
-        // First, check if the location with this city name exists in the db
-        // If it exists, return the current ID
-        // Otherwise, insert it using the content resolver and the base URI
-
-        long locationId = -1;
-        Cursor locationCursor = this.getContentResolver().query(WeatherContract.LocationEntry.CONTENT_URI,
-                new String[]{WeatherContract.LocationEntry._ID},
-                WeatherContract.LocationEntry.LOCATION_SETTING + "= ? ",
-                new String[]{locationSetting}, null);
-
-        if (locationCursor.moveToFirst()) {
-            int locationIdIndex = locationCursor.getColumnIndex(WeatherContract.LocationEntry._ID);
-            locationId = locationCursor.getLong(locationIdIndex);
-        } else {
-
-            ContentValues cv = new ContentValues();
-            cv.put(WeatherContract.LocationEntry.CITY_NAME, cityName);
-            cv.put(WeatherContract.LocationEntry.CORD_LAT, lat);
-            cv.put(WeatherContract.LocationEntry.CORD_LONG, lon);
-            cv.put(WeatherContract.LocationEntry.LOCATION_SETTING, locationSetting);
-
-            Uri uri = this.getContentResolver().insert(WeatherContract.LocationEntry.CONTENT_URI, cv);
-            locationId = ContentUris.parseId(uri);
-        }
-
-        if (locationCursor != null)
-            locationCursor.close();
-
-        return locationId;
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "onConnectionSuspended: ");
     }
 
-    static public class AlarmReceiver extends BroadcastReceiver
-    {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "onReceive", Toast.LENGTH_SHORT).show();
-            Intent sendIntent = new Intent(context, SunshineService.class);
-            sendIntent.putExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA, intent.getStringExtra(SunshineService.INTENT_LOCATION_QUERY_EXTRA));
-            context.startService(sendIntent);
-        }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "onConnectionFailed: ");
     }
 }

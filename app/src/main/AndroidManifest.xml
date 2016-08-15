@@ -88,9 +88,6 @@
             android:exported="false"
             android:syncable="true" />
 
-        <!-- <service android:name="in.udacity.learning.service.SunshineService" /> -->
-        <!-- <receiver android:name="in.udacity.learning.service.SunshineService$AlarmReceiver" /> -->
-
         <service android:name="in.udacity.learning.sync.SunshineAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -119,6 +116,8 @@
             android:value="AIzaSyDZIRzUOYvmUl3OUTNQwy4hC6gIx_bPGUI" />
 
         <service android:name="in.udacity.learning.widget.TodayWidgetIntentService" />
+
+        <service android:name="in.udacity.learning.service.SunshineService" />
         <!-- Today Widget -->
         <receiver
             android:name="in.udacity.learning.widget.TodayWidgetProvider"
