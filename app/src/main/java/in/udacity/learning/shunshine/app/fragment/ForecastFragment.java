@@ -33,12 +33,16 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.Wearable;
+
 import in.udacity.learning.adapter.ForecastAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.framework.OnWeatherItemClickListener;
 import in.udacity.learning.network.NetWorkInfoUtility;
-import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
 import in.udacity.learning.sync.SunshineSyncAdapter;
 import in.udacity.learning.utility.Utility;
@@ -46,9 +50,10 @@ import in.udacity.learning.utility.Utility;
 /**
  * Created by Lokesh on 05-09-2015.
  */
-public class ForecastFragment extends Fragment implements OnWeatherItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class ForecastFragment extends Fragment implements OnWeatherItemClickListener, LoaderManager.LoaderCallbacks<Cursor>{
 
     private final String TAG = ForecastFragment.class.getName();
+
 
     /**
      * A callback interface that all activities containing this fragment must
@@ -182,6 +187,8 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         initialize(view, savedInstanceState);
+
+
 
         return view;
     }
@@ -448,4 +455,7 @@ public class ForecastFragment extends Fragment implements OnWeatherItemClickList
         }
     }
 
+    private void sendDataToWatch() {
+        PutDataMapRequest putDataMapReqest = PutDataMapRequest.create("/step-counter");
+    }
 }

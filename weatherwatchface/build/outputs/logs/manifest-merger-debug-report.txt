@@ -1,0 +1,126 @@
+-- Merging decision tree log ---
+manifest
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:2:1-54:12
+	package
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:3:5-47
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+uses-feature#android.hardware.type.watch
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:5:5-64
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:5:19-61
+uses-permission#android.permission.WAKE_LOCK
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:8:5-68
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:8:22-65
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:9:5-80
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:9:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:10:22-77
+application
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:12:5-52:19
+MERGED from [com.google.android.support:wearable:2.0.0-alpha2] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.support\wearable\2.0.0-alpha2\AndroidManifest.xml:6:5-19
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-wearable:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.3.0\AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.3.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:15:9-41
+	android:supportsRtl
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:16:9-35
+	android:allowBackup
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:13:9-35
+	android:icon
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:14:9-43
+	android:theme
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:17:9-59
+service#in.udacity.learning.sunshine.app.MyWeatherWatchFace
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:18:9-36:19
+	android:label
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:20:13-51
+	android:permission
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:21:13-67
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:19:13-47
+meta-data#android.service.wallpaper
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:22:13-24:54
+	android:resource
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:24:17-51
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:23:17-57
+meta-data#com.google.android.wearable.watchface.preview
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:25:13-27:56
+	android:resource
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:27:17-53
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:26:17-77
+meta-data#com.google.android.wearable.watchface.preview_circular
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:28:13-30:56
+	android:resource
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:30:17-53
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:29:17-86
+intent-filter#android.service.wallpaper.WallpaperService+com.google.android.wearable.watchface.category.WATCH_FACE
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:32:13-35:29
+action#android.service.wallpaper.WallpaperService
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:33:17-85
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:33:25-82
+category#com.google.android.wearable.watchface.category.WATCH_FACE
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:34:17-102
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:34:27-99
+service#in.udacity.learning.sunshine.app.ListenService
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:38:9-47:19
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:38:18-47
+intent-filter#com.google.android.gms.wearable.DATA_CHANGED
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:39:13-46:29
+action#com.google.android.gms.wearable.DATA_CHANGED
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:41:17-87
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:41:25-84
+data
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:42:17-45:45
+	android:host
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:43:21-37
+	android:scheme
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:45:21-42
+	android:pathPrefix
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:44:21-56
+meta-data#com.google.android.gms.version
+ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:49:9-51:69
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.3.0\AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:51:13-66
+	android:name
+		ADDED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml:50:13-58
+uses-sdk
+INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.google.android.support:wearable:2.0.0-alpha2] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.support\wearable\2.0.0-alpha2\AndroidManifest.xml:4:5-72
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-wearable:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.3.0\AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-base:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.3.0\AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.3.0] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.3.0\AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.0.1] P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml
+		INJECTED from P:\UdacityProject\UdacitySunshineApp\weatherwatchface\src\main\AndroidManifest.xml

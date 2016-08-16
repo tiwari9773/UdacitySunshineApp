@@ -1,11 +1,15 @@
 package in.udacity.learning.utility;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 
+import com.google.android.gms.wearable.Asset;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -98,7 +102,7 @@ public class Utility {
      * Helper method to convert the database representation of the date into something to display
      * to users.  As classy and polished a user experience as "20140102" is, we can do better.
      *
-     * @param context Context to use for resource localization
+     * @param context      Context to use for resource localization
      * @param dateInMillis The date in milliseconds
      * @return a user-friendly representation of the date.
      */
@@ -124,7 +128,7 @@ public class Utility {
                     formatId,
                     today,
                     getFormattedMonthDay(context, dateInMillis)));
-        } else if ( julianDay < currentJulianDay + 7 ) {
+        } else if (julianDay < currentJulianDay + 7) {
             // If the input date is less than a week in the future, just return the day name.
             return getDayName(context, dateInMillis);
         } else {
@@ -588,4 +592,23 @@ public class Utility {
         return null;
     }
 
+    public static Asset getAsset(Bitmap bitmap) {
+        ByteArrayOutputStream byteStream = null;
+        try {
+            byteStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteStream);
+            return Asset.createFromBytes(byteStream.toByteArray());
+        } catch (Exception e) {
+
+        } finally {
+            if (null != byteStream) {
+                try {
+                    byteStream.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
+        return null;
+    }
 }

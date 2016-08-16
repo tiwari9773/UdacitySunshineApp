@@ -22,7 +22,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.annotation.IntDef;
 import android.support.v4.app.NotificationCompat;
@@ -51,6 +50,7 @@ import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.model.LocationAttribute;
 import in.udacity.learning.model.WeatherAttribute;
 import in.udacity.learning.muzei.WeatherMuzeiSource;
+import in.udacity.learning.service.SunshineService;
 import in.udacity.learning.shunshine.app.BuildConfig;
 import in.udacity.learning.shunshine.app.MainActivity;
 import in.udacity.learning.shunshine.app.R;
@@ -288,6 +288,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                     updateWidgets();
                     updateMuzei();
                     notifyWeather();
+                    notifyWatch();
                 }
 
                 if (AppConstant.DEBUG)
@@ -325,6 +326,11 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
             context.startService(new Intent(ACTION_DATA_UPDATED)
                     .setClass(context, WeatherMuzeiSource.class));
         }
+    }
+
+    private void notifyWatch() {
+        Intent in = new Intent(getContext(), SunshineService.class);
+        getContext().startService(in);
     }
 
     /**

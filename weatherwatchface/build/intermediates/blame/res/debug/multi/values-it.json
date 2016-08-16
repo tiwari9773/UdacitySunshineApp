@@ -1,0 +1,817 @@
+[
+    {
+        "outputFile": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\res\\merged\\debug\\values-it\\values-it.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endLine": 5,
+                    "endColumn": 14,
+                    "endOffset": 363
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 308,
+                        "endLine": 7,
+                        "endColumn": 14,
+                        "endOffset": 566
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 368,
+                    "endLine": 9,
+                    "endColumn": 14,
+                    "endOffset": 629
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 571,
+                        "endLine": 11,
+                        "endColumn": 14,
+                        "endOffset": 832
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 634,
+                    "endLine": 13,
+                    "endColumn": 14,
+                    "endOffset": 901
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 837,
+                        "endLine": 15,
+                        "endColumn": 14,
+                        "endOffset": 1104
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 906,
+                    "endLine": 17,
+                    "endColumn": 14,
+                    "endOffset": 1174
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1109,
+                        "endLine": 19,
+                        "endColumn": 14,
+                        "endOffset": 1377
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1179,
+                    "endLine": 21,
+                    "endColumn": 14,
+                    "endOffset": 1442
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1382,
+                        "endLine": 23,
+                        "endColumn": 14,
+                        "endOffset": 1645
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 1447,
+                    "endLine": 25,
+                    "endColumn": 14,
+                    "endOffset": 1718
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 1650,
+                        "endLine": 27,
+                        "endColumn": 14,
+                        "endOffset": 1921
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 1723,
+                    "endColumn": 192,
+                    "endOffset": 1911
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 490,
+                        "endColumn": 196,
+                        "endOffset": 682
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 1916,
+                    "endColumn": 175,
+                    "endOffset": 2087
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 2596,
+                        "endColumn": 179,
+                        "endOffset": 2771
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 28,
+                    "startColumn": 4,
+                    "startOffset": 2092,
+                    "endColumn": 112,
+                    "endOffset": 2200
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 2294,
+                        "endColumn": 112,
+                        "endOffset": 2402
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 2205,
+                    "endColumn": 270,
+                    "endOffset": 2471
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 4490,
+                        "endColumn": 274,
+                        "endOffset": 4760
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 2476,
+                    "endColumn": 127,
+                    "endOffset": 2599
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 2037,
+                        "endColumn": 127,
+                        "endOffset": 2160
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 31,
+                    "startColumn": 4,
+                    "startOffset": 2604,
+                    "endColumn": 182,
+                    "endOffset": 2782
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 1850,
+                        "endColumn": 186,
+                        "endOffset": 2032
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 2787,
+                    "endColumn": 125,
+                    "endOffset": 2908
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 1724,
+                        "endColumn": 125,
+                        "endOffset": 1845
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 33,
+                    "startColumn": 4,
+                    "startOffset": 2913,
+                    "endColumn": 168,
+                    "endOffset": 3077
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 860,
+                        "endColumn": 172,
+                        "endOffset": 1028
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 34,
+                    "startColumn": 4,
+                    "startOffset": 3082,
+                    "endColumn": 130,
+                    "endOffset": 3208
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1593,
+                        "endColumn": 130,
+                        "endOffset": 1719
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 35,
+                    "startColumn": 4,
+                    "startOffset": 3213,
+                    "endColumn": 212,
+                    "endOffset": 3421
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 1161,
+                        "endColumn": 216,
+                        "endOffset": 1373
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 36,
+                    "startColumn": 4,
+                    "startOffset": 3426,
+                    "endColumn": 210,
+                    "endOffset": 3632
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 1378,
+                        "endColumn": 214,
+                        "endOffset": 1588
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 37,
+                    "startColumn": 4,
+                    "startOffset": 3637,
+                    "endColumn": 127,
+                    "endOffset": 3760
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 1033,
+                        "endColumn": 127,
+                        "endOffset": 1156
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 3765,
+                    "endColumn": 188,
+                    "endOffset": 3949
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 3560,
+                        "endColumn": 188,
+                        "endOffset": 3744
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 39,
+                    "startColumn": 4,
+                    "startOffset": 3954,
+                    "endColumn": 126,
+                    "endOffset": 4076
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 3433,
+                        "endColumn": 126,
+                        "endOffset": 3555
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 40,
+                    "startColumn": 4,
+                    "startOffset": 4081,
+                    "endColumn": 172,
+                    "endOffset": 4249
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 687,
+                        "endColumn": 172,
+                        "endOffset": 855
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 41,
+                    "startColumn": 4,
+                    "startOffset": 4254,
+                    "endColumn": 178,
+                    "endOffset": 4428
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 3254,
+                        "endColumn": 178,
+                        "endOffset": 3428
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 4433,
+                    "endColumn": 120,
+                    "endOffset": 4549
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 3133,
+                        "endColumn": 120,
+                        "endOffset": 3249
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 4554,
+                    "endColumn": 185,
+                    "endOffset": 4735
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 304,
+                        "endColumn": 185,
+                        "endOffset": 485
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 4740,
+                    "endColumn": 133,
+                    "endOffset": 4869
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 170,
+                        "endColumn": 133,
+                        "endOffset": 299
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 45,
+                    "startColumn": 4,
+                    "startOffset": 4874,
+                    "endColumn": 182,
+                    "endOffset": 5052
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 4893,
+                        "endColumn": 182,
+                        "endOffset": 5071
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 46,
+                    "startColumn": 4,
+                    "startOffset": 5057,
+                    "endColumn": 127,
+                    "endOffset": 5180
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 31,
+                        "startColumn": 4,
+                        "startOffset": 4765,
+                        "endColumn": 127,
+                        "endOffset": 4888
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 5185,
+                    "endColumn": 146,
+                    "endOffset": 5327
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 25,
+                        "startColumn": 4,
+                        "startOffset": 3749,
+                        "endColumn": 146,
+                        "endOffset": 3891
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 5332,
+                    "endColumn": 259,
+                    "endOffset": 5587
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 4021,
+                        "endColumn": 263,
+                        "endOffset": 4280
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 49,
+                    "startColumn": 4,
+                    "startOffset": 5592,
+                    "endColumn": 124,
+                    "endOffset": 5712
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 3896,
+                        "endColumn": 124,
+                        "endOffset": 4016
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 50,
+                    "startColumn": 4,
+                    "startOffset": 5717,
+                    "endColumn": 108,
+                    "endOffset": 5821
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 4285,
+                        "endColumn": 108,
+                        "endOffset": 4389
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 51,
+                    "startColumn": 4,
+                    "startOffset": 5826,
+                    "endColumn": 184,
+                    "endOffset": 6006
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 2407,
+                        "endColumn": 188,
+                        "endOffset": 2591
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 52,
+                    "startColumn": 4,
+                    "startOffset": 6011,
+                    "endColumn": 128,
+                    "endOffset": 6135
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 2165,
+                        "endColumn": 128,
+                        "endOffset": 2289
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 53,
+                    "startColumn": 4,
+                    "startOffset": 6140,
+                    "endColumn": 214,
+                    "endOffset": 6350
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 2914,
+                        "endColumn": 218,
+                        "endOffset": 3128
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 6355,
+                    "endColumn": 137,
+                    "endOffset": 6488
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 2776,
+                        "endColumn": 137,
+                        "endOffset": 2909
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 55,
+                    "startColumn": 4,
+                    "startOffset": 6493,
+                    "endColumn": 95,
+                    "endOffset": 6584
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.3.0\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 29,
+                        "startColumn": 4,
+                        "startOffset": 4394,
+                        "endColumn": 95,
+                        "endOffset": 4485
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 56,
+                    "startColumn": 4,
+                    "startOffset": 6589,
+                    "endColumn": 90,
+                    "endOffset": 6675
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.3.0\\res\\values-it\\base_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 170,
+                        "endColumn": 90,
+                        "endOffset": 256
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 57,
+                    "startColumn": 4,
+                    "startOffset": 6680,
+                    "endColumn": 106,
+                    "endOffset": 6782
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-base\\8.3.0\\res\\values-it\\base_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 261,
+                        "endColumn": 106,
+                        "endOffset": 363
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 58,
+                    "startColumn": 4,
+                    "startOffset": 6787,
+                    "endColumn": 91,
+                    "endOffset": 6874
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 1926,
+                        "endColumn": 91,
+                        "endOffset": 2013
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 59,
+                    "startColumn": 4,
+                    "startOffset": 6879,
+                    "endColumn": 84,
+                    "endOffset": 6959
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 29,
+                        "startColumn": 4,
+                        "startOffset": 2018,
+                        "endColumn": 84,
+                        "endOffset": 2098
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 60,
+                    "startColumn": 4,
+                    "startOffset": 6964,
+                    "endColumn": 167,
+                    "endOffset": 7127
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 2103,
+                        "endColumn": 167,
+                        "endOffset": 2266
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 61,
+                    "startColumn": 4,
+                    "startOffset": 7132,
+                    "endColumn": 173,
+                    "endOffset": 7301
+                },
+                "from": {
+                    "file": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\exploded-aar\\com.google.android.support\\wearable\\2.0.0-alpha2\\res\\values-it\\values.xml",
+                    "position": {
+                        "startLine": 31,
+                        "startColumn": 4,
+                        "startOffset": 2271,
+                        "endColumn": 173,
+                        "endOffset": 2440
+                    }
+                }
+            }
+        ]
+    }
+]

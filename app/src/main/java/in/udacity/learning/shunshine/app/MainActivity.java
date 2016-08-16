@@ -3,13 +3,13 @@ package in.udacity.learning.shunshine.app;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -30,11 +30,9 @@ import java.io.OutputStream;
 import in.udacity.learning.adapter.ForecastAdapter;
 import in.udacity.learning.constant.AppConstant;
 import in.udacity.learning.dbhelper.DBHelper;
-import in.udacity.learning.dbhelper.WeatherContract;
 import in.udacity.learning.gcm.RegistrationIntentService;
 import in.udacity.learning.shunshine.app.fragment.DetailFragment;
 import in.udacity.learning.shunshine.app.fragment.ForecastFragment;
-import in.udacity.learning.logger.L;
 import in.udacity.learning.sync.SunshineSyncAdapter;
 import in.udacity.learning.utility.Utility;
 
@@ -44,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
     private static final String DETAIL_FRAGMENT_TAG = "DFTAG";
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+
+    public static final String WEARABLE_DATA_PATH = "/wearable_data";
 
     private String mLocation;
     private boolean mTwoPane = false;
