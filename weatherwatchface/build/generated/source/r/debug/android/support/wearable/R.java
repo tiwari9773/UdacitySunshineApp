@@ -104,31 +104,31 @@ public final class R {
 		public static final int black_86p = 0x7f100007;
 		public static final int blue = 0x7f100008;
 		public static final int card_default_background = 0x7f100009;
-		public static final int card_grey_text_color = 0x7f100030;
-		public static final int card_text_color = 0x7f100031;
-		public static final int circular_button = 0x7f100032;
+		public static final int card_grey_text_color = 0x7f100031;
+		public static final int card_text_color = 0x7f100032;
+		public static final int circular_button = 0x7f100033;
 		public static final int circular_button_disabled = 0x7f10000a;
 		public static final int circular_button_normal = 0x7f10000b;
 		public static final int circular_button_pressed = 0x7f10000c;
-		public static final int dark_blue = 0x7f10001d;
-		public static final int dark_grey = 0x7f10001e;
-		public static final int dark_red = 0x7f10001f;
-		public static final int dialog_background = 0x7f100020;
-		public static final int dialog_shade_background = 0x7f100021;
-		public static final int disabled_text_light = 0x7f100022;
-		public static final int dismiss_close = 0x7f100023;
-		public static final int dismiss_close_pressed = 0x7f100024;
-		public static final int dismiss_overlay_bg = 0x7f100025;
-		public static final int green = 0x7f100026;
-		public static final int grey = 0x7f100027;
-		public static final int light_grey = 0x7f100028;
-		public static final int orange = 0x7f100029;
-		public static final int primary_text_dark = 0x7f10002a;
-		public static final int primary_text_light = 0x7f10002b;
-		public static final int red = 0x7f10002c;
-		public static final int secondary_text_light = 0x7f10002d;
-		public static final int semitransparent_grey = 0x7f10002e;
-		public static final int white = 0x7f10002f;
+		public static final int dark_blue = 0x7f10001e;
+		public static final int dark_grey = 0x7f10001f;
+		public static final int dark_red = 0x7f100020;
+		public static final int dialog_background = 0x7f100021;
+		public static final int dialog_shade_background = 0x7f100022;
+		public static final int disabled_text_light = 0x7f100023;
+		public static final int dismiss_close = 0x7f100024;
+		public static final int dismiss_close_pressed = 0x7f100025;
+		public static final int dismiss_overlay_bg = 0x7f100026;
+		public static final int green = 0x7f100027;
+		public static final int grey = 0x7f100028;
+		public static final int light_grey = 0x7f100029;
+		public static final int orange = 0x7f10002a;
+		public static final int primary_text_dark = 0x7f10002b;
+		public static final int primary_text_light = 0x7f10002c;
+		public static final int red = 0x7f10002d;
+		public static final int secondary_text_light = 0x7f10002e;
+		public static final int semitransparent_grey = 0x7f10002f;
+		public static final int white = 0x7f100030;
 	}
 	public static final class dimen {
 		public static final int action_chooser_base_radius_percent = 0x7f0c0006;
@@ -158,9 +158,9 @@ public final class R {
 		public static final int diag_shade_height_rect = 0x7f0c001c;
 		public static final int diag_shade_height_round = 0x7f0c001d;
 		public static final int dismiss_padding = 0x7f0c0028;
-		public static final int item_touch_helper_max_drag_scroll_per_frame = 0x7f0c003b;
+		public static final int item_touch_helper_max_drag_scroll_per_frame = 0x7f0c003d;
 		public static final int peek_drawer_icon_size = 0x7f0c0004;
-		public static final int progress_spinner_inline_size = 0x7f0c003c;
+		public static final int progress_spinner_inline_size = 0x7f0c003e;
 		public static final int progress_spinner_size = 0x7f0c0005;
 	}
 	public static final class drawable {
@@ -274,10 +274,10 @@ public final class R {
 		public static final int time_difference_words_minutes = 0x7f0a0005;
 	}
 	public static final class string {
-		public static final int dismiss_overlay_button_label = 0x7f090014;
-		public static final int time_difference_now = 0x7f090015;
-		public static final int time_difference_short_days_and_hours = 0x7f090016;
-		public static final int time_difference_short_hours_and_minutes = 0x7f090017;
+		public static final int dismiss_overlay_button_label = 0x7f090020;
+		public static final int time_difference_now = 0x7f090021;
+		public static final int time_difference_short_days_and_hours = 0x7f090022;
+		public static final int time_difference_short_hours_and_minutes = 0x7f090023;
 	}
 	public static final class style {
 		public static final int CardText = 0x7f0e0000;

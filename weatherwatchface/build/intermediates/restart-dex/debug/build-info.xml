@@ -4,35 +4,30 @@
     api-level="23"
     density="tvdpi"
     format="7"
-    timestamp="10619106523972"
+    timestamp="120204582213383"
     token="2807932409146238021" >
 
     <task
         name="javac"
-        duration="256" />
+        duration="573" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="24" />
+        duration="12" />
     <task
         name="verifier"
-        duration="4" />
+        duration="3" />
 
     <artifact
-        location="P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
-        type="DEX" />
+        location="P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\outputs\apk\weatherwatchface-debug.apk"
+        type="MAIN" />
 
-    <build timestamp="10159693798669" >
+    <build timestamp="120204582213383" >
         <artifact
             location="P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\outputs\apk\weatherwatchface-debug.apk"
             type="MAIN" />
-    </build>
-    <build timestamp="10619106523972" >
-        <artifact
-            location="P:\UdacityProject\UdacitySunshineApp\weatherwatchface\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
-            type="DEX" />
     </build>
 
 </instant-run>

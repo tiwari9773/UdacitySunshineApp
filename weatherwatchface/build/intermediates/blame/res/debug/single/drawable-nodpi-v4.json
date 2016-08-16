@@ -2,5 +2,9 @@
     {
         "merged": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\preview_analog.png",
         "source": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\src\\main\\res\\drawable-nodpi\\preview_analog.png"
+    },
+    {
+        "merged": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\build\\intermediates\\res\\merged\\debug\\drawable-nodpi-v4\\preview.png",
+        "source": "P:\\UdacityProject\\UdacitySunshineApp\\weatherwatchface\\src\\main\\res\\drawable-nodpi\\preview.png"
     }
 ]
