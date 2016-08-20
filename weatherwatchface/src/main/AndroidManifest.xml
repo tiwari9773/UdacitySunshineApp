@@ -44,6 +44,11 @@
                     android:pathPrefix="/wearable_data"
                     android:scheme="wear" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+
         </service>
 
         <meta-data

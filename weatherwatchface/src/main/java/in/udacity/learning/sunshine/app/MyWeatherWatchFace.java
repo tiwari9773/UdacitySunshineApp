@@ -16,14 +16,11 @@
 
 package in.udacity.learning.sunshine.app;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,11 +31,9 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
@@ -57,12 +52,7 @@ import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.Date;
@@ -99,11 +89,6 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
      */
     private static final int MSG_UPDATE_TIME = 0;
     private static final String TAG = MyWeatherWatchFace.class.getName();
-
-    /**
-     * Alpha value for drawing time when in mute mode.
-     */
-    static final int MUTE_ALPHA = 100;
 
     /**
      * Alpha value for drawing time when not in mute mode.
@@ -222,11 +207,6 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
             minTemp = sharedPreferences.getString("min", null);
             descTemp = sharedPreferences.getString("desc", null);
 
-//            File f = Environment.getExternalStorageDirectory();
-//            String path = f.getAbsolutePath() + File.separator + "mausam.png";
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//            tempIcon = BitmapFactory.decodeFile(path, options);
         }
 
         int mTapCount;
@@ -507,9 +487,9 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
                 if (tempIcon != null) {
 
                     Rect src = new Rect(0, 0, tempIcon.getWidth(), tempIcon.getHeight());
-                    int yOff =(int)(mYOffset + mLineHeight + mLineHeight);
-                    Rect dst = new Rect(140, 160, tempIcon.getWidth() + 240, tempIcon.getHeight() + 240);
-                    canvas.drawBitmap(tempIcon, src, dst, mGraphics);
+                    int yOff = (int) (mYOffset + mLineHeight + mLineHeight);
+                    Rect dst = new Rect(140, 140, tempIcon.getWidth() + 240, tempIcon.getHeight() + 240);
+                    canvas.drawBitmap(tempIcon, null, dst, null);
                 }
             }
 
@@ -530,8 +510,6 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
                 unregisterReceiver();
             }
 
-            // Whether the timer should be running depends on whether we're visible (as well as
-            // whether we're in ambient mode), so we may need to start or stop the timer.
             updateTimer();
         }
 
@@ -630,7 +608,9 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
                     return null;
                 }
 
-                Bitmap bitmap = BitmapFactory.decodeStream(assetInputStream);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                Bitmap bitmap = BitmapFactory.decodeStream(assetInputStream, null, options);
                 return bitmap;
             } else {
                 Log.e(TAG, "Asset must be non-null");
@@ -642,20 +622,6 @@ public class MyWeatherWatchFace extends CanvasWatchFaceService implements Google
         protected void onPostExecute(Bitmap bitmap) {
 
             if (bitmap != null) {
-
-//                File f = Environment.getExternalStorageDirectory();
-//                try {
-//                    f = new File(f.getAbsolutePath(), "mausam.png");
-//                    OutputStream out = new FileOutputStream(f);
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-//                    out.flush();
-//                    out.close();
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
                 tempIcon = bitmap;
             }
         }
