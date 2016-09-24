@@ -12,10 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import in.udacity.learning.constant.AppConstant;
-import in.udacity.learning.keys.Keys;
-import in.udacity.learning.logger.L;
 import in.udacity.learning.shunshine.app.BuildConfig;
-import in.udacity.learning.shunshine.app.MyApplication;
 
 /**
  * Created by Lokesh on 06-09-2015.
